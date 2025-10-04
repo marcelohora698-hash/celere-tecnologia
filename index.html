@@ -216,7 +216,7 @@
         <div class="stats-card no-print">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h4><i class="fas fa-laptop me-2"></i>Entrega de Kits de Informática</h4>
+                    <h4><i class="fas fa-laptop me-2"></i>controle de entrega de equipamentos</h4>
                     <p class="mb-2" id="progresso-texto">Progresso: 0/440 equipamentos (0%)</p>
                     <div class="progress">
                         <div id="progresso-bar" class="progress-bar bg-success" style="width: 0%"></div>
@@ -646,7 +646,7 @@
 
             // Calcular totais
             const totalEquipamentos = quantidades.cpu + quantidades.monitor + quantidades.caboEnergia + quantidades.caboVideo;
-            const percentual = Math.min(100, Math.round((totalEquipamentos / 440) * 100)); // 110 kits * 4 equipamentos cada
+            const percentual = Math.min(100, Math.round((totalEquipamentos / 440) * 100)); //* 4 equipamentos cada
 
             // Atualizar progresso
             document.getElementById('progresso-texto').textContent = `Progresso: ${totalEquipamentos}/440 equipamentos (${percentual}%)`;
@@ -669,7 +669,7 @@
                 document.getElementById('total-kits-display').innerHTML = '<strong>✅ TODOS OS 110 KITS ENTREGUES!</strong>';
             } else {
                 document.getElementById('progresso-bar').classList.remove('bg-warning');
-                document.getElementById('total-kits-display').textContent = '110 Kits de Computadores e Monitores';
+                document.getElementById('total-kits-display').textContent = '';
             }
         }
 
@@ -1189,4 +1189,5 @@ Total: ${totalEquipamentos} equipamentos`);
 </body>
 
 </html>
+
 
