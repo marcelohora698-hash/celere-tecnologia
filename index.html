@@ -585,9 +585,9 @@
                 <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
                 <div class="logo-container-full">
                     <div class="logo-img-container">
-                     <!-- ALTERE APENAS ESTA LINHA -->
-<img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
-     onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
+                        <!-- Imagem com fundo transparente - CAMINHO CORRIGIDO -->
+                        <img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
+                             onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
                         <!-- Fallback de texto caso a imagem não carregue -->
                         <div id="logo-texto" style="display: none; text-align: center;">
                             <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px;">CÉLERE</h1>
@@ -1246,30 +1246,7 @@
             document.querySelectorAll('.quantidade-input').forEach(input => {
                 input.addEventListener('input', function() {
                     atualizarProgresso();
-                    atualizarTermo();function inicializarSistema() {
-    // ... código existente ...
-    
-    // ADICIONE ESTA LINHA NO FINAL DA FUNÇÃO
-    verificarImagemLogo();
-}
-                    // Adicionar esta função para verificar se a imagem existe
-function verificarImagemLogo() {
-    const img = document.querySelector('.logo-img');
-    if (img) {
-        img.onerror = function() {
-            this.style.display = 'none';
-            const fallback = document.getElementById('logo-texto');
-            if (fallback) {
-                fallback.style.display = 'block';
-            }
-        };
-        
-        // Verificar se a imagem carregou
-        img.onload = function() {
-            console.log('Logo carregado com sucesso');
-        };
-    }
-}
+                    atualizarTermo();
                 });
             });
 
@@ -1325,6 +1302,26 @@ function verificarImagemLogo() {
             atualizarProgresso();
             atualizarTermo();
             atualizarRelatorios();
+            verificarImagemLogo(); // NOVA LINHA ADICIONADA
+        }
+
+        // ========== VERIFICAÇÃO DA IMAGEM DO LOGO ==========
+        function verificarImagemLogo() {
+            const img = document.querySelector('.logo-img');
+            if (img) {
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    const fallback = document.getElementById('logo-texto');
+                    if (fallback) {
+                        fallback.style.display = 'block';
+                    }
+                };
+                
+                // Verificar se a imagem carregou
+                img.onload = function() {
+                    console.log('Logo carregado com sucesso');
+                };
+            }
         }
 
         // ========== SISTEMA DE STATUS ==========
@@ -1394,85 +1391,107 @@ function verificarImagemLogo() {
                 tab.show();
             }
         }
-// ========== GERAR TERMO ==========
-function atualizarTermo() {
-    // Atualizar informações do termo
-    document.getElementById('termo-usuario').textContent = document.getElementById('usuario').value || '-';
-    document.getElementById('termo-matricula').textContent = document.getElementById('matricula').value || '-';
-    document.getElementById('termo-setor').textContent = document.getElementById('setor').value || '-';
-    document.getElementById('termo-tecnico').textContent = document.getElementById('tecnico').value || '-';
-    
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    document.getElementById('termo-data').textContent = dataAtual;
-    
-    // Gerar protocolo
-    const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-    document.getElementById('termo-protocolo').textContent = protocolo;
-    
-    // Atualizar equipamentos no termo
-    const tbody = document.getElementById('termo-equipamentos');
-    if (tbody) {
-        tbody.innerHTML = '';
-        
-        const equipamentos = [
-            { nome: 'CPU', qtd: quantidades.cpu },
-            { nome: 'Monitor', qtd: quantidades.monitor },
-            { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-            { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-            { nome: 'Teclado', qtd: quantidades.teclado },
-            { nome: 'Mouse', qtd: quantidades.mouse },
-            { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-            { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-        ];
-        
-        equipamentos.forEach(equip => {
-            if (equip.qtd > 0) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${equip.nome}</td>
-                    <td class="text-center">${equip.qtd}</td>
-                `;
-                tbody.appendChild(tr);
+
+        // ========== GERAR TERMO - FUNÇÃO CORRIGIDA ==========
+        function atualizarTermo() {
+            // Atualizar informações do termo
+            document.getElementById('termo-usuario').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('termo-matricula').textContent = document.getElementById('matricula').value || '-';
+            document.getElementById('termo-setor').textContent = document.getElementById('setor').value || '-';
+            document.getElementById('termo-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            document.getElementById('termo-data').textContent = dataAtual;
+            
+            // Gerar protocolo
+            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+            document.getElementById('termo-protocolo').textContent = protocolo;
+            
+            // Atualizar equipamentos no termo
+            const tbody = document.getElementById('termo-equipamentos');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                const equipamentos = [
+                    { nome: 'CPU', qtd: quantidades.cpu },
+                    { nome: 'Monitor', qtd: quantidades.monitor },
+                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                    { nome: 'Teclado', qtd: quantidades.teclado },
+                    { nome: 'Mouse', qtd: quantidades.mouse },
+                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+                ];
+                
+                equipamentos.forEach(equip => {
+                    if (equip.qtd > 0) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${equip.nome}</td>
+                            <td class="text-center">${equip.qtd}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
             }
-        });
-    }
-    
-    // Atualizar informações de assinatura
-    document.getElementById('termo-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
-    document.getElementById('termo-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
-    
-    // VERIFICAÇÃO CORRIGIDA - Habilita o botão quando todos os campos obrigatórios estiverem preenchidos
-    const aceite = document.getElementById('aceite-termo').checked;
-    const tecnicoPreenchido = document.getElementById('tecnico').value.trim();
-    const usuarioPreenchido = document.getElementById('usuario').value.trim();
-    const matriculaPreenchida = document.getElementById('matricula').value.trim();
-    const setorPreenchido = document.getElementById('setor').value;
-    const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
-    
-    const btnGerarTermo = document.getElementById('btn-gerar-termo');
-    if (btnGerarTermo) {
-        // Habilita apenas se TODOS os campos obrigatórios estiverem preenchidos E tiver equipamentos E aceite marcado
-        const habilitar = aceite && 
-                         tecnicoPreenchido && 
-                         usuarioPreenchido && 
-                         matriculaPreenchida && 
-                         setorPreenchido && 
-                         temEquipamentos;
-        
-        btnGerarTermo.disabled = !habilitar;
-        
-        // Debug no console para ajudar a identificar o problema
-        console.log('Status do botão:', {
-            aceite,
-            tecnico: tecnicoPreenchido,
-            usuario: usuarioPreenchido,
-            matricula: matriculaPreenchida,
-            setor: setorPreenchido,
-            equipamentos: temEquipamentos,
-            habilitado: habilitar
-        });
-    }
-}
+            
+            // Atualizar informações de assinatura
+            document.getElementById('termo-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('termo-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+            
+            // VERIFICAÇÃO CORRIGIDA - Habilita o botão quando todos os campos obrigatórios estiverem preenchidos
+            const aceite = document.getElementById('aceite-termo').checked;
+            const tecnicoPreenchido = document.getElementById('tecnico').value.trim();
+            const usuarioPreenchido = document.getElementById('usuario').value.trim();
+            const matriculaPreenchida = document.getElementById('matricula').value.trim();
+            const setorPreenchido = document.getElementById('setor').value;
+            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+            
+            const btnGerarTermo = document.getElementById('btn-gerar-termo');
+            if (btnGerarTermo) {
+                // Habilita apenas se TODOS os campos obrigatórios estiverem preenchidos E tiver equipamentos E aceite marcado
+                const habilitar = aceite && 
+                                 tecnicoPreenchido && 
+                                 usuarioPreenchido && 
+                                 matriculaPreenchida && 
+                                 setorPreenchido && 
+                                 temEquipamentos;
+                
+                btnGerarTermo.disabled = !habilitar;
+                
+                // Debug no console para ajudar a identificar o problema
+                console.log('Status do botão:', {
+                    aceite,
+                    tecnico: tecnicoPreenchido,
+                    usuario: usuarioPreenchido,
+                    matricula: matriculaPreenchida,
+                    setor: setorPreenchido,
+                    equipamentos: temEquipamentos,
+                    habilitado: habilitar
+                });
+            }
+        }
+
+        // ========== SISTEMA DE IMPRESSÃO ==========
+        function visualizarTermo() {
+            if (!validarDadosParaTermo()) {
+                mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
+                return;
+            }
+
+            atualizarDadosImpressao();
+            
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                const areaImpressao = document.getElementById('area-impressao');
+                if (areaImpressao) {
+                    document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
+                }
+                modal.show();
+            }
+        }
+
         function validarDadosParaTermo() {
             const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
             for (let campo of camposObrigatorios) {
@@ -1860,7 +1879,3 @@ function atualizarTermo() {
     </script>
 </body>
 </html>
-
-
-
-
