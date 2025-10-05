@@ -369,208 +369,208 @@
             margin-right: 8px;
         }
 
-      /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO DO TERMO */
+    /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO DO TERMO */
 @media print {
     body {
         background: white !important;
         color: black !important;
         font-family: 'Arial', sans-serif !important;
         margin: 0 !important;
-        padding: 0 !important;
-        font-size: 10px !important;
-        line-height: 1.1 !important;
+        padding: 10px !important;
+        font-size: 12px !important;
+        line-height: 1.3 !important;
     }
     
     .no-print {
         display: none !important;
     }
     
-    .print-only {
-        display: block !important;
-    }
-    
-    .container {
-        width: 100% !important;
-        max-width: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    
-    /* Timbrado MUITO compacto */
-    .timbrado-celere {
-        text-align: center;
-        border-bottom: 1px solid #0f5132;
-        padding: 5px 0 !important;
-        margin-bottom: 8px !important;
-        background: white;
-        page-break-after: avoid;
-    }
-    
-    .timbrado-img {
-        max-width: 100px !important;
-        max-height: 40px !important;
-        height: auto;
-        margin-bottom: 3px !important;
-    }
-    
-    .timbrado-celere .empresa {
-        font-size: 8px !important;
-        color: #333;
-        margin: 1px 0;
-        font-weight: bold;
-        line-height: 1;
-    }
-    
-    .timbrado-celere .cnpj {
-        font-size: 7px !important;
-        color: #666;
-        margin: 1px 0;
-        line-height: 1;
-    }
-    
-    .timbrado-celere .endereco {
-        font-size: 7px !important;
-        color: #666;
-        margin: 1px 0;
-        line-height: 1;
-    }
-    
-    .timbrado-celere .contato {
-        font-size: 7px !important;
-        color: #666;
-        margin: 1px 0;
-        line-height: 1;
-    }
-    
-    /* Termo compacto */
+    /* CONTAINER PRINCIPAL */
     .termo-impressao {
-        padding: 5px 10px !important;
+        max-width: 100%;
+        margin: 0 auto;
         background: white;
+        border: 2px solid #0f5132;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    /* CABEÇALHO COM LOGO */
+    .cabecalho-termo {
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #0f5132;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .logo-container {
+        flex: 0 0 auto;
+        margin-right: 15px;
+    }
+    
+    .logo-termo {
+        max-width: 80px;
+        max-height: 60px;
+        height: auto;
+    }
+    
+    .info-empresa {
+        flex: 1;
+    }
+    
+    .empresa-nome {
+        font-size: 11px;
+        font-weight: bold;
+        color: #0f5132;
+        margin-bottom: 2px;
+    }
+    
+    .empresa-documento,
+    .empresa-endereco,
+    .empresa-contato {
+        font-size: 9px;
+        color: #666;
+        margin-bottom: 1px;
+        line-height: 1.2;
+    }
+    
+    /* CONTEÚDO DO TERMO */
+    .conteudo-termo {
+        padding: 0 5px;
     }
     
     .termo-header {
         text-align: center;
-        margin-bottom: 8px !important;
-        page-break-after: avoid;
+        margin-bottom: 15px;
     }
     
-    .termo-header h3 {
+    .termo-header h1 {
+        font-size: 14px;
         color: #0f5132;
-        font-size: 10px !important;
-        margin-bottom: 2px;
+        margin: 0 0 5px 0;
         text-transform: uppercase;
     }
     
     .protocolo {
         background: #f8f9fa;
-        padding: 4px;
-        border: 1px solid #0f5132;
-        margin-bottom: 8px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 9px;
-    }
-    
-    .dados-entrega {
-        margin-bottom: 8px;
         padding: 6px;
+        border: 1px solid #0f5132;
+        font-weight: bold;
+        font-size: 11px;
+        display: inline-block;
+    }
+    
+    /* DADOS DA ENTREGA */
+    .dados-entrega {
+        background: #f8f9fa;
+        padding: 10px;
         border: 1px solid #ddd;
-        background: #fafafa;
-        font-size: 8px;
+        margin-bottom: 15px;
+        border-radius: 4px;
     }
     
-    .dados-entrega .row {
-        margin-bottom: 2px;
+    .dados-linha {
         display: flex;
+        margin-bottom: 5px;
     }
     
-    .dados-entrega .col-md-6 {
-        width: 50%;
-        padding: 0 4px;
+    .dados-coluna {
+        flex: 1;
+        padding: 0 5px;
+    }
+    
+    /* EQUIPAMENTOS */
+    .secao-equipamentos h3 {
+        font-size: 12px;
+        color: #0f5132;
+        margin: 15px 0 8px 0;
     }
     
     .tabela-equipamentos {
         width: 100%;
         border-collapse: collapse;
-        margin: 8px 0;
-        font-size: 8px !important;
+        margin-bottom: 15px;
+        font-size: 10px;
     }
     
     .tabela-equipamentos th {
         background: #0f5132;
         color: white;
-        padding: 3px;
+        padding: 6px;
         text-align: left;
         border: 1px solid #ddd;
         font-weight: bold;
-        font-size: 8px;
     }
     
     .tabela-equipamentos td {
-        padding: 3px;
+        padding: 6px;
         border: 1px solid #ddd;
-        font-size: 8px;
     }
     
-    .termo-texto {
-        margin: 8px 0;
-        line-height: 1.1;
-        font-size: 8px !important;
+    /* TEXTO DO TERMO */
+    .texto-termo {
+        margin: 15px 0;
         text-align: justify;
     }
     
-    .termo-texto strong {
-        color: #0f5132;
+    .texto-termo p {
+        margin-bottom: 8px;
     }
     
-    .termo-texto ul {
-        margin: 4px 0;
-        padding-left: 10px;
+    .texto-termo ul {
+        margin: 8px 0;
+        padding-left: 20px;
     }
     
-    .termo-texto li {
-        margin-bottom: 1px;
+    .texto-termo li {
+        margin-bottom: 4px;
     }
     
+    /* ASSINATURAS */
     .assinaturas {
-        margin-top: 25px !important;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
         page-break-inside: avoid;
     }
     
-    .assinatura-area {
-        width: 45%;
-        display: inline-block;
+    .assinatura-coluna {
         text-align: center;
-        margin: 0 2%;
-        vertical-align: top;
+        width: 45%;
     }
     
     .linha-assinatura {
         border-top: 1px solid #000;
-        margin-top: 20px !important;
-        padding-top: 1px;
-        width: 100%;
+        margin: 30px 0 5px 0;
+        padding-top: 2px;
     }
     
     .nome-assinatura {
         font-weight: bold;
-        margin-top: 1px;
-        font-size: 8px;
+        font-size: 11px;
     }
     
     .cargo-assinatura {
-        font-size: 7px;
+        font-size: 10px;
         color: #666;
     }
     
+    /* RODAPÉ */
     .rodape-termo {
-        margin-top: 10px;
+        margin-top: 20px;
         text-align: center;
-        font-size: 6px;
+        font-size: 9px;
         color: #666;
         border-top: 1px solid #ddd;
-        padding-top: 2px;
+        padding-top: 8px;
     }
+    
+    .rodape-termo p {
+        margin: 2px 0;
+    }
+}
     
     .pagina-inteira {
         page-break-inside: avoid;
@@ -1182,72 +1182,82 @@
         </div>
     </div>
 
-    <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
-    <div id="area-impressao" style="display: none;">
-        <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
-            <div class="timbrado-celere">
-                <!-- IMAGEM DO TIMBRADO -->
-                <img src="logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
-                <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
-                <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
-                <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
-                <div class="contato">Contato – Tel: (85) 69206-4075. E-mail: comercial@celeretecnologia.com.br</div>
+   <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
+<div id="area-impressao" style="display: none;">
+    <div class="termo-impressao">
+        <!-- CABEÇALHO COM LOGO GRANDE -->
+        <div class="cabecalho-termo">
+            <div class="logo-container">
+                <img src="logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-termo">
             </div>
+            <div class="info-empresa">
+                <div class="empresa-nome">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
+                <div class="empresa-documento">CNPJ: 46.961.423/0001-79</div>
+                <div class="empresa-endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
+                <div class="empresa-contato">Tel: (85) 69206-4075 | Email: comercial@celeretecnologia.com.br</div>
+            </div>
+        </div>
 
-            <!-- Conteúdo do Termo -->
+        <!-- TERMO DENTRO DA "CAIXA" -->
+        <div class="conteudo-termo">
+            <!-- CABEÇALHO DO TERMO -->
             <div class="termo-header">
-                <h3>TERMO DE ENTREGA E RESPONSABILIDADE</h3>
+                <h1>TERMO DE ENTREGA E RESPONSABILIDADE</h1>
                 <div class="protocolo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
             </div>
 
+            <!-- DADOS DA ENTREGA -->
             <div class="dados-entrega">
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="dados-linha">
+                    <div class="dados-coluna">
                         <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="dados-coluna">
                         <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="dados-linha">
+                    <div class="dados-coluna">
                         <strong>Setor:</strong> <span id="impressao-setor">-</span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="dados-coluna">
                         <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="dados-linha">
+                    <div class="dados-coluna">
                         <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="dados-coluna">
                         <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
                     </div>
                 </div>
             </div>
 
-            <h5 class="titulo-equipamentos">EQUIPAMENTOS ENTREGUES</h5>
-            <table class="tabela-equipamentos">
-                <thead>
-                    <tr>
-                        <th>Equipamento</th>
-                        <th>Quantidade</th>
-                        <th>Observações</th>
-                    </tr>
-                </thead>
-                <tbody id="impressao-equipamentos">
-                    <!-- Preenchido via JavaScript -->
-                </tbody>
-            </table>
+            <!-- EQUIPAMENTOS -->
+            <div class="secao-equipamentos">
+                <h3>EQUIPAMENTOS ENTREGUES</h3>
+                <table class="tabela-equipamentos">
+                    <thead>
+                        <tr>
+                            <th>Equipamento</th>
+                            <th>Quantidade</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="impressao-equipamentos">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
 
-            <div class="termo-texto">
+            <!-- TEXTO DO TERMO -->
+            <div class="texto-termo">
                 <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
                 
                 <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
                 
-                <p>Comprometo-me a:</p>
+                <p><strong>Comprometo-me a:</strong></p>
                 <ul>
                     <li>Zelar pela conservação e segurança dos mesmos</li>
                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
@@ -1258,26 +1268,29 @@
                 <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
             </div>
 
-            <div class="assinaturas pagina-inteira">
-                <div class="assinatura-area">
+            <!-- ASSINATURAS -->
+            <div class="assinaturas">
+                <div class="assinatura-coluna">
                     <div class="linha-assinatura"></div>
                     <div class="nome-assinatura" id="impressao-assinatura-usuario">-</div>
                     <div class="cargo-assinatura">Colaborador</div>
                 </div>
                 
-                <div class="assinatura-area">
+                <div class="assinatura-coluna">
                     <div class="linha-assinatura"></div>
                     <div class="nome-assinatura" id="impressao-assinatura-tecnico">-</div>
                     <div class="cargo-assinatura">Técnico Responsável</div>
                 </div>
             </div>
 
+            <!-- RODAPÉ -->
             <div class="rodape-termo">
                 <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
                 <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -1946,4 +1959,5 @@
     </script>
 </body>
 </html>
+
 
