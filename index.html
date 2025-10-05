@@ -735,24 +735,63 @@
             }
         }
 
-        async function salvarEntregaGoogleSheets(entrega) {
-            try {
-                const totalEquipamentos = entrega.quantidades.cpu + entrega.quantidades.monitor + 
-                                         entrega.quantidades.caboEnergia + entrega.quantidades.caboVideo;
-                
-                const dados = [
-                    entrega.data,
-                    entrega.protocolo,
-                    entrega.usuario,
-                    entrega.matricula,
-                    entrega.setor,
-                    entrega.tecnico,
-                    entrega.quantidades.cpu,
-                    entrega.quantidades.monitor,
-                    entrega.quantidades.caboEnergia,
-                    entrega.quantidades.caboVideo,
-                    totalEquipamentos
-                ];
+ // ========== SISTEMA SIMPLIFICADO - SEM GOOGLE SCRIPTS ==========
+async function carregarDadosGoogleSheets() {
+    try {
+        // Método direto usando a API pública do Google Sheets
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        
+        const response = await fetch(sheetUrl);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const data = json.table.rows;
+        
+        entregas = [];
+        data.forEach((row, index) => {
+            if (index > 0 && row.c[0]) { // Pular cabeçalho
+                entregas.push({
+                    data: row.c[0]?.v || '',
+                    protocolo: row.c[1]?.v || '',
+                    usuario: row.c[2]?.v || '',
+                    matricula: row.c[3]?.v || '',
+                    setor: row.c[4]?.v || '',
+                    tecnico: row.c[5]?.v || '',
+                    quantidades: {
+                        cpu: parseInt(row.c[6]?.v) || 0,
+                        monitor: parseInt(row.c[7]?.v) || 0,
+                        caboEnergia: parseInt(row.c[8]?.v) || 0,
+                        caboVideo: parseInt(row.c[9]?.v) || 0
+                    }
+                });
+            }
+        });
+        
+        atualizarRelatorios();
+        mostrarStatus(`✅ ${entregas.length} entregas carregadas`, 'success');
+        
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        // Fallback para localStorage
+        const localData = localStorage.getItem('celere_entregas');
+        if (localData) {
+            entregas = JSON.parse(localData);
+            atualizarRelatorios();
+            mostrarStatus('⚠️ Usando dados locais', 'loading');
+        } else {
+            entregas = [];
+            mostrarStatus('📝 Nenhum dado encontrado', 'loading');
+        }
+    }
+}
+
+async function salvarEntregaGoogleSheets(entrega) {
+    // Por enquanto, vamos salvar apenas localmente
+    // O compartilhamento será manual via exportação/importação
+    entregas.push(entrega);
+    localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+    mostrarStatus('✅ Entrega salva localmente', 'success');
+    return true;
+}
 
                 const response = await fetch(`${API_URL}?action=saveData`, {
                     method: 'POST',
@@ -1243,3 +1282,4 @@ Total: ${totalEquipamentos} equipamentos`);
     </script>
 </body>
 </html>
+
