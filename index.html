@@ -13,12 +13,11 @@
             --cor-destaque: #198754;
             --verde-principal: #0f5132;
             --verde-secundario: #157347;
-            --verde-escuro: #157347;
-            --verde-escuro: #0f5132;
+            --verde-escuro: #0a3622;
         }
         
         body {
-            background: linear-gradient(135deg, var(--verde-principal) 50%, var(--verde-secundario) 100%) !important;
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%) !important;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             color: white;
@@ -54,8 +53,8 @@
         
         .logo-img {
             width: 95%;
-            max-width: 1400px;:largura máxima da pagina:
-            height: 100px;:diminua altura 100px
+            max-width: 1400px;
+            height: 100px;
             object-fit: contain;
             margin: 0 auto;
             display: block;
@@ -1081,7 +1080,7 @@
             checkboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;
             });
-        });
+        }
 
         // ========== SISTEMA DE RELATÓRIOS ==========
         function atualizarRelatorios() {
@@ -1403,9 +1402,3 @@ Total: ${totalEquipamentos} equipamentos`);
     </script>
 </body>
 </html>
-
-
-
-
-
-
