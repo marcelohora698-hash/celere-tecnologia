@@ -1024,28 +1024,16 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-4">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="stats-card text-center">
                                     <div class="h2 mb-1" id="total-entregas">0</div>
                                     <small>Total de Entregas</small>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="stats-card text-center">
                                     <div class="h2 mb-1" id="total-equipamentos">0</div>
                                     <small>Equipamentos Entregues</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stats-card text-center">
-                                    <div class="h2 mb-1" id="percentual-conclusao">0%</div>
-                                    <small>Conclusão do Projeto</small>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="stats-card text-center">
-                                    <div class="h2 mb-1" id="tecnicos-ativos">0</div>
-                                    <small>Técnicos Ativos</small>
                                 </div>
                             </div>
                         </div>
@@ -1142,7 +1130,6 @@
         <div class="termo-impressao">
             <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM URL CORRIGIDA -->
             <div class="timbrado-celere">
-                <img src="https://raw.githubusercontent.com/marcelohora698/celere-tecnologia/main/acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
                 <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
@@ -1642,13 +1629,6 @@
                     background: white;
                 }
                 
-                .timbrado-img {
-                    max-width: 100%;
-                    height: auto;
-                    max-height: 120px;
-                    margin-bottom: 15px;
-                }
-                
                 .timbrado-celere .empresa {
                     font-size: 14px;
                     color: #333;
@@ -1698,20 +1678,13 @@
 
         // ========== RELATÓRIOS ==========
         function atualizarRelatorios() {
-            // Estatísticas gerais
+            // Estatísticas gerais - APENAS 2 CARDS
             document.getElementById('total-entregas').textContent = entregas.length;
             
             const totalEquipamentos = entregas.reduce((total, entrega) => {
                 return total + (entrega.totalEquipamentos || 0);
             }, 0);
             document.getElementById('total-equipamentos').textContent = totalEquipamentos;
-            
-            const percentualConclusao = Math.min(100, Math.round((totalEquipamentos / 440) * 100));
-            document.getElementById('percentual-conclusao').textContent = `${percentualConclusao}%`;
-            
-            // Técnicos ativos
-            const tecnicos = [...new Set(entregas.map(e => e.tecnico))];
-            document.getElementById('tecnicos-ativos').textContent = tecnicos.length;
             
             // Distribuição por setor
             const setores = {};
@@ -1756,7 +1729,7 @@
             }
         }
 
-        // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
+        // ========== EXPORTAÇÃO/IMPORTAÇÃO CORRIGIDA ==========
         function exportarParaExcel() {
             if (entregas.length === 0) {
                 mostrarStatus('Não há dados para exportar!', 'error');
@@ -1765,37 +1738,42 @@
 
             mostrarStatus('Exportando para Excel...', 'loading');
             
-            // Criar CSV
-            let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,CPUs,MONITORES,CABOS DESKTOP,CABOS MONITOR,TECLADOS,MOUSES,CABOS HDMI,CABOS VGA,TOTAL\n";
-            
-            entregas.forEach(entrega => {
-                const data = new Date(entrega.data).toLocaleDateString('pt-BR');
-                const total = entrega.totalEquipamentos || 0;
+            try {
+                // Criar conteúdo CSV
+                let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,CPUs,MONITORES,CABOS_DESKTOP,CABOS_MONITOR,TECLADOS,MOUSES,CABOS_HDMI,CABOS_VGA,TOTAL\n";
                 
-                csvContent += `"${data}","${entrega.protocolo}","${entrega.tecnico}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}",`;
-                csvContent += `${entrega.equipamentos.cpu || 0},${entrega.equipamentos.monitor || 0},`;
-                csvContent += `${entrega.equipamentos.caboEnergiaDesktop || 0},${entrega.equipamentos.caboEnergiaMonitor || 0},`;
-                csvContent += `${entrega.equipamentos.teclado || 0},${entrega.equipamentos.mouse || 0},`;
-                csvContent += `${entrega.equipamentos.caboHdmi || 0},${entrega.equipamentos.caboVga || 0},`;
-                csvContent += `${total}\n`;
-            });
+                entregas.forEach(entrega => {
+                    const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                    const total = entrega.totalEquipamentos || 0;
+                    
+                    csvContent += `"${data}","${entrega.protocolo}","${entrega.tecnico}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}",`;
+                    csvContent += `${entrega.equipamentos.cpu || 0},${entrega.equipamentos.monitor || 0},`;
+                    csvContent += `${entrega.equipamentos.caboEnergiaDesktop || 0},${entrega.equipamentos.caboEnergiaMonitor || 0},`;
+                    csvContent += `${entrega.equipamentos.teclado || 0},${entrega.equipamentos.mouse || 0},`;
+                    csvContent += `${entrega.equipamentos.caboHdmi || 0},${entrega.equipamentos.caboVga || 0},`;
+                    csvContent += `${total}\n`;
+                });
 
-            // Baixar arquivo
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', `celere-entregas-${new Date().toISOString().split('T')[0]}.csv`);
-            link.style.visibility = 'hidden';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            setTimeout(() => {
-                mostrarStatus('Dados exportados para Excel com sucesso!', 'success');
-            }, 1000);
+                // Criar e baixar arquivo
+                const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', `celere-entregas-${new Date().toISOString().split('T')[0]}.csv`);
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => {
+                    mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
+                }, 1000);
+                
+            } catch (error) {
+                mostrarStatus('Erro ao exportar para Excel', 'error');
+                console.error('Erro na exportação:', error);
+            }
         }
 
         function exportarParaJSON() {
