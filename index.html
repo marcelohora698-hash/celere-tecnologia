@@ -402,10 +402,11 @@
                 margin-bottom: 25px;
                 background: white;
             }
-
+            
             .timbrado-img {
-                max-width: 300px;
+                max-width: 100%;
                 height: auto;
+                max-height: 120px;
                 margin-bottom: 15px;
             }
             
@@ -585,7 +586,7 @@
                 <div class="logo-container-full">
                     <div class="logo-img-container">
                         <!-- Imagem com fundo transparente - CAMINHO CORRIGIDO -->
-                        <img src="images/logo-celere.png" alt="Célere Tecnologia em Saúde" class="logo-img" 
+                        <img src="acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
                              onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
                         <!-- Fallback de texto caso a imagem não carregue -->
                         <div id="logo-texto" style="display: none; text-align: center;">
@@ -1127,9 +1128,10 @@
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
         <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM IMAGEM ADICIONADA -->
+            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM URL CORRIGIDA -->
             <div class="timbrado-celere">
-                <img src="logotipo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
+                <!-- IMAGEM DO TIMBRADO ADICIONADA -->
+                <img src="acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
                 <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
@@ -1261,7 +1263,11 @@
             // Configurar checkbox de aceite
             const aceiteTermo = document.getElementById('aceite-termo');
             if (aceiteTermo) {
-                aceiteTermo.addEventListener('change', atualizarTermo);
+                aceiteTermo.addEventListener('change', function() {
+                    atualizarTermo();
+                    // FORÇAR ATUALIZAÇÃO IMEDIATA DO BOTÃO
+                    setTimeout(atualizarTermo, 100);
+                });
             }
 
             // Configurar checkboxes de equipamentos
@@ -1441,10 +1447,10 @@
             
             // VERIFICAÇÃO CORRIGIDA - Habilita o botão quando todos os campos obrigatórios estiverem preenchidos
             const aceite = document.getElementById('aceite-termo').checked;
-            const tecnicoPreenchido = document.getElementById('tecnico').value.trim();
-            const usuarioPreenchido = document.getElementById('usuario').value.trim();
-            const matriculaPreenchida = document.getElementById('matricula').value.trim();
-            const setorPreenchido = document.getElementById('setor').value;
+            const tecnicoPreenchido = document.getElementById('tecnico').value && document.getElementById('tecnico').value.trim() !== '';
+            const usuarioPreenchido = document.getElementById('usuario').value && document.getElementById('usuario').value.trim() !== '';
+            const matriculaPreenchida = document.getElementById('matricula').value && document.getElementById('matricula').value.trim() !== '';
+            const setorPreenchido = document.getElementById('setor').value && document.getElementById('setor').value !== '';
             const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
             
             const btnGerarTermo = document.getElementById('btn-gerar-termo');
@@ -1666,10 +1672,11 @@
                     margin-bottom: 25px;
                     background: white;
                 }
-
+                
                 .timbrado-img {
-                    max-width: 300px;
+                    max-width: 100%;
                     height: auto;
+                    max-height: 120px;
                     margin-bottom: 15px;
                 }
                 
@@ -1885,5 +1892,3 @@
     </script>
 </body>
 </html>
-
-
