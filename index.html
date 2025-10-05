@@ -1247,6 +1247,24 @@
                 input.addEventListener('input', function() {
                     atualizarProgresso();
                     atualizarTermo();
+                    // Adicionar esta função para verificar se a imagem existe
+function verificarImagemLogo() {
+    const img = document.querySelector('.logo-img');
+    if (img) {
+        img.onerror = function() {
+            this.style.display = 'none';
+            const fallback = document.getElementById('logo-texto');
+            if (fallback) {
+                fallback.style.display = 'block';
+            }
+        };
+        
+        // Verificar se a imagem carregou
+        img.onload = function() {
+            console.log('Logo carregado com sucesso');
+        };
+    }
+}
                 });
             });
 
@@ -1837,5 +1855,6 @@ function atualizarTermo() {
     </script>
 </body>
 </html>
+
 
 
