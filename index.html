@@ -585,13 +585,11 @@
                 <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
                 <div class="logo-container-full">
                     <div class="logo-img-container">
-                        <!-- Imagem com fundo transparente - CAMINHO CORRIGIDO -->
-                        <img src="images/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
-                             onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
-                        <!-- Fallback de texto caso a imagem não carregue -->
-                        <div id="logo-texto" style="display: none; text-align: center;">
-                            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px;">CÉLERE</h1>
-                            <h2 style="font-size: 1.5rem; opacity: 0.9;">Tecnologia em Saúde</h2>
+                        <!-- IMAGEM DO SISTEMA (DIFERENTE DO TIMBRADO) -->
+                        <div id="logo-texto" style="text-align: center;">
+                            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px; color: white;">CÉLERE</h1>
+                            <h2 style="font-size: 1.5rem; opacity: 0.9; color: white;">Tecnologia em Saúde</h2>
+                            <p style="font-size: 1rem; margin-top: 10px; color: white;">Sistema de Entrega de Equipamentos de TI</p>
                         </div>
                     </div>
                 </div>
@@ -1128,9 +1126,9 @@
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
         <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM URL CORRIGIDA -->
+            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
             <div class="timbrado-celere">
-                <!-- IMAGEM DO TIMBRADO ADICIONADA -->
+                <!-- IMAGEM DO TIMBRADO -->
                 <img src="acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
@@ -1256,7 +1254,9 @@
             ['tecnico', 'usuario', 'matricula', 'setor'].forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
-                    element.addEventListener('input', atualizarTermo);
+                    element.addEventListener('input', function() {
+                        setTimeout(atualizarTermo, 100);
+                    });
                 }
             });
 
@@ -1264,8 +1264,6 @@
             const aceiteTermo = document.getElementById('aceite-termo');
             if (aceiteTermo) {
                 aceiteTermo.addEventListener('change', function() {
-                    atualizarTermo();
-                    // FORÇAR ATUALIZAÇÃO IMEDIATA DO BOTÃO
                     setTimeout(atualizarTermo, 100);
                 });
             }
@@ -1279,7 +1277,7 @@
                     if (quantidadeInput) {
                         quantidadeInput.value = this.checked ? '1' : '0';
                         atualizarProgresso();
-                        atualizarTermo();
+                        setTimeout(atualizarTermo, 100);
                     }
                 });
             });
@@ -1299,7 +1297,7 @@
                             }
                         });
                         atualizarProgresso();
-                        atualizarTermo();
+                        setTimeout(atualizarTermo, 100);
                     }
                 });
             }
@@ -1308,26 +1306,6 @@
             atualizarProgresso();
             atualizarTermo();
             atualizarRelatorios();
-            verificarImagemLogo();
-        }
-
-        // ========== VERIFICAÇÃO DA IMAGEM DO LOGO ==========
-        function verificarImagemLogo() {
-            const img = document.querySelector('.logo-img');
-            if (img) {
-                img.onerror = function() {
-                    this.style.display = 'none';
-                    const fallback = document.getElementById('logo-texto');
-                    if (fallback) {
-                        fallback.style.display = 'block';
-                    }
-                };
-                
-                // Verificar se a imagem carregou
-                img.onload = function() {
-                    console.log('Logo carregado com sucesso');
-                };
-            }
         }
 
         // ========== SISTEMA DE STATUS ==========
@@ -1465,26 +1443,23 @@
                 
                 btnGerarTermo.disabled = !habilitar;
                 
-                // Debug no console para ajudar a identificar o problema
-                console.log('Status do botão:', {
-                    aceite,
-                    tecnico: tecnicoPreenchido,
-                    usuario: usuarioPreenchido,
-                    matricula: matriculaPreenchida,
-                    setor: setorPreenchido,
-                    equipamentos: temEquipamentos,
-                    habilitado: habilitar
+                console.log('Status do botão - Habilitado:', habilitar, {
+                    aceite, tecnico: tecnicoPreenchido, usuario: usuarioPreenchido,
+                    matricula: matriculaPreenchida, setor: setorPreenchido, equipamentos: temEquipamentos
                 });
             }
         }
 
         // ========== SISTEMA DE IMPRESSÃO ==========
         function visualizarTermo() {
+            console.log('Tentando visualizar termo...');
+            
             if (!validarDadosParaTermo()) {
                 mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
                 return;
             }
 
+            console.log('Dados válidos, atualizando impressão...');
             atualizarDadosImpressao();
             
             const modalElement = document.getElementById('modalPreview');
@@ -1495,6 +1470,7 @@
                     document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
                 }
                 modal.show();
+                console.log('Modal aberto com sucesso!');
             }
         }
 
@@ -1503,10 +1479,25 @@
             for (let campo of camposObrigatorios) {
                 const element = document.getElementById(campo);
                 if (!element || !element.value.trim()) {
+                    console.log('Campo obrigatório não preenchido:', campo);
                     return false;
                 }
             }
-            return Object.values(quantidades).some(qtd => qtd > 0);
+            
+            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+            if (!temEquipamentos) {
+                console.log('Nenhum equipamento selecionado');
+                return false;
+            }
+            
+            const aceite = document.getElementById('aceite-termo').checked;
+            if (!aceite) {
+                console.log('Termo não aceito');
+                return false;
+            }
+            
+            console.log('Todos os dados estão válidos!');
+            return true;
         }
 
         function atualizarDadosImpressao() {
@@ -1564,6 +1555,8 @@
         }
 
         function imprimirTermoCompleto() {
+            console.log('Iniciando impressão...');
+            
             // Salvar a entrega
             const entrega = {
                 id: Date.now(),
@@ -1591,6 +1584,7 @@
             
             // Imprimir
             setTimeout(() => {
+                console.log('Preparando para imprimir...');
                 atualizarDadosImpressao();
                 const areaImpressao = document.getElementById('area-impressao');
                 if (areaImpressao) {
@@ -1604,16 +1598,8 @@
                                 ${obterEstilosImpressao()}
                             </style>
                         </head>
-                        <body>
+                        <body onload="window.print(); setTimeout(() => window.close(), 500);">
                             ${areaImpressao.innerHTML}
-                            <script>
-                                window.onload = function() {
-                                    window.print();
-                                    setTimeout(function() {
-                                        window.close();
-                                    }, 1000);
-                                };
-                            <\/script>
                         </body>
                         </html>
                     `);
@@ -1780,7 +1766,7 @@
             }
         }
 
-        // ========== EXPORTAÇÃO/IMPORTAÇÃO CORRIGIDA ==========
+        // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
         function exportarParaExcel() {
             if (entregas.length === 0) {
                 mostrarStatus('Não há dados para exportar!', 'error');
@@ -1892,4 +1878,3 @@
     </script>
 </body>
 </html>
-
