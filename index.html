@@ -402,11 +402,10 @@
                 margin-bottom: 25px;
                 background: white;
             }
-            
+
             .timbrado-img {
-                max-width: 100%;
+                max-width: 300px;
                 height: auto;
-                max-height: 120px;
                 margin-bottom: 15px;
             }
             
@@ -586,7 +585,7 @@
                 <div class="logo-container-full">
                     <div class="logo-img-container">
                         <!-- Imagem com fundo transparente - CAMINHO CORRIGIDO -->
-                        <img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
+                        <img src="images/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
                              onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
                         <!-- Fallback de texto caso a imagem não carregue -->
                         <div id="logo-texto" style="display: none; text-align: center;">
@@ -1128,8 +1127,9 @@
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
         <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM URL CORRIGIDA -->
+            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) COM IMAGEM ADICIONADA -->
             <div class="timbrado-celere">
+                <img src="logotipo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
                 <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
@@ -1302,7 +1302,7 @@
             atualizarProgresso();
             atualizarTermo();
             atualizarRelatorios();
-            verificarImagemLogo(); // NOVA LINHA ADICIONADA
+            verificarImagemLogo();
         }
 
         // ========== VERIFICAÇÃO DA IMAGEM DO LOGO ==========
@@ -1665,6 +1665,12 @@
                     padding: 20px 0;
                     margin-bottom: 25px;
                     background: white;
+                }
+
+                .timbrado-img {
+                    max-width: 300px;
+                    height: auto;
+                    margin-bottom: 15px;
                 }
                 
                 .timbrado-celere .empresa {
