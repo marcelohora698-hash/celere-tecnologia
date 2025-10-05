@@ -7,12 +7,372 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* ... (todo o CSS anterior permanece igual) ... */
+        :root {
+            --cor-primaria: #157347;
+            --cor-secundaria: #0f5132;
+            --cor-destaque: #198754;
+            --verde-principal: #0f5132;
+            --verde-secundario: #157347;
+            --verde-escuro: #0a3622;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%) !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header-custom {
+            background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+            border-bottom: 4px solid var(--cor-destaque);
+            padding: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-custom::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(21, 115, 71, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(13, 110, 253, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .logo-area {
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-img {
+            width: 100%;
+            max-width: 100%;
+            height: 300px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+            background-color: transparent;
+            border-radius: 10px;
+            padding: 15px;
+            mix-blend-mode: multiply;
+            filter: brightness(1.1) contrast(1.1);
+        }
+        
+        .logo-container-full {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+        
+        .logo-img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background: transparent;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .health-tech-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 15px 0;
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, var(--cor-destaque) 0%, #146c43 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.4);
+            background: linear-gradient(135deg, #146c43 0%, var(--cor-destaque) 100%);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-body {
+            background: transparent;
+            color: white;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+        
+        .stats-card {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(0,0,0,0.2);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: white;
+            border-color: var(--cor-destaque);
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+            color: #333;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .kit-badge {
+            background: var(--cor-destaque);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        .equipamentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .equipamento-item {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--cor-destaque);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .equipamento-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .quantidade-input {
+            max-width: 120px;
+        }
+
+        .progress {
+            height: 12px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(135deg, var(--cor-destaque) 0%, #146c43 100%);
+            border-radius: 10px;
+        }
+
+        .bg-verde-pagina {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%) !important;
+            color: white;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .table {
+            background: rgba(255,255,255,0.95);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        .table td {
+            background: white;
+            border-color: #dee2e6;
+            color: #333;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .nav-tabs .nav-link {
+            background: linear-gradient(135deg, rgba(10, 54, 34, 0.8) 0%, rgba(15, 81, 50, 0.8) 100%);
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-right: 5px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: bold;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .text-muted {
+            color: rgba(255,255,255,0.8) !important;
+        }
+
+        .bg-light {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%) !important;
+            color: white;
+        }
+
+        .sync-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .sync-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .sync-error {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            color: white;
+        }
+
+        .sync-loading {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #1a1a2e;
+        }
+
+        .import-area {
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .import-area:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.8);
+            transform: translateY(-3px);
+        }
+
+        .import-area.dragover {
+            background: rgba(255,255,255,0.3);
+            border-color: #28a745;
+        }
+
+        .badge {
+            font-weight: 600;
+        }
+
+        /* Animações suaves */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
 
         /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO DO TERMO */
         @media print {
             body {
-                background: green !important;
+                background: white !important;
                 color: black !important;
                 font-family: 'Arial', sans-serif !important;
                 margin: 0;
@@ -60,7 +420,7 @@
             
             .timbrado-celere .empresa {
                 font-size: 14px;
-                color: #345;
+                color: #333;
                 margin: 8px 0;
                 font-weight: bold;
             }
@@ -137,7 +497,7 @@
             
             .tabela-equipamentos th {
                 background: #0f5132;
-                color: green;
+                color: white;
                 padding: 10px;
                 text-align: left;
                 border: 1px solid #ddd;
@@ -187,7 +547,7 @@
             
             .cargo-assinatura {
                 font-size: 11px;
-                color: #333;
+                color: #666;
             }
             
             .rodape-termo {
@@ -203,21 +563,6 @@
             .pagina-inteira {
                 page-break-inside: avoid;
             }
-        }
-
-        /* Visualização do termo antes da impressão */
-        .preview-termo {
-            background: green;
-            color: black;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            margin: 20px 0;
-            display: none;
-        }
-
-        .btn-visualizar {
-            margin-bottom: 20px;
         }
 
         /* Modal de visualização */
@@ -378,13 +723,13 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="kit-completo">
                                 <label class="form-check-label fw-bold">
-                                    😃 CONFIRMAR ENTREGA DE KITS COMPLETOS
+                                    ✅ CONFIRMAR ENTREGA DE KITS COMPLETOS
                                 </label>
                             </div>
                         </div>
 
                         <!-- KIT PRINCIPAL -->
-                        <h6 class="mb-3">🖥️Equipamntos principais</h6>
+                        <h6 class="mb-3">🖥️ Kit Principal</h6>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-check mb-3">
@@ -491,43 +836,39 @@
                             <!-- KIT PRINCIPAL -->
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">💻</span> Quantidade de CPUs *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cpu" min="0" max="110" value="0" onchange="atualizarProgresso()">
-                                <small class="text-muted">Máximo: 110 unidades</small>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cpu" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🖥️</span> Quantidade de Monitores *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-monitor" min="0" max="110" value="0" onchange="atualizarProgresso()">
-                                <small class="text-muted">Máximo: 110 unidades</small>
+                                <input type="number" class="form-control quantidade-input" id="qtd-monitor" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Desktop *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-desktop" min="0" max="110" value="0" onchange="atualizarProgresso()">
-                                <small class="text-muted">Máximo: 110 unidades</small>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-desktop" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Monitor *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-monitor" min="0" max="110" value="0" onchange="atualizarProgresso()">
-                                <small class="text-muted">Máximo: 110 unidades</small>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-monitor" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
 
                             <!-- PERIFÉRICOS -->
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">⌨️</span> Quantidade de Teclados</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-teclado" min="0" max="50" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-teclado" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🖱️</span> Quantidade de Mouses</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-mouse" min="0" max="50" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-mouse" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
 
                             <!-- CABOS DE VÍDEO -->
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos HDMI</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-hdmi" min="0" max="50" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-hdmi" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos VGA</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-vga" min="0" max="50" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-vga" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                         </div>
 
@@ -805,7 +1146,7 @@
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
         <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere -->
+            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
             <div class="timbrado-celere">
                 <div class="logo">CÉLERE</div>
                 <div class="subtitulo">TECNOLOGIA EM SAÚDE</div>
@@ -1498,6 +1839,3 @@
     </script>
 </body>
 </html>
-
-
-
