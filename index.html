@@ -53,7 +53,7 @@
         
         .logo-img {
             width: 100%;
-            max-width: 600px;
+            max-width: 100%;
             height: 300px;
             object-fit: contain;
             margin: 0 auto;
@@ -61,6 +61,8 @@
             background-color: transparent;
             border-radius: 10px;
             padding: 15px;
+            mix-blend-mode: multiply;
+            filter: brightness(1.1) contrast(1.1);
         }
         
         .logo-container-full {
@@ -404,33 +406,33 @@
             .timbrado-img {
                 max-width: 100%;
                 height: auto;
-                max-height: 100px;
-                margin-bottom: 10px;
+                max-height: 120px;
+                margin-bottom: 15px;
             }
             
             .timbrado-celere .empresa {
-                font-size: 12px;
+                font-size: 14px;
                 color: #333;
-                margin: 5px 0;
+                margin: 8px 0;
                 font-weight: bold;
             }
             
             .timbrado-celere .cnpj {
-                font-size: 10px;
+                font-size: 12px;
                 color: #666;
-                margin: 3px 0;
+                margin: 5px 0;
             }
             
             .timbrado-celere .endereco {
-                font-size: 10px;
+                font-size: 12px;
                 color: #666;
-                margin: 3px 0;
+                margin: 5px 0;
             }
             
             .timbrado-celere .contato {
-                font-size: 10px;
+                font-size: 12px;
                 color: #666;
-                margin: 3px 0;
+                margin: 5px 0;
             }
             
             /* Termo de entrega */
@@ -441,68 +443,68 @@
             
             .termo-header {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
             }
             
             .termo-header h3 {
                 color: #0f5132;
-                font-size: 18px;
+                font-size: 20px;
                 margin-bottom: 8px;
                 text-transform: uppercase;
             }
             
             .protocolo {
                 background: #f8f9fa;
-                padding: 10px;
+                padding: 12px;
                 border: 2px solid #0f5132;
-                margin-bottom: 15px;
+                margin-bottom: 20px;
                 text-align: center;
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 16px;
             }
             
             .dados-entrega {
-                margin-bottom: 15px;
-                padding: 12px;
+                margin-bottom: 20px;
+                padding: 15px;
                 border: 1px solid #ddd;
                 background: #fafafa;
             }
             
             .dados-entrega .row {
-                margin-bottom: 6px;
+                margin-bottom: 8px;
                 display: flex;
             }
             
             .dados-entrega .col-md-6 {
                 width: 50%;
-                padding: 0 8px;
+                padding: 0 10px;
             }
             
             .tabela-equipamentos {
                 width: 100%;
                 border-collapse: collapse;
-                margin: 15px 0;
-                font-size: 11px;
+                margin: 20px 0;
+                font-size: 12px;
             }
             
             .tabela-equipamentos th {
                 background: #0f5132;
                 color: white;
-                padding: 8px;
+                padding: 10px;
                 text-align: left;
                 border: 1px solid #ddd;
                 font-weight: bold;
             }
             
             .tabela-equipamentos td {
-                padding: 8px;
+                padding: 10px;
                 border: 1px solid #ddd;
             }
             
             .termo-texto {
-                margin: 15px 0;
-                line-height: 1.4;
-                font-size: 12px;
+                margin: 20px 0;
+                line-height: 1.5;
+                font-size: 13px;
                 text-align: justify;
             }
             
@@ -511,7 +513,7 @@
             }
             
             .assinaturas {
-                margin-top: 60px;
+                margin-top: 80px;
                 page-break-inside: avoid;
             }
             
@@ -525,7 +527,7 @@
             
             .linha-assinatura {
                 border-top: 1px solid #000;
-                margin-top: 40px;
+                margin-top: 60px;
                 padding-top: 5px;
                 width: 100%;
             }
@@ -533,21 +535,20 @@
             .nome-assinatura {
                 font-weight: bold;
                 margin-top: 5px;
-                font-size: 12px;
             }
             
             .cargo-assinatura {
-                font-size: 10px;
+                font-size: 11px;
                 color: #666;
             }
             
             .rodape-termo {
-                margin-top: 20px;
+                margin-top: 30px;
                 text-align: center;
-                font-size: 9px;
+                font-size: 10px;
                 color: #666;
                 border-top: 1px solid #ddd;
-                padding-top: 8px;
+                padding-top: 10px;
             }
             
             /* Garantir que não quebre no meio das assinaturas */
@@ -585,7 +586,7 @@
                 <div class="logo-container-full">
                     <div class="logo-img-container">
                         <!-- Imagem com fundo transparente -->
-                        <img src="./imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
+                        <img src="./images/logo-celere.png" alt="Célere Tecnologia em Saúde" class="logo-img" 
                              onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
                         <!-- Fallback de texto caso a imagem não carregue -->
                         <div id="logo-texto" style="display: none; text-align: center;">
@@ -608,99 +609,287 @@
         </div>
     </div>
 
-    <!-- ... (o restante do conteúdo HTML permanece igual) ... -->
+    <div class="container py-4">
+        <!-- Card Estatísticas -->
+        <div class="stats-card no-print fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4><i class="fas fa-laptop-medical me-2"></i>Entrega de Kits de Informática</h4>
+                    <p class="mb-2" id="progresso-texto">Progresso: 0/440 equipamentos (0%)</p>
+                    <div class="progress">
+                        <div id="progresso-bar" class="progress-bar bg-success" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-light" onclick="proximaAba('relatorios')">
+                        <i class="fas fa-chart-bar me-1"></i>Relatórios
+                    </button>
+                </div>
+            </div>
+        </div>
 
-    <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
-    <div id="area-impressao" style="display: none;">
-        <div class="termo-impressao">
-            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
-            <div class="timbrado-celere">
-                <img src="./imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
-                <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
-                <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
-                <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
-                <div class="contato">Contato – Tel: (85) 69206-4075. E-mail: comercial@celeretecnologia.com.br</div>
+        <!-- Abas -->
+        <ul class="nav nav-tabs mb-4 no-print" id="myTab">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#dados">
+                    <i class="fas fa-user me-2"></i>Dados
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#equipamentos">
+                    <i class="fas fa-laptop me-2"></i>Equipamentos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#quantidades">
+                    <i class="fas fa-calculator me-2"></i>Quantidades
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#termo">
+                    <i class="fas fa-file-signature me-2"></i>Termo
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#relatorios">
+                    <i class="fas fa-chart-bar me-2"></i>Relatórios
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Dados -->
+            <div class="tab-pane fade show active" id="dados">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Dados do Colaborador</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Técnico Responsável *</label>
+                                <input type="text" class="form-control" id="tecnico" placeholder="Nome do técnico">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Colaborador *</label>
+                                <input type="text" class="form-control" id="usuario" placeholder="Nome do colaborador">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Matrícula *</label>
+                                <input type="text" class="form-control" id="matricula" placeholder="Número da matrícula">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Setor *</label>
+                                <select class="form-select" id="setor">
+                                    <option value="">Selecione...</option>
+                                    <option value="TI">Tecnologia da Informação</option>
+                                    <option value="RH">Recursos Humanos</option>
+                                    <option value="SAUDE">Área da Saúde</option>
+                                    <option value="ADM">Administrativo</option>
+                                    <option value="FIN">Financeiro</option>
+                                    <option value="VEND">Vendas</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-custom" onclick="proximaAba('equipamentos')">
+                            Próximo <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <!-- ... (restante do conteúdo do termo permanece igual) ... -->
-        </div>
-    </div>
+            <!-- Equipamentos -->
+            <div class="tab-pane fade" id="equipamentos">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-laptop me-2"></i>Checklist do Kit</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <strong>Kit Completo:</strong> CPU, Monitor, Cabos de Energia e Vídeo
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kit-completo">
+                                <label class="form-check-label fw-bold">
+                                    ✅ CONFIRMAR ENTREGA DE KITS COMPLETOS
+                                </label>
+                            </div>
+                        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // ... (todo o JavaScript permanece igual) ...
+                        <!-- KIT PRINCIPAL -->
+                        <h6 class="mb-3">🖥️ Kit Principal</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="cpu">
+                                    <label class="form-check-label">
+                                        <span class="emoji">💻</span>CPU
+                                        <span class="badge bg-warning ms-2" id="badge-cpu">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="monitor">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🖥️</span>Monitor
+                                        <span class="badge bg-info ms-2" id="badge-monitor">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="cabo-energia-desktop">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🔌</span>Cabo de Energia Desktop
+                                        <span class="badge bg-success ms-2" id="badge-cabo-energia-desktop">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="cabo-energia-monitor">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🔌</span>Cabo de Energia Monitor
+                                        <span class="badge bg-success ms-2" id="badge-cabo-energia-monitor">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-        function obterEstilosImpressao() {
-            return `
-                body {
-                    background: white !important;
-                    color: black !important;
-                    font-family: 'Arial', sans-serif !important;
-                    margin: 0;
-                    padding: 0;
-                }
-                
-                .no-print {
-                    display: none !important;
-                }
-                
-                .print-only {
-                    display: block !important;
-                }
-                
-                .container {
-                    width: 100% !important;
-                    max-width: none !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                }
-                
-                /* Timbrado oficial da Célere */
-                .timbrado-celere {
-                    text-align: center;
-                    border-bottom: 3px solid #0f5132;
-                    padding: 15px 0;
-                    margin-bottom: 20px;
-                    background: white;
-                }
-                
-                .timbrado-img {
-                    max-width: 100%;
-                    height: auto;
-                    max-height: 100px;
-                    margin-bottom: 10px;
-                }
-                
-                .timbrado-celere .empresa {
-                    font-size: 12px;
-                    color: #333;
-                    margin: 5px 0;
-                    font-weight: bold;
-                }
-                
-                .timbrado-celere .cnpj {
-                    font-size: 10px;
-                    color: #666;
-                    margin: 3px 0;
-                }
-                
-                .timbrado-celere .endereco {
-                    font-size: 10px;
-                    color: #666;
-                    margin: 3px 0;
-                }
-                
-                .timbrado-celere .contato {
-                    font-size: 10px;
-                    color: #666;
-                    margin: 3px 0;
-                }
-                
-                /* ... (restante dos estilos de impressão) ... */
-            `;
-        }
+                        <!-- PERIFÉRICOS -->
+                        <h6 class="mb-3 mt-4">⌨️ Periféricos</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input periferico-check" type="checkbox" id="teclado">
+                                    <label class="form-check-label">
+                                        <span class="emoji">⌨️</span>Teclado
+                                        <span class="badge bg-primary ms-2" id="badge-teclado">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input periferico-check" type="checkbox" id="mouse">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🖱️</span>Mouse
+                                        <span class="badge bg-secondary ms-2" id="badge-mouse">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-        // ... (restante do JavaScript permanece igual) ...
-    </script>
-</body>
-</html>
+                        <!-- CABOS E ADAPTADORES -->
+                        <h6 class="mb-3 mt-4">🔗 Cabos de Vídeo</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input cabo-check" type="checkbox" id="cabo-hdmi">
+                                    <label class="form-check-label">
+                                        <span class="emoji">📺</span>Cabo HDMI
+                                        <span class="badge bg-primary ms-2" id="badge-cabo-hdmi">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input cabo-check" type="checkbox" id="cabo-vga">
+                                    <label class="form-check-label">
+                                        <span class="emoji">📺</span>Cabo VGA
+                                        <span class="badge bg-info ms-2" id="badge-cabo-vga">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-secondary" onclick="proximaAba('dados')">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar
+                        </button>
+                        <button class="btn btn-custom" onclick="proximaAba('quantidades')">
+                            Próximo <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantidades -->
+            <div class="tab-pane fade" id="quantidades">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Quantidades por Equipamento</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Informe as quantidades de cada equipamento entregue</strong>
+                        </div>
+
+                        <div class="row g-3">
+                            <!-- KIT PRINCIPAL -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">💻</span> Quantidade de CPUs *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cpu" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🖥️</span> Quantidade de Monitores *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-monitor" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Desktop *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-desktop" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Monitor *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-monitor" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+
+                            <!-- PERIFÉRICOS -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">⌨️</span> Quantidade de Teclados</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-teclado" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🖱️</span> Quantidade de Mouses</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-mouse" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+
+                            <!-- CABOS DE VÍDEO -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos HDMI</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-hdmi" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos VGA</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-vga" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-verde-pagina rounded">
+                            <h6>Resumo das Quantidades</h6>
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cpu">0</div>
+                                        <small>💻 CPUs</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-monitor">0</div>
+                                        <small>🖥️ Monitores</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-energia-desktop">0</div>
+                                        <small>🔌 Cabos Desktop</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-energia-monitor">0</div>
+                                        <small>🔌 Cabos Monitor</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-
