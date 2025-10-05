@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Célere -| Tecnologia em Saúde</title>
+    <title>Célere - Tecnologia em Saúde</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -30,37 +30,24 @@
             padding: 10px 0;
         }
         
-        .logo-visual {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1a365d 100%);
-            color: white;
-            padding: 20px;
+        .logo-img {
+            width: 90%;
+            max-width: 1200px;
+            height: 200px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+            background-color: transparent;
             border-radius: 10px;
-            margin-bottom: 15px;
-            border: 2px solid rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 15px;
         }
         
-        .logo-visual:hover {
-            transform: scale(1.02);
-        }
-        
-      .logo-container-full {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-}
-            display: none;
-            background-color: transparent; /* FUNDO TRANSPARENTE */
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-            image-rendering: pixelated;
-            filter: brightness(1.05) contrast(1.1) saturate(1.1);
+        .logo-container-full {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
         
         .logo-img-container {
@@ -68,7 +55,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            background: transparent; /* FUNDO TRANSPARENTE - VERDE DA PÁGINA APARECE */
+            background: transparent;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 15px;
@@ -109,27 +96,6 @@
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9em;
-        }
-
-        .upload-area {
-            border: 2px dashed #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            background: #f8f9fa;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .upload-area:hover {
-            border-color: var(--cor-destaque);
-            background: #e9ecef;
-        }
-
-        .upload-area.dragover {
-            border-color: var(--cor-destaque);
-            background: #d1ecf1;
         }
 
         .print-only {
@@ -177,14 +143,18 @@
     </style>
 </head>
 <body>
-  <!-- Header com Logo FIXO -->
-<div class="header-custom text-white">
-    <div class="container">
-        <div class="logo-area">
-         
-    <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
-    
-               
+    <!-- Header com Logo FIXO -->
+    <div class="header-custom text-white">
+        <div class="container">
+            <div class="logo-area">
+                <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
+                <div class="logo-container-full">
+                    <div class="logo-img-container">
+                        <img src="./images/logo-celere.png" alt="Célere Tecnologia em Saúde" class="logo-img">
+                    </div>
+                </div>
+                
+                <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
             </div>
         </div>
     </div>
@@ -201,7 +171,6 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <!-- REMOVIDO O KIT-BADGE E DEIXADO APENAS O BOTÃO DE RELATÓRIOS -->
                     <button class="btn btn-outline-light" onclick="proximaAba('relatorios')">
                         <i class="fas fa-chart-bar me-1"></i>Relatórios
                     </button>
@@ -209,7 +178,7 @@
             </div>
         </div>
 
-        <!-- Abas - ORDEM MODIFICADA: Equipamentos antes de Quantidades -->
+        <!-- Abas -->
         <ul class="nav nav-tabs mb-4 no-print" id="myTab">
             <li class="nav-item">
                 <a class="nav-link active" data-bs-toggle="tab" href="#dados">
@@ -281,7 +250,7 @@
                 </div>
             </div>
 
-            <!-- Equipamentos - AGORA VEM ANTES DAS QUANTIDADES -->
+            <!-- Equipamentos -->
             <div class="tab-pane fade" id="equipamentos">
                 <div class="card">
                     <div class="card-header">
@@ -347,7 +316,7 @@
                 </div>
             </div>
 
-            <!-- Quantidades - AGORA DEPOIS DOS EQUIPAMENTOS -->
+            <!-- Quantidades -->
             <div class="tab-pane fade" id="quantidades">
                 <div class="card">
                     <div class="card-header">
@@ -458,7 +427,8 @@
                                         <li><strong>Cabo de Vídeo: <span id="termo-cabo-video">0</span> unidades</strong></li>
                                     </ul>
                                     
-                                   
+                                    <p><strong>Total de equipamentos entregues: <span id="termo-total">0</span> unidades</strong></p>
+                                    
                                     <p>Comprometo-me a:</p>
                                     <ul>
                                         <li>Utilizar os equipamentos exclusivamente para fins profissionais</li>
@@ -495,25 +465,16 @@
                         <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Relatórios de Entregas</h5>
                     </div>
                     <div class="card-body">
-                 <div class="row mb-4">
-    <div class="col-md-6">
-        <div class="card bg-primary text-white">
-            <div class="card-body text-center">
-                <h3 id="total-entregas">0</h3>
-                <p class="mb-0">Total de Entregas</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card bg-info text-white">
-            <div class="card-body text-center">
-                <h3 id="equipamentos-entregues">0</h3>
-                <p class="mb-0">Equipamentos Entregues</p>
-            </div>
-        </div>
-    </div>
-</div>
-                            <div class="col-md-4">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h3 id="total-entregas">0</h3>
+                                        <p class="mb-0">Total de Entregas</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="card bg-info text-white">
                                     <div class="card-body text-center">
                                         <h3 id="equipamentos-entregues">0</h3>
@@ -586,21 +547,12 @@
     <script>
         // ========== SISTEMA DE ARMAZENAMENTO ==========
         let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
-        let logoData = localStorage.getItem('celere_logo');
         let quantidades = {
             cpu: 0,
             monitor: 0,
             caboEnergia: 0,
             caboVideo: 0
         };
-
-        // Carregar logo salvo
-        if (logoData) {
-            document.getElementById('logo-img').src = logoData;
-            document.getElementById('logo-img').style.display = 'block';
-            document.getElementById('logo-visual').style.display = 'none';
-            document.getElementById('uploadArea').style.display = 'none';
-        }
 
         // ========== ATUALIZAR PROGRESSO ==========
         function atualizarProgresso() {
@@ -624,7 +576,7 @@
 
             // Calcular totais
             const totalEquipamentos = quantidades.cpu + quantidades.monitor + quantidades.caboEnergia + quantidades.caboVideo;
-            const percentual = Math.min(100, Math.round((totalEquipamentos / 440) * 100)); // 110 kits * 4 equipamentos cada
+            const percentual = Math.min(100, Math.round((totalEquipamentos / 440) * 100));
 
             // Atualizar progresso
             document.getElementById('progresso-texto').textContent = `Progresso: ${totalEquipamentos}/440 equipamentos (${percentual}%)`;
@@ -644,10 +596,8 @@
             // Verificar se atingiu 100%
             if (percentual === 100) {
                 document.getElementById('progresso-bar').classList.add('bg-warning');
-                document.getElementById('total-kits-display').innerHTML = '<strong>✅ TODOS OS 110 KITS ENTREGUES!</strong>';
             } else {
                 document.getElementById('progresso-bar').classList.remove('bg-warning');
-                document.getElementById('total-kits-display').textContent = '110 Kits de Computadores e Monitores';
             }
         }
 
@@ -674,116 +624,6 @@
                     container.appendChild(div);
                 }
             });
-        }
-
-        // ========== SISTEMA DE UPLOAD DE IMAGEM COM VETORIZAÇÃO ==========
-        const fileInput = document.getElementById('fileInput');
-        const uploadArea = document.getElementById('uploadArea');
-        const logoImg = document.getElementById('logo-img');
-        const logoVisual = document.getElementById('logo-visual');
-
-        uploadArea.addEventListener('click', () => fileInput.click());
-        logoVisual.addEventListener('click', () => fileInput.click());
-
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('dragover');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleImageUpload(files[0]);
-            }
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                handleImageUpload(e.target.files[0]);
-            }
-        });
-
-        function handleImageUpload(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Por favor, selecione uma imagem (JPG ou PNG)');
-                return;
-            }
-
-            if (file.size > 500 * 1024) {
-                alert('A imagem deve ter no máximo 500KB');
-                return;
-            }
-
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                // Criar uma imagem temporária para processamento
-                const tempImg = new Image();
-                tempImg.onload = function() {
-                    // Criar canvas com alta qualidade
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Configurar canvas com dimensões otimizadas para qualidade
-                    const scale = 2; // Aumenta a resolução para melhor qualidade
-                    canvas.width = 1200 * scale;
-                    canvas.height = 180 * scale;
-                    
-                    // Preencher fundo transparente (verde da página aparecerá)
-                    ctx.fillStyle = 'transparent';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Configurar alta qualidade de renderização
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.translate(0.5, 0.5); // Melhora o anti-aliasing
-                    
-                    // Calcular dimensões para preencher o container mantendo qualidade
-                    const containerRatio = 1200 / 180;
-                    const imgRatio = tempImg.width / tempImg.height;
-                    
-                    let drawWidth, drawHeight, offsetX, offsetY;
-                    
-                    if (imgRatio > containerRatio) {
-                        // Imagem mais larga
-                        drawWidth = canvas.width;
-                        drawHeight = canvas.width / imgRatio;
-                        offsetX = 0;
-                        offsetY = (canvas.height - drawHeight) / 2;
-                    } else {
-                        // Imagem mais alta
-                        drawHeight = canvas.height;
-                        drawWidth = canvas.height * imgRatio;
-                        offsetX = (canvas.width - drawWidth) / 2;
-                        offsetY = 0;
-                    }
-                    
-                    // Desenhar imagem com alta qualidade
-                    ctx.drawImage(tempImg, offsetX, offsetY, drawWidth, drawHeight);
-                    
-                    // Obter a imagem processada em alta qualidade
-                    const processedImage = canvas.toDataURL('image/png', 1.0);
-                    
-                    // Salvar imagem processada no localStorage
-                    localStorage.setItem('celere_logo', processedImage);
-                    
-                    // Exibir imagem processada
-                    logoImg.src = processedImage;
-                    logoImg.style.display = 'block';
-                    logoVisual.style.display = 'none';
-                    uploadArea.style.display = 'none';
-                };
-                
-                tempImg.src = e.target.result;
-            };
-            
-            reader.readAsDataURL(file);
         }
 
         // ========== SISTEMA PRINCIPAL ==========
@@ -856,7 +696,6 @@
             });
 
             document.getElementById('total-entregas').textContent = entregas.length;
-         
             document.getElementById('equipamentos-entregues').textContent = totalEquipamentosGeral;
         }
 
@@ -984,7 +823,7 @@ Total: ${totalEquipamentos} equipamentos`);
             modal.show();
         }
 
-        // ========== IMPRIMIR TERMO COMPLETO - SISTEMA CORRIGIDO ==========
+        // ========== IMPRIMIR TERMO COMPLETO ==========
         function imprimirTermoCompleto() {
             const totalEquipamentos = quantidades.cpu + quantidades.monitor + quantidades.caboEnergia + quantidades.caboVideo;
             
@@ -1128,7 +967,6 @@ Total: ${totalEquipamentos} equipamentos`);
                 // Aguardar e imprimir
                 setTimeout(() => {
                     janela.print();
-                    // janela.close(); // Opcional: fechar após imprimir
                 }, 1000);
                 
             } catch (error) {
@@ -1166,10 +1004,3 @@ Total: ${totalEquipamentos} equipamentos`);
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
