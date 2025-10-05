@@ -670,7 +670,7 @@
     <script>
         // ========== CONFIGURAÇÃO GOOGLE SHEETS ==========
         const SHEET_ID = '1ge5b_RTUJYrLATUXNIBZseUrwbLoLcam5Np8R_ShSPY';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbw8WwN0VkLq6X8J8Q7QeZ5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxrkghzPNrkiOLLslIsGHovkU2iideIg1LzdO-DKsB2gmVllevr2boYA6nUWKs4Cieh/exec';
 
         // ========== SISTEMA DE ARMAZENAMENTO ==========
         let entregas = [];
@@ -706,8 +706,7 @@
 
         async function carregarDadosGoogleSheets() {
             try {
-                // URL do Google Apps Script (vamos criar na próxima etapa)
-                const response = await fetch(`https://script.google.com/macros/s/AKfycbyQwZiV7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q/exec?action=getData&sheetId=${SHEET_ID}`);
+                const response = await fetch(`${API_URL}?action=getData&sheetId=${SHEET_ID}`);
                 
                 if (!response.ok) {
                     throw new Error('Erro ao carregar dados');
@@ -755,7 +754,7 @@
                     totalEquipamentos
                 ];
 
-                const response = await fetch(`https://script.google.com/macros/s/AKfycbyQwZiV7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q/exec?action=saveData`, {
+                const response = await fetch(`${API_URL}?action=saveData`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
