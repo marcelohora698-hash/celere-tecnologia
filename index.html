@@ -1122,138 +1122,106 @@
             </div>
         </div>
     </div>
-// SUBSTITUA A FUNÇÃO imprimirTermoCompleto() PELA ESTA NOVA FUNÇÃO:
 
-async function imprimirTermoCompleto() {
-    try {
-        mostrarStatus('Gerando termo em PDF...', 'loading');
-        
-        // Carregar o PDF template do GitHub
-        const pdfUrl = './logotipo-celere.pdf';
-        const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-        
-        // Carregar PDF
-        const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
-        const pages = pdfDoc.getPages();
-        const firstPage = pages[0];
-        
-        // Obter dados do formulário
-        const tecnico = document.getElementById('tecnico').value;
-        const usuario = document.getElementById('usuario').value;
-        const matricula = document.getElementById('matricula').value;
-        const setor = document.getElementById('setor').value;
-        const dataAtual = new Date().toLocaleDateString('pt-BR');
-        const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-        
-        // Adicionar texto ao PDF - AJUSTE ESTAS COORDENADAS CONFORME SEU PDF
-        // Você vai precisar testar e ajustar os valores de x e y
-        firstPage.drawText(`Técnico Responsável: ${tecnico}`, { x: 50, y: 500, size: 10 });
-        firstPage.drawText(`Colaborador: ${usuario}`, { x: 50, y: 480, size: 10 });
-        firstPage.drawText(`Matrícula: ${matricula}`, { x: 50, y: 460, size: 10 });
-        firstPage.drawText(`Setor: ${setor}`, { x: 50, y: 440, size: 10 });
-        firstPage.drawText(`Data: ${dataAtual}`, { x: 50, y: 420, size: 10 });
-        firstPage.drawText(`Protocolo: ${protocolo}`, { x: 50, y: 400, size: 10 });
-        
-        // Adicionar equipamentos
-        let yPos = 350;
-        const equipamentos = [
-            { nome: 'CPU', qtd: quantidades.cpu },
-            { nome: 'Monitor', qtd: quantidades.monitor },
-            { nome: 'Cabo Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-            { nome: 'Cabo Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-            { nome: 'Teclado', qtd: quantidades.teclado },
-            { nome: 'Mouse', qtd: quantidades.mouse },
-            { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-            { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-        ];
-        
-        firstPage.drawText('EQUIPAMENTOS ENTREGUES:', { x: 50, y: 380, size: 10, color: PDFLib.rgb(0, 0, 0) });
-        
-        equipamentos.forEach(equip => {
-            if (equip.qtd > 0) {
-                firstPage.drawText(`• ${equip.nome}: ${equip.qtd} unidade(s)`, { 
-                    x: 70, 
-                    y: yPos, 
-                    size: 9 
-                });
-                yPos -= 20;
-            }
-        });
+    <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
+    <div id="area-impressao" style="display: none;">
+        <div class="termo-impressao">
+            <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
+            <div class="timbrado-celere">
+                <!-- IMAGEM DO TIMBRADO -->
+                <img src="acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
+                <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
+                <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
+                <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
+                <div class="contato">Contato – Tel: (85) 69206-4075. E-mail: comercial@celeretecnologia.com.br</div>
+            </div>
 
-        // Adicionar termo de responsabilidade
-        firstPage.drawText('TERMO DE RESPONSABILIDADE:', { x: 50, y: yPos - 30, size: 10 });
-        firstPage.drawText(`Eu, ${usuario}, matrícula ${matricula}, declaro que recebi os`, { x: 50, y: yPos - 50, size: 8 });
-        firstPage.drawText('equipamentos relacionados acima em perfeito estado de funcionamento.', { x: 50, y: yPos - 65, size: 8 });
-        
-        // Salvar PDF
-        const pdfBytes = await pdfDoc.save();
-        
-        // Download automático
-        download(pdfBytes, `termo-entrega-${protocolo}.pdf`, "application/pdf");
-        
-        // Salvar no histórico (mantém a funcionalidade atual)
-        const entrega = {
-            id: Date.now(),
-            protocolo: protocolo,
-            tecnico: tecnico,
-            usuario: usuario,
-            matricula: matricula,
-            setor: setor,
-            data: new Date().toISOString(),
-            equipamentos: { ...quantidades },
-            totalEquipamentos: Object.values(quantidades).reduce((a, b) => a + b, 0)
-        };
-        
-        entregas.push(entrega);
-        localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-        
-        // Fechar modal
-        const modalElement = document.getElementById('modalPreview');
-        if (modalElement) {
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) {
-                modal.hide();
-            }
-        }
-        
-        mostrarStatus('PDF gerado com sucesso!', 'success');
-        atualizarRelatorios();
-        limparFormulario();
-        
-    } catch (error) {
-        console.error('Erro ao gerar PDF:', error);
-        mostrarStatus('Erro ao gerar PDF. Verifique se o arquivo logotipo-celere.pdf está na pasta.', 'error');
-        
-        // Fallback: usar o sistema de impressão original
-        setTimeout(() => {
-            mostrarStatus('Usando impressão normal...', 'loading');
-            // Chama a impressão normal como fallback
-            imprimirTermoOriginal();
-        }, 2000);
-    }
-}
+            <!-- Conteúdo do Termo -->
+            <div class="termo-header">
+                <h3>TERMO DE ENTREGA E RESPONSABILIDADE</h3>
+                <div class="protocolo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
+            </div>
 
-// Função fallback de impressão normal
-function imprimirTermoOriginal() {
-    atualizarDadosImpressao();
-    const areaImpressao = document.getElementById('area-impressao');
-    if (areaImpressao) {
-        const janelaImpressao = window.open('', '_blank');
-        janelaImpressao.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Termo de Entrega</title>
-                <style>${obterEstilosImpressao()}</style>
-            </head>
-            <body onload="window.print(); setTimeout(() => window.close(), 500);">
-                ${areaImpressao.innerHTML}
-            </body>
-            </html>
-        `);
-        janelaImpressao.document.close();
-    }
-}
+            <div class="dados-entrega">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Setor:</strong> <span id="impressao-setor">-</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <h5>EQUIPAMENTOS ENTREGUES</h5>
+            <table class="tabela-equipamentos">
+                <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Quantidade</th>
+                        <th>Observações</th>
+                    </tr>
+                </thead>
+                <tbody id="impressao-equipamentos">
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
+            </table>
+
+            <div class="termo-texto">
+                <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                
+                <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
+                
+                <p>Comprometo-me a:</p>
+                <ul>
+                    <li>Zelar pela conservação e segurança dos mesmos</li>
+                    <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                    <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
+                    <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+                </ul>
+                
+                <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+            </div>
+
+            <div class="assinaturas pagina-inteira">
+                <div class="assinatura-area">
+                    <div class="linha-assinatura"></div>
+                    <div class="nome-assinatura" id="impressao-assinatura-usuario">-</div>
+                    <div class="cargo-assinatura">Colaborador</div>
+                </div>
+                
+                <div class="assinatura-area">
+                    <div class="linha-assinatura"></div>
+                    <div class="nome-assinatura" id="impressao-assinatura-tecnico">-</div>
+                    <div class="cargo-assinatura">Técnico Responsável</div>
+                </div>
+            </div>
+
+            <div class="rodape-termo">
+                <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
+                <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
         // ========== SISTEMA DE ARMAZENAMENTO ==========
         let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
         let quantidades = {
@@ -1910,5 +1878,3 @@ function imprimirTermoOriginal() {
     </script>
 </body>
 </html>
-
-
