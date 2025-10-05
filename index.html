@@ -395,233 +395,102 @@
         padding: 0 !important;
     }
     
-    /* Timbrado oficial da Célere - REDUZIDO */
-    .timbrado-celere {
-        text-align: center;
-        border-bottom: 2px solid #0f5132;
-        padding: 10px 0 !important;
-        margin-bottom: 15px !important;
-        background: white;
-        page-break-after: avoid;
-    }
-    
-    .timbrado-img {
-        max-width: 150px !important;
-        max-height: 60px !important;
-        height: auto;
-        margin-bottom: 8px !important;
-    }
-    
-    .timbrado-celere .empresa {
-        font-size: 10px !important;
-        color: #333;
-        margin: 3px 0;
-        font-weight: bold;
-        line-height: 1.2;
-    }
-    
-    .timbrado-celere .cnpj {
-        font-size: 9px !important;
-        color: #666;
-        margin: 2px 0;
-        line-height: 1.2;
-    }
-    
-    .timbrado-celere .endereco {
-        font-size: 9px !important;
-        color: #666;
-        margin: 2px 0;
-        line-height: 1.2;
-    }
-    
-    .timbrado-celere .contato {
-        font-size: 9px !important;
-        color: #666;
-        margin: 2px 0;
-        line-height: 1.2;
-    }
-    
-    /* Termo de entrega */
-    .termo-impressao {
-        padding: 10px 20px !important;
-        background: white;
-    }
-    
-    .termo-header {
-        text-align: center;
-        margin-bottom: 15px !important;
-        page-break-after: avoid;
-    }
-    
-    .termo-header h3 {
-        color: #0f5132;
-        font-size: 14px !important;
-        margin-bottom: 5px;
-        text-transform: uppercase;
-    }
-    
-    .protocolo {
-        background: #f8f9fa;
-        padding: 8px;
-        border: 1px solid #0f5132;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: bold;
-        font-size: 11px;
-    }
-    
-    .dados-entrega {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        background: #fafafa;
-        font-size: 10px;
-    }
-    
-    .dados-entrega .row {
-        margin-bottom: 5px;
-        display: flex;
-    }
-    
-    .dados-entrega .col-md-6 {
-        width: 50%;
-        padding: 0 8px;
-    }
-    
-    .tabela-equipamentos {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 15px 0;
-        font-size: 10px !important;
-    }
-    
-    .tabela-equipamentos th {
-        background: #0f5132;
-        color: white;
-        padding: 6px;
-        text-align: left;
-        border: 1px solid #ddd;
-        font-weight: bold;
-        font-size: 10px;
-    }
-    
-    .tabela-equipamentos td {
-        padding: 6px;
-        border: 1px solid #ddd;
-        font-size: 10px;
-    }
-    
-    .termo-texto {
-        margin: 15px 0;
-        line-height: 1.3;
-        font-size: 10px !important;
-        text-align: justify;
-    }
-    
-    .termo-texto strong {
-        color: #0f5132;
-    }
-    
-    .termo-texto ul {
-        margin: 8px 0;
-        padding-left: 15px;
-    }
-    
-    .termo-texto li {
-        margin-bottom: 3px;
-    }
-    
-    .assinaturas {
-        margin-top: 50px !important;
-        page-break-inside: avoid;
-    }
-    
-    .assinatura-area {
-        width: 45%;
-        display: inline-block;
-        text-align: center;
-        margin: 0 2%;
-        vertical-align: top;
-    }
-    
-    .linha-assinatura {
-        border-top: 1px solid #000;
-        margin-top: 40px !important;
-        padding-top: 3px;
-        width: 100%;
-    }
-    
-    .nome-assinatura {
-        font-weight: bold;
-        margin-top: 3px;
-        font-size: 10px;
-    }
-    
-    .cargo-assinatura {
-        font-size: 9px;
-        color: #666;
-    }
-    
-    .rodape-termo {
-        margin-top: 20px;
-        text-align: center;
-        font-size: 8px;
-        color: #666;
-        border-top: 1px solid #ddd;
-        padding-top: 5px;
-    }
-    
-    /* Garantir que não quebre no meio das assinaturas */
-    .pagina-inteira {
-        page-break-inside: avoid;
-    }
-    
-    /* Evitar quebras de página indesejadas */
-    h1, h2, h3, h4, h5, h6 {
-        page-break-after: avoid;
-    }
-    
-    table {
-        page-break-inside: avoid;
-    }
-}
+  <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
+<div id="area-impressao" style="display: none;">
+    <div class="termo-impressao">
+        <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
+        <div class="timbrado-celere">
+            <!-- IMAGEM DO TIMBRADO -->
+            <img src="logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
+            <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
+            <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
+            <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
+            <div class="contato">Contato – Tel: (85) 69206-4075. E-mail: comercial@celeretecnologia.com.br</div>
+        </div>
 
-        /* Modal de visualização */
-        .modal-preview .modal-content {
-            background: white;
-            color: black;
-        }
+        <!-- Conteúdo do Termo -->
+        <div class="termo-header">
+            <h3>TERMO DE ENTREGA E RESPONSABILIDADE</h3>
+            <div class="protocolo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
+        </div>
 
-        .modal-preview .modal-header {
-            border-bottom: 2px solid #0f5132;
-            background: #f8f9fa;
-        }
-
-        .modal-preview .modal-title {
-            color: #0f5132;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <!-- Status de Sincronização -->
-    <div id="syncStatus" class="sync-status" style="display: none;"></div>
-
-    <!-- Header com Logo FIXO -->
-    <div class="header-custom text-white">
-        <div class="container">
-            <div class="logo-area">
-                <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
-                <div class="logo-container-full">
-                    <div class="logo-img-container">
-                        <!-- IMAGEM DO SISTEMA (DIFERENTE DO TIMBRADO) -->
-                        <div id="logo-texto" style="text-align: center;">
-                            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px; color: white;">CÉLERE</h1>
-                            <h2 style="font-size: 1.5rem; opacity: 0.9; color: white;">Tecnologia em Saúde</h2>
-                            <p style="font-size: 1rem; margin-top: 10px; color: white;">Sistema de Entrega de Equipamentos de TI</p>
-                        </div>
-                    </div>
+        <div class="dados-entrega">
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
                 </div>
+                <div class="col-md-6">
+                    <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Setor:</strong> <span id="impressao-setor">-</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
+                </div>
+                <div class="col-md-6">
+                    <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="titulo-equipamentos">EQUIPAMENTOS ENTREGUES</h5>
+        <table class="tabela-equipamentos">
+            <thead>
+                <tr>
+                    <th>Equipamento</th>
+                    <th>Quantidade</th>
+                    <th>Observações</th>
+                </tr>
+            </thead>
+            <tbody id="impressao-equipamentos">
+                <!-- Preenchido via JavaScript -->
+            </tbody>
+        </table>
+
+        <div class="termo-texto">
+            <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+            
+            <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
+            
+            <p>Comprometo-me a:</p>
+            <ul>
+                <li>Zelar pela conservação e segurança dos mesmos</li>
+                <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
+                <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+            </ul>
+            
+            <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+        </div>
+
+        <div class="assinaturas pagina-inteira">
+            <div class="assinatura-area">
+                <div class="linha-assinatura"></div>
+                <div class="nome-assinatura" id="impressao-assinatura-usuario">-</div>
+                <div class="cargo-assinatura">Colaborador</div>
+            </div>
+            
+            <div class="assinatura-area">
+                <div class="linha-assinatura"></div>
+                <div class="nome-assinatura" id="impressao-assinatura-tecnico">-</div>
+                <div class="cargo-assinatura">Técnico Responsável</div>
+            </div>
+        </div>
+
+        <div class="rodape-termo">
+            <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
+            <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
+        </div>
+    </div>
+</div>
                 
                 <!-- Ícones de Tecnologia em Saúde -->
                 <div class="health-tech-icons">
@@ -1907,5 +1776,6 @@
     </script>
 </body>
 </html>
+
 
 
