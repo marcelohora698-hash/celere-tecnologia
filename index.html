@@ -52,9 +52,9 @@
         }
         
         .logo-img {
-            width: 95%;
-            max-width: 1400px;
-            height: 100px;
+            width: 100%;
+            max-width: 100%;
+            height: 300px;
             object-fit: contain;
             margin: 0 auto;
             display: block;
@@ -693,7 +693,7 @@
                                         <li>Utilizar os equipamentos exclusivamente para fins profissionais</li>
                                         <li>Zelar pela conservação e segurança dos mesmos</li>
                                         <li>Comunicar imediatamente qualquer problema ao departamento de TI</li>
-                                        <li>Devolver todos os itens em caso de desligamento da empresa</li>
+                                        <li>Devolver todos os itens em caso of desligamento da empresa</li>
                                     </ul>
                                     
                                     <p class="mb-0">Data: <strong id="termo-data"></strong></p>
@@ -1080,7 +1080,7 @@
             checkboxes.forEach(checkbox => {
                 checkbox.checked = this.checked;
             });
-        }
+        });
 
         // ========== SISTEMA DE RELATÓRIOS ==========
         function atualizarRelatorios() {
