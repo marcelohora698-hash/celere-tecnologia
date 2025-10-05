@@ -237,6 +237,27 @@
             color: black;
         }
 
+        .import-area {
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .import-area:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.8);
+        }
+
+        .import-area.dragover {
+            background: rgba(255,255,255,0.3);
+            border-color: #28a745;
+        }
+
         @media print {
             .no-print {
                 display: none !important;
@@ -271,7 +292,7 @@
                 </div>
                 
                 <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
-                <p class="small mb-0 opacity-85">📊 Dados compartilhados em tempo real</p>
+                <p class="small mb-0 opacity-85">💾 Sistema com exportação/importação CSV</p>
             </div>
         </div>
     </div>
@@ -288,9 +309,6 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <button class="btn btn-outline-light me-2" onclick="sincronizarDados()">
-                        <i class="fas fa-sync-alt me-1"></i>Sincronizar
-                    </button>
                     <button class="btn btn-outline-light" onclick="proximaAba('relatorios')">
                         <i class="fas fa-chart-bar me-1"></i>Relatórios
                     </button>
@@ -605,18 +623,27 @@
                         </div>
 
                         <div class="mb-3">
-                            <button class="btn btn-outline-light me-2" onclick="sincronizarDados()">
-                                <i class="fas fa-sync-alt me-1"></i>Sincronizar Dados
-                            </button>
                             <button class="btn btn-outline-light me-2" onclick="exportarDados()">
                                 <i class="fas fa-download me-1"></i>Exportar CSV
                             </button>
+                            <button class="btn btn-outline-light me-2" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-upload me-1"></i>Importar CSV
+                            </button>
                             <button class="btn btn-outline-warning" onclick="limparDados()">
-                                <i class="fas fa-trash me-1"></i>Limpar Todos os Dados
+                                <i class="fas fa-trash me-1"></i>Limpar Dados
                             </button>
                         </div>
 
-                        <div class="table-responsive">
+                        <!-- Área de Importação -->
+                        <div class="import-area" id="importArea">
+                            <i class="fas fa-file-csv fa-3x mb-3 opacity-50"></i>
+                            <h5>Importar Dados CSV</h5>
+                            <p class="mb-2">Arraste um arquivo CSV aqui ou clique para selecionar</p>
+                            <p class="small opacity-75">Formato esperado: Data,Protocolo,Colaborador,Matrícula,Setor,Técnico,CPU,Monitor,CaboEnergia,CaboVideo,TotalEquipamentos</p>
+                            <input type="file" id="fileInput" accept=".csv" style="display: none;">
+                        </div>
+
+                        <div class="table-responsive mt-4">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -668,12 +695,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ========== CONFIGURAÇÃO GOOGLE SHEETS ==========
-        const SHEET_ID = '1ge5b_RTUJYrLATUXNIBZseUrwbLoLcam5Np8R_ShSPY';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxrkghzPNrkiOLLslIsGHovkU2iideIg1LzdO-DKsB2gmVllevr2boYA6nUWKs4Cieh/exec';
-
         // ========== SISTEMA DE ARMAZENAMENTO ==========
-        let entregas = [];
+        let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
         let quantidades = {
             cpu: 0,
             monitor: 0,
@@ -681,7 +704,7 @@
             caboVideo: 0
         };
 
-        // ========== SISTEMA DE SINCRONIZAÇÃO ==========
+        // ========== SISTEMA DE STATUS ==========
         function mostrarStatus(mensagem, tipo) {
             const status = document.getElementById('syncStatus');
             status.textContent = mensagem;
@@ -693,139 +716,144 @@
             }, 3000);
         }
 
-        async function sincronizarDados() {
-            mostrarStatus('🔄 Sincronizando dados...', 'loading');
-            try {
-                await carregarDadosGoogleSheets();
-                mostrarStatus('✅ Dados sincronizados!', 'success');
-            } catch (error) {
-                console.error('Erro na sincronização:', error);
-                mostrarStatus('❌ Erro na sincronização', 'error');
+        // ========== SISTEMA DE EXPORTAÇÃO/IMPORTAÇÃO ==========
+        function exportarDados() {
+            if (entregas.length === 0) {
+                alert('Não há dados para exportar');
+                return;
             }
+
+            let csv = 'Data,Protocolo,Colaborador,Matrícula,Setor,Técnico,CPU,Monitor,CaboEnergia,CaboVideo,TotalEquipamentos\n';
+            entregas.forEach(entrega => {
+                const totalEquipamentos = entrega.quantidades.cpu + entrega.quantidades.monitor + 
+                                         entrega.quantidades.caboEnergia + entrega.quantidades.caboVideo;
+                csv += `"${entrega.data}","${entrega.protocolo}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}","${entrega.tecnico}",${entrega.quantidades.cpu},${entrega.quantidades.monitor},${entrega.quantidades.caboEnergia},${entrega.quantidades.caboVideo},${totalEquipamentos}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `entregas_celere_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            mostrarStatus('✅ CSV exportado com sucesso!', 'success');
         }
 
-        async function carregarDadosGoogleSheets() {
-            try {
-                const response = await fetch(`${API_URL}?action=getData&sheetId=${SHEET_ID}`);
-                
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar dados');
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    entregas = data.data || [];
-                    atualizarRelatorios();
-                    mostrarStatus(`✅ ${entregas.length} entregas carregadas`, 'success');
-                } else {
-                    throw new Error(data.error || 'Erro desconhecido');
-                }
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-                // Fallback para localStorage se necessário
-                const localData = localStorage.getItem('celere_entregas');
-                if (localData) {
-                    entregas = JSON.parse(localData);
-                    atualizarRelatorios();
-                    mostrarStatus('⚠️ Usando dados locais', 'loading');
-                } else {
-                    mostrarStatus('❌ Erro ao carregar dados', 'error');
-                }
-            }
-        }
+        // Sistema de importação CSV
+        const fileInput = document.getElementById('fileInput');
+        const importArea = document.getElementById('importArea');
 
- // ========== SISTEMA SIMPLIFICADO - SEM GOOGLE SCRIPTS ==========
-async function carregarDadosGoogleSheets() {
-    try {
-        // Método direto usando a API pública do Google Sheets
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        fileInput.addEventListener('change', handleFileSelect);
         
-        const response = await fetch(sheetUrl);
-        const text = await response.text();
-        const json = JSON.parse(text.substring(47).slice(0, -2));
-        const data = json.table.rows;
+        importArea.addEventListener('click', () => fileInput.click());
         
-        entregas = [];
-        data.forEach((row, index) => {
-            if (index > 0 && row.c[0]) { // Pular cabeçalho
-                entregas.push({
-                    data: row.c[0]?.v || '',
-                    protocolo: row.c[1]?.v || '',
-                    usuario: row.c[2]?.v || '',
-                    matricula: row.c[3]?.v || '',
-                    setor: row.c[4]?.v || '',
-                    tecnico: row.c[5]?.v || '',
-                    quantidades: {
-                        cpu: parseInt(row.c[6]?.v) || 0,
-                        monitor: parseInt(row.c[7]?.v) || 0,
-                        caboEnergia: parseInt(row.c[8]?.v) || 0,
-                        caboVideo: parseInt(row.c[9]?.v) || 0
-                    }
-                });
-            }
+        importArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            importArea.classList.add('dragover');
         });
         
-        atualizarRelatorios();
-        mostrarStatus(`✅ ${entregas.length} entregas carregadas`, 'success');
+        importArea.addEventListener('dragleave', () => {
+            importArea.classList.remove('dragover');
+        });
         
-    } catch (error) {
-        console.error('Erro ao carregar dados:', error);
-        // Fallback para localStorage
-        const localData = localStorage.getItem('celere_entregas');
-        if (localData) {
-            entregas = JSON.parse(localData);
-            atualizarRelatorios();
-            mostrarStatus('⚠️ Usando dados locais', 'loading');
-        } else {
-            entregas = [];
-            mostrarStatus('📝 Nenhum dado encontrado', 'loading');
-        }
-    }
-}
-
-async function salvarEntregaGoogleSheets(entrega) {
-    // Por enquanto, vamos salvar apenas localmente
-    // O compartilhamento será manual via exportação/importação
-    entregas.push(entrega);
-    localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-    mostrarStatus('✅ Entrega salva localmente', 'success');
-    return true;
-}
-
-                const response = await fetch(`${API_URL}?action=saveData`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        sheetId: SHEET_ID,
-                        data: dados
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Erro ao salvar dados');
-                }
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Adiciona localmente também
-                    entregas.push(entrega);
-                    localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-                    return true;
-                } else {
-                    throw new Error(result.error || 'Erro ao salvar');
-                }
-            } catch (error) {
-                console.error('Erro ao salvar no Google Sheets:', error);
-                // Fallback para localStorage
-                entregas.push(entrega);
-                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-                mostrarStatus('⚠️ Dados salvos localmente', 'loading');
-                return false;
+        importArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            importArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileImport(files[0]);
             }
+        });
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFileImport(file);
+            }
+        }
+
+        function handleFileImport(file) {
+            if (!file.name.toLowerCase().endsWith('.csv')) {
+                alert('Por favor, selecione um arquivo CSV');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const csv = e.target.result;
+                    const linhas = csv.split('\n');
+                    const novasEntregas = [];
+                    
+                    // Pular cabeçalho (primeira linha)
+                    for (let i = 1; i < linhas.length; i++) {
+                        const linha = linhas[i].trim();
+                        if (linha) {
+                            const colunas = parseCSVLine(linha);
+                            
+                            if (colunas.length >= 10) {
+                                const entrega = {
+                                    data: colunas[0],
+                                    protocolo: colunas[1],
+                                    usuario: colunas[2],
+                                    matricula: colunas[3],
+                                    setor: colunas[4],
+                                    tecnico: colunas[5],
+                                    quantidades: {
+                                        cpu: parseInt(colunas[6]) || 0,
+                                        monitor: parseInt(colunas[7]) || 0,
+                                        caboEnergia: parseInt(colunas[8]) || 0,
+                                        caboVideo: parseInt(colunas[9]) || 0
+                                    }
+                                };
+                                novasEntregas.push(entrega);
+                            }
+                        }
+                    }
+                    
+                    if (novasEntregas.length > 0) {
+                        if (confirm(`Encontradas ${novasEntregas.length} entregas no arquivo. Deseja importar?`)) {
+                            entregas = [...entregas, ...novasEntregas];
+                            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                            atualizarRelatorios();
+                            mostrarStatus(`✅ ${novasEntregas.length} entregas importadas!`, 'success');
+                        }
+                    } else {
+                        alert('Nenhuma entrega válida encontrada no arquivo CSV');
+                    }
+                    
+                } catch (error) {
+                    console.error('Erro ao importar CSV:', error);
+                    alert('Erro ao importar arquivo CSV. Verifique o formato do arquivo.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSVLine(linha) {
+            const resultado = [];
+            let campo = '';
+            let dentroDeAspas = false;
+            
+            for (let i = 0; i < linha.length; i++) {
+                const char = linha[i];
+                
+                if (char === '"') {
+                    dentroDeAspas = !dentroDeAspas;
+                } else if (char === ',' && !dentroDeAspas) {
+                    resultado.push(campo.trim());
+                    campo = '';
+                } else {
+                    campo += char;
+                }
+            }
+            
+            resultado.push(campo.trim());
+            return resultado;
         }
 
         // ========== ATUALIZAR PROGRESSO ==========
@@ -994,37 +1022,13 @@ Quantidades:
 Total: ${totalEquipamentos} equipamentos`);
         }
 
-        async function excluirEntrega(index) {
+        function excluirEntrega(index) {
             if (confirm('Tem certeza que deseja excluir esta entrega?')) {
-                const entregaRemovida = entregas.splice(index, 1)[0];
+                entregas.splice(index, 1);
                 localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-                
-                // TODO: Implementar exclusão no Google Sheets
-                mostrarStatus('✅ Entrega excluída localmente', 'success');
+                mostrarStatus('✅ Entrega excluída', 'success');
                 atualizarRelatorios();
             }
-        }
-
-        function exportarDados() {
-            if (entregas.length === 0) {
-                alert('Não há dados para exportar');
-                return;
-            }
-
-            let csv = 'Data,Protocolo,Colaborador,Matrícula,Setor,Técnico,CPU,Monitor,CaboEnergia,CaboVideo,TotalEquipamentos\n';
-            entregas.forEach(entrega => {
-                const totalEquipamentos = entrega.quantidades.cpu + entrega.quantidades.monitor + 
-                                         entrega.quantidades.caboEnergia + entrega.quantidades.caboVideo;
-                csv += `"${entrega.data}","${entrega.protocolo}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}","${entrega.tecnico}",${entrega.quantidades.cpu},${entrega.quantidades.monitor},${entrega.quantidades.caboEnergia},${entrega.quantidades.caboVideo},${totalEquipamentos}\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `entregas_celere_${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            window.URL.revokeObjectURL(url);
         }
 
         function limparDados() {
@@ -1032,7 +1036,7 @@ Total: ${totalEquipamentos} equipamentos`);
                 localStorage.removeItem('celere_entregas');
                 entregas = [];
                 atualizarRelatorios();
-                alert('Todos os dados foram apagados.');
+                mostrarStatus('🗑️ Todos os dados foram apagados', 'success');
             }
         }
 
@@ -1058,7 +1062,7 @@ Total: ${totalEquipamentos} equipamentos`);
         }
 
         // ========== FINALIZAR ENTREGA ==========
-        async function finalizarEntrega() {
+        function finalizarEntrega() {
             const usuario = document.getElementById('usuario').value;
             const tecnico = document.getElementById('tecnico').value;
             
@@ -1088,13 +1092,8 @@ Total: ${totalEquipamentos} equipamentos`);
                 quantidades: { ...quantidades }
             };
 
-            // Salvar no Google Sheets
-            const sucesso = await salvarEntregaGoogleSheets(entrega);
-            
-            if (sucesso) {
-                mostrarStatus('✅ Entrega salva com sucesso!', 'success');
-            }
-
+            entregas.push(entrega);
+            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
             atualizarRelatorios();
 
             const modal = new bootstrap.Modal(document.getElementById('modalSucesso'));
@@ -1276,10 +1275,9 @@ Total: ${totalEquipamentos} equipamentos`);
 
         // Inicializar relatórios quando a página carregar
         window.addEventListener('load', function() {
-            carregarDadosGoogleSheets();
+            atualizarRelatorios();
             atualizarProgresso();
         });
     </script>
 </body>
 </html>
-
