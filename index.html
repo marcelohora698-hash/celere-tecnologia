@@ -403,19 +403,11 @@
                 background: white;
             }
             
-            .timbrado-celere .logo {
-                color: #0f5132;
-                font-size: 32px;
-                font-weight: bold;
-                margin: 0;
-                line-height: 1.2;
-            }
-            
-            .timbrado-celere .subtitulo {
-                color: #157347;
-                font-size: 20px;
-                margin: 5px 0 15px 0;
-                font-weight: normal;
+            .timbrado-img {
+                max-width: 100%;
+                height: auto;
+                max-height: 120px;
+                margin-bottom: 15px;
             }
             
             .timbrado-celere .empresa {
@@ -594,7 +586,7 @@
                 <div class="logo-container-full">
                     <div class="logo-img-container">
                         <!-- Imagem com fundo transparente -->
-                        <img src="./images/logo-celere.png" alt="Célere Tecnologia em Saúde" class="logo-img" 
+                        <img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-img" 
                              onerror="this.style.display='none'; document.getElementById('logo-texto').style.display='block';">
                         <!-- Fallback de texto caso a imagem não carregue -->
                         <div id="logo-texto" style="display: none; text-align: center;">
@@ -987,11 +979,12 @@
                         <div class="mb-4">
                             <h6>Termo de Responsabilidade</h6>
                             <div class="p-3 bg-verde-pagina rounded">
-                                <p class="mb-3">Eu, <strong><span id="termo-usuario-assinatura">-</span></strong>, matrícula <strong><span id="termo-matricula-assinatura">-</span></strong>, declaro que acompanhei a separação dos equipamentos, que foi conferido os números de tombamento de todos equipamentos e que confirma a quantidade entregue de equipamentos no geral.</p>
+                                <p class="mb-3">Eu, <strong><span id="termo-usuario-assinatura">-</span></strong>, matrícula <strong><span id="termo-matricula-assinatura">-</span></strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                                
+                                <p class="mb-3">Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
                                 
                                 <p class="mb-3">Comprometo-me a:</p>
                                 <ul>
-                                    <li>Utilizar os equipamentos exclusivamente para fins profissionais</li>
                                     <li>Zelar pela conservação e segurança dos mesmos</li>
                                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
                                     <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
@@ -1148,8 +1141,7 @@
         <div class="termo-impressao">
             <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
             <div class="timbrado-celere">
-                <div class="logo">CÉLERE</div>
-                <div class="subtitulo">TECNOLOGIA EM SAÚDE</div>
+                <img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
                 <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
@@ -1204,11 +1196,12 @@
             </table>
 
             <div class="termo-texto">
-                <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que acompanhei a separação dos equipamentos, que foi conferido os números de tombamento de todos equipamentos e que confirma a quantidade entregue de equipamentos no geral.</p>
+                <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                
+                <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
                 
                 <p>Comprometo-me a:</p>
                 <ul>
-                    <li>Utilizar os equipamentos exclusivamente para fins profissionais</li>
                     <li>Zelar pela conservação e segurança dos mesmos</li>
                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
                     <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
@@ -1534,19 +1527,11 @@
                     background: white;
                 }
                 
-                .timbrado-celere .logo {
-                    color: #0f5132;
-                    font-size: 32px;
-                    font-weight: bold;
-                    margin: 0;
-                    line-height: 1.2;
-                }
-                
-                .timbrado-celere .subtitulo {
-                    color: #157347;
-                    font-size: 20px;
-                    margin: 5px 0 15px 0;
-                    font-weight: normal;
+                .timbrado-img {
+                    max-width: 100%;
+                    height: auto;
+                    max-height: 120px;
+                    margin-bottom: 15px;
                 }
                 
                 .timbrado-celere .empresa {
