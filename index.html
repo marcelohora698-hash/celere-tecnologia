@@ -369,207 +369,228 @@
             margin-right: 8px;
         }
 
-        /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO DO TERMO */
-        @media print {
-            body {
-                background: white !important;
-                color: black !important;
-                font-family: 'Arial', sans-serif !important;
-                margin: 0;
-                padding: 0;
-                font-size: 12px;
-                line-height: 1.2;
-            }
-            
-            .no-print {
-                display: none !important;
-            }
-            
-            .print-only {
-                display: block !important;
-            }
-            
-            .container {
-                width: 100% !important;
-                max-width: none !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-            
-            /* Timbrado oficial da Célere - COMPACTO */
-            .timbrado-celere {
-                text-align: center;
-                border-bottom: 2px solid #0f5132;
-                padding: 8px 0 !important;
-                margin-bottom: 12px !important;
-                background: white;
-                page-break-after: avoid;
-            }
-            
-            .timbrado-img {
-                max-width: 120px !important;
-                max-height: 50px !important;
-                height: auto;
-                margin-bottom: 5px !important;
-            }
-            
-            .timbrado-celere .empresa {
-                font-size: 9px !important;
-                color: #333;
-                margin: 2px 0;
-                font-weight: bold;
-                line-height: 1.1;
-            }
-            
-            .timbrado-celere .cnpj {
-                font-size: 8px !important;
-                color: #666;
-                margin: 1px 0;
-                line-height: 1.1;
-            }
-            
-            .timbrado-celere .endereco {
-                font-size: 8px !important;
-                color: #666;
-                margin: 1px 0;
-                line-height: 1.1;
-            }
-            
-            .timbrado-celere .contato {
-                font-size: 8px !important;
-                color: #666;
-                margin: 1px 0;
-                line-height: 1.1;
-            }
-            
-            /* Termo de entrega */
-            .termo-impressao {
-                padding: 8px 15px !important;
-                background: white;
-            }
-            
-            .termo-header {
-                text-align: center;
-                margin-bottom: 12px !important;
-                page-break-after: avoid;
-            }
-            
-            .termo-header h3 {
-                color: #0f5132;
-                font-size: 12px !important;
-                margin-bottom: 3px;
-                text-transform: uppercase;
-            }
-            
-            .protocolo {
-                background: #f8f9fa;
-                padding: 6px;
-                border: 1px solid #0f5132;
-                margin-bottom: 12px;
-                text-align: center;
-                font-weight: bold;
-                font-size: 10px;
-            }
-            
-            .dados-entrega {
-                margin-bottom: 12px;
-                padding: 8px;
-                border: 1px solid #ddd;
-                background: #fafafa;
-                font-size: 9px;
-            }
-            
-            .dados-entrega .row {
-                margin-bottom: 3px;
-                display: flex;
-            }
-            
-            .dados-entrega .col-md-6 {
-                width: 50%;
-                padding: 0 6px;
-            }
-            
-            .tabela-equipamentos {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 12px 0;
-                font-size: 9px !important;
-            }
-            
-            .tabela-equipamentos th {
-                background: #0f5132;
-                color: white;
-                padding: 4px;
-                text-align: left;
-                border: 1px solid #ddd;
-                font-weight: bold;
-                font-size: 9px;
-            }
-            
-            .tabela-equipamentos td {
-                padding: 4px;
-                border: 1px solid #ddd;
-                font-size: 9px;
-            }
-            
-            .termo-texto {
-                margin: 12px 0;
-                line-height: 1.2;
-                font-size: 9px !important;
-                text-align: justify;
-            }
-            
-            .termo-texto strong {
-                color: #0f5132;
-            }
-            
-            .termo-texto ul {
-                margin: 6px 0;
-                padding-left: 12px;
-            }
-            
-            .termo-texto li {
-                margin-bottom: 2px;
-            }
-            
-            .assinaturas {
-                margin-top: 40px !important;
-                page-break-inside: avoid;
-            }
-            
-            .assinatura-area {
-                width: 45%;
-                display: inline-block;
-                text-align: center;
-                margin: 0 2%;
-                vertical-align: top;
-            }
-            
-            .linha-assinatura {
-                border-top: 1px solid #000;
-                margin-top: 30px !important;
-                padding-top: 2px;
-                width: 100%;
-            }
-            
-            .nome-assinatura {
-                font-weight: bold;
-                margin-top: 2px;
-                font-size: 9px;
-            }
-            
-            .cargo-assinatura {
-                font-size: 8px;
-                color: #666;
-            }
-            
-            .rodape-termo {
-                margin-top: 15px;
-                text-align: center;
-                font-size: 7px;
-                color: #666;
-                border-top: 1px solid #ddd;
-                padding-top: 3px;
+      /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO DO TERMO */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+        font-family: 'Arial', sans-serif !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 10px !important;
+        line-height: 1.1 !important;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+    
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Timbrado MUITO compacto */
+    .timbrado-celere {
+        text-align: center;
+        border-bottom: 1px solid #0f5132;
+        padding: 5px 0 !important;
+        margin-bottom: 8px !important;
+        background: white;
+        page-break-after: avoid;
+    }
+    
+    .timbrado-img {
+        max-width: 100px !important;
+        max-height: 40px !important;
+        height: auto;
+        margin-bottom: 3px !important;
+    }
+    
+    .timbrado-celere .empresa {
+        font-size: 8px !important;
+        color: #333;
+        margin: 1px 0;
+        font-weight: bold;
+        line-height: 1;
+    }
+    
+    .timbrado-celere .cnpj {
+        font-size: 7px !important;
+        color: #666;
+        margin: 1px 0;
+        line-height: 1;
+    }
+    
+    .timbrado-celere .endereco {
+        font-size: 7px !important;
+        color: #666;
+        margin: 1px 0;
+        line-height: 1;
+    }
+    
+    .timbrado-celere .contato {
+        font-size: 7px !important;
+        color: #666;
+        margin: 1px 0;
+        line-height: 1;
+    }
+    
+    /* Termo compacto */
+    .termo-impressao {
+        padding: 5px 10px !important;
+        background: white;
+    }
+    
+    .termo-header {
+        text-align: center;
+        margin-bottom: 8px !important;
+        page-break-after: avoid;
+    }
+    
+    .termo-header h3 {
+        color: #0f5132;
+        font-size: 10px !important;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+    }
+    
+    .protocolo {
+        background: #f8f9fa;
+        padding: 4px;
+        border: 1px solid #0f5132;
+        margin-bottom: 8px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 9px;
+    }
+    
+    .dados-entrega {
+        margin-bottom: 8px;
+        padding: 6px;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        font-size: 8px;
+    }
+    
+    .dados-entrega .row {
+        margin-bottom: 2px;
+        display: flex;
+    }
+    
+    .dados-entrega .col-md-6 {
+        width: 50%;
+        padding: 0 4px;
+    }
+    
+    .tabela-equipamentos {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0;
+        font-size: 8px !important;
+    }
+    
+    .tabela-equipamentos th {
+        background: #0f5132;
+        color: white;
+        padding: 3px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-weight: bold;
+        font-size: 8px;
+    }
+    
+    .tabela-equipamentos td {
+        padding: 3px;
+        border: 1px solid #ddd;
+        font-size: 8px;
+    }
+    
+    .termo-texto {
+        margin: 8px 0;
+        line-height: 1.1;
+        font-size: 8px !important;
+        text-align: justify;
+    }
+    
+    .termo-texto strong {
+        color: #0f5132;
+    }
+    
+    .termo-texto ul {
+        margin: 4px 0;
+        padding-left: 10px;
+    }
+    
+    .termo-texto li {
+        margin-bottom: 1px;
+    }
+    
+    .assinaturas {
+        margin-top: 25px !important;
+        page-break-inside: avoid;
+    }
+    
+    .assinatura-area {
+        width: 45%;
+        display: inline-block;
+        text-align: center;
+        margin: 0 2%;
+        vertical-align: top;
+    }
+    
+    .linha-assinatura {
+        border-top: 1px solid #000;
+        margin-top: 20px !important;
+        padding-top: 1px;
+        width: 100%;
+    }
+    
+    .nome-assinatura {
+        font-weight: bold;
+        margin-top: 1px;
+        font-size: 8px;
+    }
+    
+    .cargo-assinatura {
+        font-size: 7px;
+        color: #666;
+    }
+    
+    .rodape-termo {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 6px;
+        color: #666;
+        border-top: 1px solid #ddd;
+        padding-top: 2px;
+    }
+    
+    .pagina-inteira {
+        page-break-inside: avoid;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+    
+    table {
+        page-break-inside: avoid;
+    }
+    
+    .titulo-equipamentos {
+        font-size: 9px !important;
+        color: #0f5132;
+        margin: 6px 0 4px 0 !important;
+        font-weight: bold;
+    }
+}
             }
             
             /* Garantir que não quebre no meio das assinaturas */
@@ -1925,3 +1946,4 @@
     </script>
 </body>
 </html>
+
