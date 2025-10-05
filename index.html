@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* SEU CSS EXISTENTE (mantido intacto) */
         :root {
             --cor-primaria: #157347;
             --cor-secundaria: #0f5132;
@@ -952,8 +953,8 @@
                                     <p><strong>Setor:</strong> <span id="termo-setor">-</span></p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>Técnico:</strong> <span id="termo-tecnico">-</span></p>
-                                    <p><strong>Data:</strong> <span id="termo-data">-</span></p>
+                                    <p><strong>Técnico Responsável:</strong> <span id="termo-tecnico">-</span></p>
+                                    <p><strong>Data da Entrega:</strong> <span id="termo-data">-</span></p>
                                     <p><strong>Protocolo:</strong> <span id="termo-protocolo">-</span></p>
                                 </div>
                             </div>
@@ -988,9 +989,10 @@
                                     <li>Zelar pela conservação e segurança dos mesmos</li>
                                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
                                     <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
+                                    <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
                                 </ul>
                                 
-                                <p class="mb-0">Data: <strong><span id="termo-data-assinatura">-</span></strong></p>
+                                <p class="mb-0">Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
                             </div>
                         </div>
 
@@ -1141,7 +1143,7 @@
         <div class="termo-impressao">
             <!-- Timbrado Oficial da Célere (APENAS NA IMPRESSÃO) -->
             <div class="timbrado-celere">
-                <img src="imagens/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
+                <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/acess/logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="timbrado-img">
                 <div class="empresa">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
                 <div class="cnpj">CNPJ: 46.961.423/0001-79</div>
                 <div class="endereco">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
@@ -1738,23 +1740,63 @@
             });
         }
 
-        // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
+        // ========== EXPORTAÇÃO/IMPORTAÇÃO CORRIGIDA ==========
         function exportarParaExcel() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+
             mostrarStatus('Exportando para Excel...', 'loading');
-            // Simular exportação
+            
+            // Criar conteúdo CSV
+            let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,CPUs,MONITORES,CABOS DESKTOP,CABOS MONITOR,TECLADOS,MOUSES,CABOS HDMI,CABOS VGA,TOTAL\n";
+            
+            entregas.forEach(entrega => {
+                const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                const total = Object.values(entrega.equipamentos).reduce((sum, qtd) => sum + qtd, 0);
+                
+                csvContent += `"${data}","${entrega.protocolo}","${entrega.tecnico}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}",`;
+                csvContent += `${entrega.equipamentos.cpu || 0},${entrega.equipamentos.monitor || 0},`;
+                csvContent += `${entrega.equipamentos.caboEnergiaDesktop || 0},${entrega.equipamentos.caboEnergiaMonitor || 0},`;
+                csvContent += `${entrega.equipamentos.teclado || 0},${entrega.equipamentos.mouse || 0},`;
+                csvContent += `${entrega.equipamentos.caboHdmi || 0},${entrega.equipamentos.caboVga || 0},`;
+                csvContent += `${total}\n`;
+            });
+
+            // Criar e baixar arquivo
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `celere-entregas-${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
             setTimeout(() => {
-                mostrarStatus('Dados exportados com sucesso!', 'success');
-            }, 1500);
+                mostrarStatus('Dados exportados para Excel com sucesso!', 'success');
+            }, 1000);
         }
 
         function exportarParaJSON() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+            
             const dataStr = JSON.stringify(entregas, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
             
             const link = document.createElement('a');
             link.href = URL.createObjectURL(dataBlob);
             link.download = `celere-entregas-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             
             mostrarStatus('Dados exportados para JSON!', 'success');
         }
@@ -1767,21 +1809,35 @@
                 try {
                     const dados = JSON.parse(e.target.result);
                     if (Array.isArray(dados)) {
-                        entregas = dados;
-                        localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-                        atualizarRelatorios();
-                        mostrarStatus('Dados importados com sucesso!', 'success');
+                        // Validar estrutura dos dados
+                        const dadosValidos = dados.filter(item => 
+                            item.protocolo && item.tecnico && item.usuario && item.matricula && item.setor
+                        );
+                        
+                        if (dadosValidos.length > 0) {
+                            entregas = dadosValidos;
+                            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                            atualizarRelatorios();
+                            mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
+                        } else {
+                            throw new Error('Nenhum dado válido encontrado');
+                        }
                     } else {
-                        throw new Error('Formato inválido');
+                        throw new Error('Formato inválido - deve ser um array');
                     }
                 } catch (error) {
-                    mostrarStatus('Erro ao importar dados!', 'error');
+                    mostrarStatus('Erro ao importar dados: ' + error.message, 'error');
                 }
             };
             reader.readAsText(file);
         }
 
         function limparDados() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para limpar!', 'error');
+                return;
+            }
+            
             if (confirm('Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
                 localStorage.removeItem('celere_entregas');
                 entregas = [];
