@@ -45,12 +45,13 @@
             transform: scale(1.02);
         }
         
-        .logo-img {
-            width: 100%;
-            max-width: 100%; /* AGORA OCUPA 100% DA LARGURA */
-            height: 180px;
-            object-fit: contain;
-            margin: 0 auto 10px auto;
+      .logo-container-full {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
             display: none;
             background-color: transparent; /* FUNDO TRANSPARENTE */
             border-radius: 10px;
@@ -180,23 +181,10 @@
 <div class="header-custom text-white">
     <div class="container">
         <div class="logo-area">
-            <!-- LOGO FIXO - IMAGEM DIRETA -->
-    <div class="logo-img-container">
-        <img src="./images/logo-celere.png" alt="Célere Tecnologia em Saúde" class="logo-img" style="display: block;">
-    </div>
-    
+         
     <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
-    <p class="mb-0 opacity-85" id="total-kits-display">110 Kits de Computadores e Monitores</p>
-                <!-- ÁREA DE UPLOAD - AGORA SOME QUANDO IMAGEM É CARREGADA -->
-                <div class="upload-area mt-3" id="uploadArea">
-                    <i class="fas fa-cloud-upload-alt fa-2x mb-2 text-muted"></i>
-                    <p class="mb-1"><strong>Carregar Logo da Empresa</strong></p>
-                    <p class="small text-muted mb-0">
-                        Clique aqui ou arraste uma imagem<br>
-                        Formatos: JPG, PNG (Máx. 500KB)
-                    </p>
-                    <input type="file" id="fileInput" accept=".jpg,.jpeg,.png" style="display: none;">
-                </div>
+    
+               
             </div>
         </div>
     </div>
@@ -508,23 +496,24 @@
                         <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Relatórios de Entregas</h5>
                     </div>
                     <div class="card-body">
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <div class="card bg-primary text-white">
-                                    <div class="card-body text-center">
-                                        <h3 id="total-entregas">0</h3>
-                                        <p class="mb-0">Total de Entregas</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card bg-success text-white">
-                                    <div class="card-body text-center">
-                                        <h3 id="kits-restantes">110</h3>
-                                        <p class="mb-0">Kits Restantes</p>
-                                    </div>
-                                </div>
-                            </div>
+                 <div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 id="total-entregas">0</h3>
+                <p class="mb-0">Total de Entregas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3 id="equipamentos-entregues">0</h3>
+                <p class="mb-0">Equipamentos Entregues</p>
+            </div>
+        </div>
+    </div>
+</div>
                             <div class="col-md-4">
                                 <div class="card bg-info text-white">
                                     <div class="card-body text-center">
@@ -868,7 +857,7 @@
             });
 
             document.getElementById('total-entregas').textContent = entregas.length;
-            document.getElementById('kits-restantes').textContent = 110 - entregas.length;
+         
             document.getElementById('equipamentos-entregues').textContent = totalEquipamentosGeral;
         }
 
@@ -1178,6 +1167,7 @@ Total: ${totalEquipamentos} equipamentos`);
     </script>
 </body>
 </html>
+
 
 
 
