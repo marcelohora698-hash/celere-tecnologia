@@ -35,13 +35,13 @@
         }
         
         .logo-img {
-            width: 100%;
-            max-width: 1900px;
+            width: 90%;
+            max-width: 1200px;
             height: 200px;
             object-fit: contain;
             margin: 0 auto;
-            display: enable;
-            background-color: verde-secundario;
+            display: block;
+            background-color: transparent;
             border-radius: 10px;
             padding: 15px;
         }
@@ -59,7 +59,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            background:slimegreen;
+            background: transparent;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 15px;
@@ -212,6 +212,31 @@
             color: white;
         }
 
+        .sync-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .sync-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .sync-error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .sync-loading {
+            background: #ffc107;
+            color: black;
+        }
+
         @media print {
             .no-print {
                 display: none !important;
@@ -231,6 +256,9 @@
     </style>
 </head>
 <body>
+    <!-- Status de Sincronização -->
+    <div id="syncStatus" class="sync-status" style="display: none;"></div>
+
     <!-- Header com Logo FIXO -->
     <div class="header-custom text-white">
         <div class="container">
@@ -243,6 +271,7 @@
                 </div>
                 
                 <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
+                <p class="small mb-0 opacity-85">📊 Dados compartilhados em tempo real</p>
             </div>
         </div>
     </div>
@@ -259,6 +288,9 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-light me-2" onclick="sincronizarDados()">
+                        <i class="fas fa-sync-alt me-1"></i>Sincronizar
+                    </button>
                     <button class="btn btn-outline-light" onclick="proximaAba('relatorios')">
                         <i class="fas fa-chart-bar me-1"></i>Relatórios
                     </button>
@@ -573,6 +605,9 @@
                         </div>
 
                         <div class="mb-3">
+                            <button class="btn btn-outline-light me-2" onclick="sincronizarDados()">
+                                <i class="fas fa-sync-alt me-1"></i>Sincronizar Dados
+                            </button>
                             <button class="btn btn-outline-light me-2" onclick="exportarDados()">
                                 <i class="fas fa-download me-1"></i>Exportar CSV
                             </button>
@@ -633,14 +668,127 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // ========== CONFIGURAÇÃO GOOGLE SHEETS ==========
+        const SHEET_ID = '1ge5b_RTUJYrLATUXNIBZseUrwbLoLcam5Np8R_ShSPY';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw8WwN0VkLq6X8J8Q7QeZ5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q5Q/exec';
+
         // ========== SISTEMA DE ARMAZENAMENTO ==========
-        let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
+        let entregas = [];
         let quantidades = {
             cpu: 0,
             monitor: 0,
             caboEnergia: 0,
             caboVideo: 0
         };
+
+        // ========== SISTEMA DE SINCRONIZAÇÃO ==========
+        function mostrarStatus(mensagem, tipo) {
+            const status = document.getElementById('syncStatus');
+            status.textContent = mensagem;
+            status.className = `sync-status sync-${tipo}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        async function sincronizarDados() {
+            mostrarStatus('🔄 Sincronizando dados...', 'loading');
+            try {
+                await carregarDadosGoogleSheets();
+                mostrarStatus('✅ Dados sincronizados!', 'success');
+            } catch (error) {
+                console.error('Erro na sincronização:', error);
+                mostrarStatus('❌ Erro na sincronização', 'error');
+            }
+        }
+
+        async function carregarDadosGoogleSheets() {
+            try {
+                // URL do Google Apps Script (vamos criar na próxima etapa)
+                const response = await fetch(`https://script.google.com/macros/s/AKfycbyQwZiV7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q/exec?action=getData&sheetId=${SHEET_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar dados');
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    entregas = data.data || [];
+                    atualizarRelatorios();
+                    mostrarStatus(`✅ ${entregas.length} entregas carregadas`, 'success');
+                } else {
+                    throw new Error(data.error || 'Erro desconhecido');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                // Fallback para localStorage se necessário
+                const localData = localStorage.getItem('celere_entregas');
+                if (localData) {
+                    entregas = JSON.parse(localData);
+                    atualizarRelatorios();
+                    mostrarStatus('⚠️ Usando dados locais', 'loading');
+                } else {
+                    mostrarStatus('❌ Erro ao carregar dados', 'error');
+                }
+            }
+        }
+
+        async function salvarEntregaGoogleSheets(entrega) {
+            try {
+                const totalEquipamentos = entrega.quantidades.cpu + entrega.quantidades.monitor + 
+                                         entrega.quantidades.caboEnergia + entrega.quantidades.caboVideo;
+                
+                const dados = [
+                    entrega.data,
+                    entrega.protocolo,
+                    entrega.usuario,
+                    entrega.matricula,
+                    entrega.setor,
+                    entrega.tecnico,
+                    entrega.quantidades.cpu,
+                    entrega.quantidades.monitor,
+                    entrega.quantidades.caboEnergia,
+                    entrega.quantidades.caboVideo,
+                    totalEquipamentos
+                ];
+
+                const response = await fetch(`https://script.google.com/macros/s/AKfycbyQwZiV7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q7Q/exec?action=saveData`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        sheetId: SHEET_ID,
+                        data: dados
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar dados');
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Adiciona localmente também
+                    entregas.push(entrega);
+                    localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                    return true;
+                } else {
+                    throw new Error(result.error || 'Erro ao salvar');
+                }
+            } catch (error) {
+                console.error('Erro ao salvar no Google Sheets:', error);
+                // Fallback para localStorage
+                entregas.push(entrega);
+                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                mostrarStatus('⚠️ Dados salvos localmente', 'loading');
+                return false;
+            }
+        }
 
         // ========== ATUALIZAR PROGRESSO ==========
         function atualizarProgresso() {
@@ -808,10 +956,13 @@ Quantidades:
 Total: ${totalEquipamentos} equipamentos`);
         }
 
-        function excluirEntrega(index) {
+        async function excluirEntrega(index) {
             if (confirm('Tem certeza que deseja excluir esta entrega?')) {
-                entregas.splice(index, 1);
-                salvarDados();
+                const entregaRemovida = entregas.splice(index, 1)[0];
+                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                
+                // TODO: Implementar exclusão no Google Sheets
+                mostrarStatus('✅ Entrega excluída localmente', 'success');
                 atualizarRelatorios();
             }
         }
@@ -847,10 +998,6 @@ Total: ${totalEquipamentos} equipamentos`);
             }
         }
 
-        function salvarDados() {
-            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-        }
-
         // ========== FUNÇÃO PARA FECHAR MODAL ==========
         function fecharModal() {
             const modal = bootstrap.Modal.getInstance(document.getElementById('modalSucesso'));
@@ -873,7 +1020,7 @@ Total: ${totalEquipamentos} equipamentos`);
         }
 
         // ========== FINALIZAR ENTREGA ==========
-        function finalizarEntrega() {
+        async function finalizarEntrega() {
             const usuario = document.getElementById('usuario').value;
             const tecnico = document.getElementById('tecnico').value;
             
@@ -903,8 +1050,13 @@ Total: ${totalEquipamentos} equipamentos`);
                 quantidades: { ...quantidades }
             };
 
-            entregas.push(entrega);
-            salvarDados();
+            // Salvar no Google Sheets
+            const sucesso = await salvarEntregaGoogleSheets(entrega);
+            
+            if (sucesso) {
+                mostrarStatus('✅ Entrega salva com sucesso!', 'success');
+            }
+
             atualizarRelatorios();
 
             const modal = new bootstrap.Modal(document.getElementById('modalSucesso'));
@@ -1086,15 +1238,9 @@ Total: ${totalEquipamentos} equipamentos`);
 
         // Inicializar relatórios quando a página carregar
         window.addEventListener('load', function() {
-            atualizarRelatorios();
+            carregarDadosGoogleSheets();
             atualizarProgresso();
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
