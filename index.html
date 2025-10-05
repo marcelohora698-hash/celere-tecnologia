@@ -31,7 +31,7 @@
         }
         
         .logo-img {
-            width: 150%;
+            width: 90%;
             max-width: 1200px;
             height: 200px;
             object-fit: contain;
@@ -73,7 +73,7 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            background: light blue;
+            background: #d4edda; /* VERDE COMUM PARA CARDS */
         }
         
         .card-header {
@@ -110,7 +110,7 @@
         }
 
         .equipamento-item {
-            background: #f8f9fa;
+            background: #c8e6c9; /* VERDE COMUM PARA ITENS */
             padding: 10px;
             border-radius: 5px;
             border-left: 4px solid var(--cor-destaque);
@@ -122,6 +122,10 @@
 
         .progress {
             height: 10px;
+        }
+
+        .bg-verde-comum {
+            background: #d4edda !important;
         }
 
         @media print {
@@ -351,7 +355,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 p-3 bg-light rounded">
+                        <div class="mt-4 p-3 bg-verde-comum rounded">
                             <h6>Resumo das Quantidades</h6>
                             <div class="row">
                                 <div class="col-md-3 text-center">
@@ -402,7 +406,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h6 class="mb-3">Resumo da Entrega</h6>
-                                <div class="p-3 bg-light rounded mb-4">
+                                <div class="p-3 bg-verde-comum rounded mb-4">
                                     <p><strong>Colaborador:</strong> <span id="resumo-usuario">[Nome]</span></p>
                                     <p><strong>Matrícula:</strong> <span id="resumo-matricula">[Matrícula]</span></p>
                                     <p><strong>Setor:</strong> <span id="resumo-setor">[Setor]</span></p>
@@ -1004,7 +1008,3 @@ Total: ${totalEquipamentos} equipamentos`);
     </script>
 </body>
 </html>
-
-
-
-
