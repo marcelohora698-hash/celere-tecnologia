@@ -1246,7 +1246,12 @@
             document.querySelectorAll('.quantidade-input').forEach(input => {
                 input.addEventListener('input', function() {
                     atualizarProgresso();
-                    atualizarTermo();
+                    atualizarTermo();function inicializarSistema() {
+    // ... código existente ...
+    
+    // ADICIONE ESTA LINHA NO FINAL DA FUNÇÃO
+    verificarImagemLogo();
+}
                     // Adicionar esta função para verificar se a imagem existe
 function verificarImagemLogo() {
     const img = document.querySelector('.logo-img');
@@ -1855,6 +1860,7 @@ function atualizarTermo() {
     </script>
 </body>
 </html>
+
 
 
 
