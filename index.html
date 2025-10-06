@@ -51,6 +51,19 @@
             z-index: 2;
         }
         
+        /* Estilo para a imagem do header */
+        .header-logo-img {
+            filter: brightness(0) invert(1); /* Torna a imagem branca */
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header-logo-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
         .logo-img {
             width: 100%;
             max-width: 100%;
@@ -369,6 +382,42 @@
             margin-right: 8px;
         }
 
+        /* Responsividade para mobile */
+        @media (max-width: 768px) {
+            .header-logo-img {
+                height: 80px !important;
+            }
+            
+            #logo-texto h1 {
+                font-size: 2rem !important;
+            }
+            
+            #logo-texto h2 {
+                font-size: 1.2rem !important;
+            }
+            
+            .health-tech-icons {
+                gap: 15px;
+            }
+            
+            .tech-icon {
+                font-size: 1.8rem;
+            }
+            
+            .equipamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .assinaturas-termo {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .assinatura-coluna {
+                width: 100%;
+            }
+        }
+
         /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO - TERMO DENTRO DO TIMBRADO */
         @media print {
             body {
@@ -632,30 +681,6 @@
         .is-invalid {
             border-color: #dc3545 !important;
         }
-
-        /* Melhorar responsividade */
-        @media (max-width: 768px) {
-            .health-tech-icons {
-                gap: 15px;
-            }
-            
-            .tech-icon {
-                font-size: 1.8rem;
-            }
-            
-            .equipamentos-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .assinaturas-termo {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .assinatura-coluna {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
@@ -669,30 +694,30 @@
         </div>
     </div>
 
-   <!-- Header com Logo FIXO -->
-<div class="header-custom text-white">
-    <div class="container">
-        <div class="logo-area">
-            <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
-            <div class="logo-container-full">
-                <div class="logo-img-container">
-                    <!-- IMAGEM DO SISTEMA + TEXTO -->
-                    <div class="d-flex align-items-center justify-content-center gap-4">
-                        <!-- LOGO DO GITHUB -->
-                        <img src="https://raw.githubusercontent.com/marcelohora698-hash/celere-tecnologia/main/images/celere.jpeg" 
-                             alt="Célere Tecnologia em Saúde" 
-                             class="header-logo-img"
-                             style="height: 120px; width: auto; border-radius: 10px;">
-                        
-                        <!-- TEXTO -->
-                        <div id="logo-texto" style="text-align: left;">
-                            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px; color: white;">CÉLERE</h1>
-                            <h2 style="font-size: 1.5rem; opacity: 0.9; color: white;">Tecnologia em Saúde</h2>
-                            <p style="font-size: 1rem; margin-top: 10px; color: white;">Sistema de Entrega de Equipamentos de TI</p>
+    <!-- Header com Logo FIXO -->
+    <div class="header-custom text-white">
+        <div class="container">
+            <div class="logo-area">
+                <!-- LOGO FIXO - IMAGEM MAIOR E CENTRALIZADA -->
+                <div class="logo-container-full">
+                    <div class="logo-img-container">
+                        <!-- IMAGEM DO SISTEMA + TEXTO -->
+                        <div class="d-flex align-items-center justify-content-center gap-4">
+                            <!-- LOGO DO GITHUB -->
+                            <img src="https://raw.githubusercontent.com/marcelohora698-hash/celere-tecnologia/main/images/celere.jpeg" 
+                                 alt="Célere Tecnologia em Saúde" 
+                                 class="header-logo-img"
+                                 style="height: 120px; width: auto; border-radius: 10px;">
+                            
+                            <!-- TEXTO -->
+                            <div id="logo-texto" style="text-align: left;">
+                                <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 10px; color: white;">CÉLERE</h1>
+                                <h2 style="font-size: 1.5rem; opacity: 0.9; color: white;">Tecnologia em Saúde</h2>
+                                <p style="font-size: 1rem; margin-top: 10px; color: white;">Sistema de Entrega de Equipamentos de TI</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
                 
                 <!-- Ícones de Tecnologia em Saúde -->
                 <div class="health-tech-icons">
@@ -2209,4 +2234,3 @@
     </script>
 </body>
 </html>
-
