@@ -783,7 +783,7 @@
                     <i class="fas fa-laptop-medical tech-icon pulse" title="TI em Saúde"></i>
                 </div>
                 
-                <h3 class="h5 mb-1">Sistema de Entrega de Equipamentos de TI</h3>
+                <h3 class="h5 mb-1">logistica e sistema de informatização em saúde</h3>
                 <p class="small mb-0 opacity-85"><i class="fas fa-heartbeat me-1"></i> Tecnologia em Saúde</p>
             </div>
         </div>
@@ -794,8 +794,8 @@
         <div class="stats-card no-print fade-in">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h4><i class="fas fa-laptop-medical me-2"></i>Entrega de Kits de Informática</h4>
-                    <p class="mb-2" id="progresso-texto">Total de equipamentos: 0</p>
+                    <h4><i class="fas fa-laptop-medical me-2"></i>Entrega de equipamentos</h4>
+                    <p class="mb-2" id="progresso-texto">Total de equipamentos entregues: 0</p>
                     <div class="progress">
                         <div id="progresso-bar" class="progress-bar bg-success" style="width: 0%"></div>
                     </div>
@@ -867,7 +867,7 @@
                                     <option value="SAUDE">Área da Saúde</option>
                                     <option value="ADM">Administrativo</option>
                                     <option value="FIN">Financeiro</option>
-                                    <option value="VEND">Vendas</option>
+                                    <option value="VEND">Informatização em saúde</option>
                                 </select>
                             </div>
                         </div>
@@ -888,7 +888,7 @@
                     </div>
                     <div class="card-body">
                         <div class="alert alert-info" role="alert" aria-live="polite">
-                            <strong>Kit Completo:</strong> CPU, Monitor, Cabos de Energia e Vídeo
+                            <strong>Kit Completo:</strong> CPU, Monitor, Cabos de Energia,Cabos de Vídeo e Periféricos
                         </div>
                         
                         <div class="mb-4">
@@ -958,7 +958,7 @@
                             </div>
                         </div>
 
-                        <!-- CABOS E ADAPTADORES -->
+                        <!-- CABOS -->
                         <h6 class="mb-3 mt-4">🔗 Cabos de Vídeo</h6>
                         <div class="row">
                             <div class="col-md-6">
@@ -1005,9 +1005,9 @@
                         </div>
 
                         <div class="row g-3">
-                            <!-- KIT PRINCIPAL -->
+                            <!-- Equipamentos principais -->
                             <div class="col-md-6">
-                                <label class="form-label"><span class="emoji">💻</span> Quantidade de CPUs *</label>
+                                <label class="form-label"><span class="emoji">💻</span> Quantidade de Desktop *</label>
                                 <input type="number" class="form-control quantidade-input" id="qtd-cpu" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
@@ -1050,7 +1050,7 @@
                                 <div class="col-md-3 text-center">
                                     <div class="p-2">
                                         <div class="h4 mb-1" id="resumo-cpu">0</div>
-                                        <small>💻 CPUs</small>
+                                        <small>💻 Desktop</small>
                                     </div>
                                 </div>
                                 <div class="col-md-3 text-center">
@@ -1128,7 +1128,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>Colaborador:</strong> <span id="termo-usuario">-</span></p>
-                                    <p><strong>Matrícula:</strong> <span id="termo-matricula">-</span></p>
+                                    <p><strong>Empresa:</strong> <span id="termo-empresa">-</span></p>
                                     <p><strong>Setor:</strong> <span id="termo-setor">-</span></p>
                                 </div>
                                 <div class="col-md-6">
@@ -1161,13 +1161,11 @@
                             <div class="p-3 bg-verde-pagina rounded">
                                 <p class="mb-3">Eu, <strong><span id="termo-usuario-assinatura">-</span></strong>, matrícula <strong><span id="termo-matricula-assinatura">-</span></strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
                                 
-                                <p class="mb-3">Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
                                 
-                                <p class="mb-3">Comprometo-me a:</p>
+                                <p class="mb-3">Declaro que:</p>
                                 <ul>
-                                    <li>Zelar pela conservação e segurança dos mesmos</li>
+                                    <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
                                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
-                                    <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
                                     <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
                                 </ul>
                                 
@@ -1274,6 +1272,7 @@
                             <i class="fas fa-file-upload fa-2x mb-3"></i>
                             <p>Clique aqui ou arraste um arquivo para importar dados</p>
                             <small class="text-muted">Suporte para arquivos JSON</small>
+                             <small class="text-muted">Suporte para arquivos EXCEL</small>
                             <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importarDados(this.files[0])">
                         </div>
                     </div>
@@ -1375,11 +1374,10 @@
                     
                     <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
                     
-                    <p><strong>Comprometo-me a:</strong></p>
+                    <p><strong>Declaro que:</strong></p>
                     <ul>
-                        <li>Zelar pela conservação e segurança dos mesmos</li>
+                        <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
                         <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
-                        <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
                         <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
                     </ul>
                     
@@ -2291,4 +2289,5 @@
     </script>
 </body>
 </html>
+
 
