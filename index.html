@@ -1741,4 +1741,553 @@
                 tbody.innerHTML = '';
                 
                 const equipamentos = [
-                    { nome: 'CPU', qtd:
+                    { nome: 'CPU', qtd: quantidades.cpu },
+                    { nome: 'Monitor', qtd: quantidades.monitor },
+                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                    { nome: 'Teclado', qtd: quantidades.teclado },
+                    { nome: 'Mouse', qtd: quantidades.mouse },
+                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+                ];
+                
+                let totalEquipamentos = 0;
+                equipamentos.forEach(equip => {
+                    if (equip.qtd > 0) {
+                        totalEquipamentos += equip.qtd;
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${equip.nome}</td>
+                            <td>${equip.qtd}</td>
+                            <td>Conferido e em perfeito estado</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+                
+                document.getElementById('impressao-total').textContent = totalEquipamentos;
+                
+                // Atualizar assinaturas
+                document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+                document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            }
+        }
+
+        function imprimirTermoCompleto() {
+            console.log('Iniciando impressão...');
+            
+            mostrarLoading(true);
+            
+            // Salvar a entrega
+            const entrega = {
+                id: Date.now(),
+                protocolo: document.getElementById('impressao-protocolo').textContent.replace('PROTOCOLO: ', ''),
+                tecnico: document.getElementById('tecnico').value,
+                usuario: document.getElementById('usuario').value,
+                matricula: document.getElementById('matricula').value,
+                setor: document.getElementById('setor').value,
+                data: new Date().toISOString(),
+                equipamentos: { ...quantidades },
+                totalEquipamentos: Object.values(quantidades).reduce((a, b) => a + b, 0)
+            };
+            
+            entregas.push(entrega);
+            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+            
+            // Fazer backup automático
+            fazerBackupAutomatico();
+            
+            // Fechar modal
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                }
+            }
+            
+            // Imprimir
+            setTimeout(() => {
+                console.log('Preparando para imprimir...');
+                atualizarDadosImpressao();
+                const areaImpressao = document.getElementById('area-impressao');
+                if (areaImpressao) {
+                    const janelaImpressao = window.open('', '_blank');
+                    janelaImpressao.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Termo de Entrega - ${entrega.protocolo}</title>
+                            <style>
+                                ${obterEstilosImpressao()}
+                            </style>
+                        </head>
+                        <body onload="window.print(); setTimeout(() => window.close(), 500);">
+                            ${areaImpressao.innerHTML}
+                        </body>
+                        </html>
+                    `);
+                    janelaImpressao.document.close();
+                }
+                
+                mostrarLoading(false);
+                mostrarStatus('Termo impresso e salvo com sucesso!', 'success');
+                atualizarRelatorios();
+                limparFormulario();
+            }, 1000);
+        }
+
+        function limparFormulario() {
+            // Limpar campos
+            document.getElementById('tecnico').value = '';
+            document.getElementById('usuario').value = '';
+            document.getElementById('matricula').value = '';
+            document.getElementById('setor').value = '';
+            
+            // Limpar quantidades
+            document.querySelectorAll('.quantidade-input').forEach(input => {
+                input.value = '0';
+            });
+            
+            // Limpar checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Limpar validações
+            document.querySelectorAll('.is-valid, .is-invalid').forEach(element => {
+                element.classList.remove('is-valid', 'is-invalid');
+            });
+            
+            // Atualizar tudo
+            atualizarProgresso();
+            atualizarTermo();
+            
+            // Voltar para primeira aba
+            proximaAba('dados');
+        }
+
+        function obterEstilosImpressao() {
+            return `
+                body {
+                    background: white !important;
+                    color: black !important;
+                    font-family: 'Arial', sans-serif !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 12px !important;
+                    line-height: 1.3 !important;
+                }
+                
+                .no-print { display: none !important; }
+                
+                /* CONTAINER PRINCIPAL COM FUNDO TIMBRADO */
+                .container-termo-timbrado {
+                    width: 100%;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    position: relative;
+                }
+                
+                /* IMAGEM DE FUNDO DO TIMBRADO */
+                .fundo-timbrado {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url('logo-celere.jpeg');
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0.1;
+                    z-index: 1;
+                }
+                
+                /* CONTEÚDO SOBRE O TIMBRADO */
+                .conteudo-sobre-timbrado {
+                    position: relative;
+                    z-index: 2;
+                    width: 90%;
+                    max-width: 800px;
+                    min-height: 90vh;
+                    background: rgba(255, 255, 255, 0.95);
+                    padding: 40px;
+                    border: 3px solid #0f5132;
+                    border-radius: 15px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+                }
+                
+                /* CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO */
+                .cabecalho-termo {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 3px solid #0f5132;
+                }
+                
+                .empresa-nome {
+                    font-size: 24px;
+                    color: #0f5132;
+                    margin: 0 0 10px 0;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                
+                .titulo-termo {
+                    font-size: 18px;
+                    color: #0f5132;
+                    margin: 0 0 15px 0;
+                    font-weight: bold;
+                }
+                
+                .protocolo-termo {
+                    background: #0f5132;
+                    color: white;
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    font-weight: bold;
+                    font-size: 14px;
+                    display: inline-block;
+                }
+                
+                /* DADOS DA ENTREGA */
+                .dados-termo {
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border: 2px solid #0f5132;
+                    border-radius: 10px;
+                    margin-bottom: 25px;
+                }
+                
+                .linha-dados {
+                    display: flex;
+                    margin-bottom: 10px;
+                }
+                
+                .coluna-dados {
+                    flex: 1;
+                    padding: 0 15px;
+                }
+                
+                .coluna-dados strong {
+                    color: #0f5132;
+                    font-size: 13px;
+                }
+                
+                /* EQUIPAMENTOS */
+                .equipamentos-termo {
+                    margin-bottom: 25px;
+                }
+                
+                .equipamentos-termo h3 {
+                    font-size: 16px;
+                    color: #0f5132;
+                    margin: 0 0 15px 0;
+                    padding-bottom: 8px;
+                    border-bottom: 2px solid #0f5132;
+                    text-align: center;
+                }
+                
+                .tabela-termo {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 12px;
+                    border: 2px solid #0f5132;
+                }
+                
+                .tabela-termo th {
+                    background: linear-gradient(135deg, #0f5132, #157347);
+                    color: white;
+                    padding: 12px;
+                    text-align: left;
+                    border: 1px solid #ddd;
+                    font-weight: bold;
+                    font-size: 13px;
+                }
+                
+                .tabela-termo td {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    background: white;
+                }
+                
+                /* TEXTO DO TERMO */
+                .texto-termo {
+                    margin: 25px 0;
+                    text-align: justify;
+                    line-height: 1.5;
+                    padding: 20px;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    border-left: 5px solid #0f5132;
+                }
+                
+                .texto-termo p {
+                    margin-bottom: 12px;
+                    font-size: 13px;
+                }
+                
+                .texto-termo ul {
+                    margin: 15px 0;
+                    padding-left: 30px;
+                }
+                
+                .texto-termo li {
+                    margin-bottom: 8px;
+                    font-size: 13px;
+                }
+                
+                .texto-termo strong {
+                    color: #0f5132;
+                }
+                
+                /* ASSINATURAS */
+                .assinaturas-termo {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 60px;
+                    page-break-inside: avoid;
+                }
+                
+                .assinatura-coluna {
+                    text-align: center;
+                    width: 45%;
+                }
+                
+                .linha-assinatura {
+                    border-top: 2px solid #000;
+                    margin: 40px 0 10px 0;
+                    padding-top: 5px;
+                }
+                
+                .nome-assinatura {
+                    font-weight: bold;
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                }
+                
+                .cargo-assinatura {
+                    font-size: 12px;
+                    color: #666;
+                }
+                
+                /* RODAPÉ */
+                .rodape-termo {
+                    margin-top: 30px;
+                    text-align: center;
+                    font-size: 11px;
+                    color: #666;
+                    border-top: 2px solid #0f5132;
+                    padding-top: 15px;
+                }
+                
+                .rodape-termo p {
+                    margin: 5px 0;
+                }
+                
+                @media print {
+                    .container-termo-timbrado {
+                        height: auto;
+                        min-height: 100vh;
+                    }
+                    
+                    .conteudo-sobre-timbrado {
+                        box-shadow: none;
+                        border: 2px solid #0f5132;
+                    }
+                }
+            `;
+        }
+
+        // ========== SISTEMA DE BACKUP ==========
+        function fazerBackupAutomatico() {
+            const backup = {
+                entregas: entregas,
+                timestamp: new Date().toISOString(),
+                total: entregas.length
+            };
+            
+            localStorage.setItem('celere_backup_' + Date.now(), JSON.stringify(backup));
+            
+            // Manter apenas os últimos 5 backups
+            const backups = Object.keys(localStorage)
+                .filter(key => key.startsWith('celere_backup_'))
+                .sort()
+                .slice(0, -5);
+            
+            backups.forEach(key => localStorage.removeItem(key));
+        }
+
+        // ========== RELATÓRIOS ==========
+        function atualizarRelatorios() {
+            // Estatísticas gerais
+            document.getElementById('total-entregas').textContent = entregas.length;
+            
+            const totalEquipamentos = entregas.reduce((total, entrega) => {
+                return total + (entrega.totalEquipamentos || 0);
+            }, 0);
+            document.getElementById('total-equipamentos').textContent = totalEquipamentos;
+            
+            // Distribuição por setor
+            const setores = {};
+            entregas.forEach(entrega => {
+                setores[entrega.setor] = (setores[entrega.setor] || 0) + 1;
+            });
+            
+            const tabelaSetores = document.getElementById('tabela-setores');
+            if (tabelaSetores) {
+                tabelaSetores.innerHTML = '';
+                
+                Object.entries(setores).forEach(([setor, count]) => {
+                    const percentual = Math.round((count / entregas.length) * 100);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${setor}</td>
+                        <td class="text-center">${count}</td>
+                        <td class="text-center">${percentual}%</td>
+                    `;
+                    tabelaSetores.appendChild(tr);
+                });
+            }
+            
+            // Últimas entregas
+            const tabelaUltimas = document.getElementById('tabela-ultimas-entregas');
+            if (tabelaUltimas) {
+                tabelaUltimas.innerHTML = '';
+                
+                const ultimasEntregas = entregas.slice(-5).reverse();
+                ultimasEntregas.forEach(entrega => {
+                    const totalEquip = entrega.totalEquipamentos || 0;
+                    const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${data}</td>
+                        <td>${entrega.usuario}</td>
+                        <td class="text-center">${totalEquip}</td>
+                    `;
+                    tabelaUltimas.appendChild(tr);
+                });
+            }
+        }
+
+        // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
+        function exportarParaExcel() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+
+            mostrarLoading(true);
+            
+            try {
+                // Criar conteúdo CSV
+                let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,CPUs,MONITORES,CABOS_DESKTOP,CABOS_MONITOR,TECLADOS,MOUSES,CABOS_HDMI,CABOS_VGA,TOTAL\n";
+                
+                entregas.forEach(entrega => {
+                    const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                    const total = entrega.totalEquipamentos || 0;
+                    
+                    csvContent += `"${data}","${entrega.protocolo}","${entrega.tecnico}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}",`;
+                    csvContent += `${entrega.equipamentos.cpu || 0},${entrega.equipamentos.monitor || 0},`;
+                    csvContent += `${entrega.equipamentos.caboEnergiaDesktop || 0},${entrega.equipamentos.caboEnergiaMonitor || 0},`;
+                    csvContent += `${entrega.equipamentos.teclado || 0},${entrega.equipamentos.mouse || 0},`;
+                    csvContent += `${entrega.equipamentos.caboHdmi || 0},${entrega.equipamentos.caboVga || 0},`;
+                    csvContent += `${total}\n`;
+                });
+
+                // Criar e baixar arquivo
+                const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                link.setAttribute('href', url);
+                link.setAttribute('download', `celere-entregas-${new Date().toISOString().split('T')[0]}.csv`);
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(() => {
+                    mostrarLoading(false);
+                    mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
+                }, 1000);
+                
+            } catch (error) {
+                mostrarLoading(false);
+                mostrarStatus('Erro ao exportar para Excel', 'error');
+                console.error('Erro na exportação:', error);
+            }
+        }
+
+        function exportarParaJSON() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(entregas, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `celere-entregas-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            mostrarStatus('Dados exportados para JSON!', 'success');
+        }
+
+        function importarDados(file) {
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    if (Array.isArray(dados)) {
+                        const dadosValidos = dados.filter(item => 
+                            item.protocolo && item.tecnico && item.usuario && item.matricula && item.setor
+                        );
+                        
+                        if (dadosValidos.length > 0) {
+                            entregas = dadosValidos;
+                            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                            atualizarRelatorios();
+                            mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
+                        } else {
+                            throw new Error('Nenhum dado válido encontrado');
+                        }
+                    } else {
+                        throw new Error('Formato inválido');
+                    }
+                } catch (error) {
+                    mostrarStatus('Erro ao importar dados!', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function limparDados() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para limpar!', 'error');
+                return;
+            }
+            
+            if (confirm('Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
+                localStorage.removeItem('celere_entregas');
+                entregas = [];
+                atualizarRelatorios();
+                mostrarStatus('Dados limpos com sucesso!', 'success');
+            }
+        }
+    </script>
+</body>
+</html>
