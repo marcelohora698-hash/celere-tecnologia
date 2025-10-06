@@ -50,13 +50,17 @@
             position: relative;
             z-index: 2;
         }
-      /* Estilo para a imagem do header - REMOVER FUNDO PRETO */
+         /* Estilo alternativo para remover fundo preto */
 .header-logo-img {
     height: 120px;
     width: auto;
     transition: all 0.3s ease;
-    mix-blend-mode: lighten; /* Isso remove o fundo preto */
-    filter: brightness(1.2) contrast(1.1); /* Melhora a visibilidade */
+    background: transparent;
+    mix-blend-mode: screen; /* Outra opção para remover preto */
+}
+
+.header-logo-img:hover {
+    transform: scale(1.05);
 }
 
 .header-logo-img:hover {
@@ -2240,6 +2244,7 @@
     </script>
 </body>
 </html>
+
 
 
 
