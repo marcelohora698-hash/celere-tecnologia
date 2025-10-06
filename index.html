@@ -369,7 +369,7 @@
             margin-right: 8px;
         }
 
-        /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO - TEXTO DENTRO DO LOGO */
+        /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO - TERMO DENTRO DO TIMBRADO */
         @media print {
             body {
                 background: white !important;
@@ -385,109 +385,74 @@
                 display: none !important;
             }
             
-            /* CONTAINER PRINCIPAL */
-            .container-termo-com-logo {
+            /* CONTAINER PRINCIPAL COM FUNDO TIMBRADO */
+            .container-termo-timbrado {
                 width: 100%;
                 height: 100vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 background: white;
+                position: relative;
             }
             
-            /* TERMO COM LOGO COMO "FUNDO/CARTÃO" */
-            .termo-com-logo-fundo {
-                width: 90%;
-                max-width: 900px;
-                min-height: 90vh;
-                background: white;
-                border: 15px solid transparent;
-                padding: 30px;
+            /* IMAGEM DE FUNDO DO TIMBRADO */
+            .fundo-timbrado {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('logo-celere.jpeg');
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: 0.1;
+                z-index: 1;
+            }
+            
+            /* CONTEÚDO SOBRE O TIMBRADO */
+            .conteudo-sobre-timbrado {
                 position: relative;
-                box-shadow: 0 0 20px rgba(0,0,0,0.2);
+                z-index: 2;
+                width: 90%;
+                max-width: 800px;
+                min-height: 90vh;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 40px;
                 border: 3px solid #0f5132;
                 border-radius: 15px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.2);
             }
             
-            /* CABEÇALHO COM LOGO */
-            .cabecalho-com-logo {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-                padding-bottom: 15px;
+            /* CABEÇALHO DO TERMO */
+            .cabecalho-termo {
+                text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
                 border-bottom: 3px solid #0f5132;
             }
             
-            .logo-grande {
-                flex: 0 0 auto;
-                margin-right: 25px;
-            }
-            
-            .logo-fundo {
-                max-width: 120px;
-                max-height: 100px;
-                height: auto;
-                border: 2px solid #0f5132;
-                border-radius: 8px;
-                padding: 5px;
-                background: white;
-            }
-            
-            .dados-empresa-no-logo {
-                flex: 1;
-            }
-            
-            .empresa-nome-logo {
-                font-size: 14px;
-                font-weight: bold;
+            .titulo-termo {
+                font-size: 22px;
                 color: #0f5132;
-                margin-bottom: 4px;
-            }
-            
-            .empresa-cnpj-logo,
-            .empresa-endereco-logo,
-            .empresa-contato-logo {
-                font-size: 11px;
-                color: #666;
-                margin-bottom: 3px;
-                line-height: 1.2;
-            }
-            
-            /* CONTEÚDO SOBRE O "FUNDO" DO LOGO */
-            .conteudo-sobre-logo {
-                padding: 0 15px;
-            }
-            
-            /* TÍTULO */
-            .titulo-sobre-logo {
-                text-align: center;
-                margin-bottom: 25px;
-                padding: 15px;
-                background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-                border-radius: 10px;
-                border: 2px solid #0f5132;
-            }
-            
-            .titulo-sobre-logo h1 {
-                font-size: 18px;
-                color: #0f5132;
-                margin: 0 0 10px 0;
+                margin: 0 0 15px 0;
                 text-transform: uppercase;
                 font-weight: bold;
             }
             
-            .protocolo-sobre-logo {
+            .protocolo-termo {
                 background: #0f5132;
                 color: white;
-                padding: 10px 20px;
-                border-radius: 25px;
+                padding: 8px 20px;
+                border-radius: 20px;
                 font-weight: bold;
                 font-size: 14px;
                 display: inline-block;
             }
             
             /* DADOS DA ENTREGA */
-            .dados-sobre-logo {
+            .dados-termo {
                 background: #f8f9fa;
                 padding: 20px;
                 border: 2px solid #0f5132;
@@ -497,7 +462,7 @@
             
             .linha-dados {
                 display: flex;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
             
             .coluna-dados {
@@ -511,11 +476,11 @@
             }
             
             /* EQUIPAMENTOS */
-            .equipamentos-sobre-logo {
+            .equipamentos-termo {
                 margin-bottom: 25px;
             }
             
-            .equipamentos-sobre-logo h3 {
+            .equipamentos-termo h3 {
                 font-size: 16px;
                 color: #0f5132;
                 margin: 0 0 15px 0;
@@ -524,14 +489,14 @@
                 text-align: center;
             }
             
-            .tabela-sobre-logo {
+            .tabela-termo {
                 width: 100%;
                 border-collapse: collapse;
                 font-size: 12px;
                 border: 2px solid #0f5132;
             }
             
-            .tabela-sobre-logo th {
+            .tabela-termo th {
                 background: linear-gradient(135deg, #0f5132, #157347);
                 color: white;
                 padding: 12px;
@@ -541,15 +506,15 @@
                 font-size: 13px;
             }
             
-            .tabela-sobre-logo td {
+            .tabela-termo td {
                 padding: 10px;
                 border: 1px solid #ddd;
                 background: white;
             }
             
             /* TEXTO DO TERMO */
-            .texto-sobre-logo {
-                margin: 30px 0;
+            .texto-termo {
+                margin: 25px 0;
                 text-align: justify;
                 line-height: 1.5;
                 padding: 20px;
@@ -558,30 +523,30 @@
                 border-left: 5px solid #0f5132;
             }
             
-            .texto-sobre-logo p {
+            .texto-termo p {
                 margin-bottom: 12px;
                 font-size: 13px;
             }
             
-            .texto-sobre-logo ul {
+            .texto-termo ul {
                 margin: 15px 0;
                 padding-left: 30px;
             }
             
-            .texto-sobre-logo li {
+            .texto-termo li {
                 margin-bottom: 8px;
                 font-size: 13px;
             }
             
-            .texto-sobre-logo strong {
+            .texto-termo strong {
                 color: #0f5132;
             }
             
             /* ASSINATURAS */
-            .assinaturas-sobre-logo {
+            .assinaturas-termo {
                 display: flex;
                 justify-content: space-between;
-                margin-top: 80px;
+                margin-top: 60px;
                 page-break-inside: avoid;
             }
             
@@ -590,26 +555,26 @@
                 width: 45%;
             }
             
-            .linha-assinatura-logo {
+            .linha-assinatura {
                 border-top: 2px solid #000;
-                margin: 50px 0 10px 0;
+                margin: 40px 0 10px 0;
                 padding-top: 5px;
             }
             
-            .nome-assinatura-logo {
+            .nome-assinatura {
                 font-weight: bold;
                 font-size: 14px;
                 margin-bottom: 5px;
             }
             
-            .cargo-assinatura-logo {
+            .cargo-assinatura {
                 font-size: 12px;
                 color: #666;
             }
             
             /* RODAPÉ */
-            .rodape-sobre-logo {
-                margin-top: 40px;
+            .rodape-termo {
+                margin-top: 30px;
                 text-align: center;
                 font-size: 11px;
                 color: #666;
@@ -617,7 +582,7 @@
                 padding-top: 15px;
             }
             
-            .rodape-sobre-logo p {
+            .rodape-termo p {
                 margin: 5px 0;
             }
         }
@@ -637,11 +602,65 @@
             color: #0f5132;
             font-weight: bold;
         }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Estados de validação */
+        .is-valid {
+            border-color: #198754 !important;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        /* Melhorar responsividade */
+        @media (max-width: 768px) {
+            .health-tech-icons {
+                gap: 15px;
+            }
+            
+            .tech-icon {
+                font-size: 1.8rem;
+            }
+            
+            .equipamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .assinaturas-termo {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .assinatura-coluna {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Status de Sincronização -->
     <div id="syncStatus" class="sync-status" style="display: none;"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
 
     <!-- Header com Logo FIXO -->
     <div class="header-custom text-white">
@@ -678,13 +697,13 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h4><i class="fas fa-laptop-medical me-2"></i>Entrega de Kits de Informática</h4>
-                    <p class="mb-2" id="progresso-texto">Progresso: 0/440 equipamentos (0%)</p>
+                    <p class="mb-2" id="progresso-texto">Total de equipamentos: 0</p>
                     <div class="progress">
                         <div id="progresso-bar" class="progress-bar bg-success" style="width: 0%"></div>
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <button class="btn btn-outline-light" onclick="proximaAba('relatorios')">
+                    <button class="btn btn-outline-light" onclick="proximaAba('relatorios')" data-bs-toggle="tooltip" data-bs-title="Visualizar relatórios e estatísticas">
                         <i class="fas fa-chart-bar me-1"></i>Relatórios
                     </button>
                 </div>
@@ -730,19 +749,19 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Técnico Responsável *</label>
+                                <label for="tecnico" class="form-label">Técnico Responsável *</label>
                                 <input type="text" class="form-control" id="tecnico" placeholder="Nome do técnico">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Colaborador *</label>
+                                <label for="usuario" class="form-label">Colaborador *</label>
                                 <input type="text" class="form-control" id="usuario" placeholder="Nome do colaborador">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Matrícula *</label>
+                                <label for="matricula" class="form-label">Matrícula *</label>
                                 <input type="text" class="form-control" id="matricula" placeholder="Número da matrícula">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Setor *</label>
+                                <label for="setor" class="form-label">Setor *</label>
                                 <select class="form-select" id="setor">
                                     <option value="">Selecione...</option>
                                     <option value="TI">Tecnologia da Informação</option>
@@ -770,7 +789,7 @@
                         <h5 class="mb-0"><i class="fas fa-laptop me-2"></i>Checklist do Kit</h5>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-info">
+                        <div class="alert alert-info" role="alert" aria-live="polite">
                             <strong>Kit Completo:</strong> CPU, Monitor, Cabos de Energia e Vídeo
                         </div>
                         
@@ -1048,9 +1067,13 @@
                                 
                                 <p class="mb-3">Comprometo-me a:</p>
                                 <ul>
-                                     <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                                    <li>Zelar pela conservação e segurança dos mesmos</li>
+                                    <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                                    <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
+                                    <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
                                 </ul>
-                                  <p class="mb-0">Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+                                
+                                <p class="mb-0">Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
                             </div>
                         </div>
 
@@ -1186,112 +1209,99 @@
 
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
-        <div class="container-termo-com-logo">
-            <!-- TERMO COM LOGO DE FUNDO -->
-            <div class="termo-com-logo-fundo">
+        <div class="container-termo-timbrado">
+            <!-- FUNDO TIMBRADO -->
+            <div class="fundo-timbrado"></div>
+            
+            <!-- CONTEÚDO DO TERMO SOBRE O TIMBRADO -->
+            <div class="conteudo-sobre-timbrado">
                 <!-- CABEÇALHO -->
-                <div class="cabecalho-com-logo">
-                    <div class="logo-grande">
-                        <img src="logo-celere.jpeg" alt="Célere Tecnologia em Saúde" class="logo-fundo">
+                <div class="cabecalho-termo">
+                    <h1 class="titulo-termo">TERMO DE ENTREGA E RESPONSABILIDADE</h1>
+                    <div class="protocolo-termo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
+                </div>
+
+                <!-- DADOS -->
+                <div class="dados-termo">
+                    <div class="linha-dados">
+                        <div class="coluna-dados">
+                            <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
+                        </div>
+                        <div class="coluna-dados">
+                            <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
+                        </div>
                     </div>
-                    <div class="dados-empresa-no-logo">
-                        <div class="empresa-nome-logo">CÉLERE TECNOLOGIA E ASSESSORIA EM SAÚDE PÚBLICA E PRIVADA LTDA</div>
-                        <div class="empresa-cnpj-logo">CNPJ: 46.961.423/0001-79</div>
-                        <div class="empresa-endereco-logo">Rua Ziderita, 1166, Sala 03, Bairro Amador, Estebio – CE</div>
-                        <div class="empresa-contato-logo">Tel: (85) 69206-4075 | Email: comercial@celeretecnologia.com.br</div>
+                    <div class="linha-dados">
+                        <div class="coluna-dados">
+                            <strong>Setor:</strong> <span id="impressao-setor">-</span>
+                        </div>
+                        <div class="coluna-dados">
+                            <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
+                        </div>
+                    </div>
+                    <div class="linha-dados">
+                        <div class="coluna-dados">
+                            <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
+                        </div>
+                        <div class="coluna-dados">
+                            <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- CONTEÚDO DO TERMO SOBRE O LOGO -->
-                <div class="conteudo-sobre-logo">
-                    <!-- TÍTULO -->
-                    <div class="titulo-sobre-logo">
-                        <h1>TERMO DE ENTREGA E RESPONSABILIDADE</h1>
-                        <div class="protocolo-sobre-logo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
-                    </div>
+                <!-- EQUIPAMENTOS -->
+                <div class="equipamentos-termo">
+                    <h3>EQUIPAMENTOS ENTREGUES</h3>
+                    <table class="tabela-termo">
+                        <thead>
+                            <tr>
+                                <th>Equipamento</th>
+                                <th>Quantidade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="impressao-equipamentos">
+                            <!-- Preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
 
-                    <!-- DADOS -->
-                    <div class="dados-sobre-logo">
-                        <div class="linha-dados">
-                            <div class="coluna-dados">
-                                <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
-                            </div>
-                            <div class="coluna-dados">
-                                <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
-                            </div>
-                        </div>
-                        <div class="linha-dados">
-                            <div class="coluna-dados">
-                                <strong>Setor:</strong> <span id="impressao-setor">-</span>
-                            </div>
-                            <div class="coluna-dados">
-                                <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
-                            </div>
-                        </div>
-                        <div class="linha-dados">
-                            <div class="coluna-dados">
-                                <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
-                            </div>
-                            <div class="coluna-dados">
-                                <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
-                            </div>
-                        </div>
-                    </div>
+                <!-- TEXTO DO TERMO -->
+                <div class="texto-termo">
+                    <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                    
+                    <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
+                    
+                    <p><strong>Comprometo-me a:</strong></p>
+                    <ul>
+                        <li>Zelar pela conservação e segurança dos mesmos</li>
+                        <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                        <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
+                        <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+                    </ul>
+                    
+                    <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+                </div>
 
-                    <!-- EQUIPAMENTOS -->
-                    <div class="equipamentos-sobre-logo">
-                        <h3>EQUIPAMENTOS ENTREGUES</h3>
-                        <table class="tabela-sobre-logo">
-                            <thead>
-                                <tr>
-                                    <th>Equipamento</th>
-                                    <th>Quantidade</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="impressao-equipamentos">
-                                <!-- Preenchido via JavaScript -->
-                            </tbody>
-                        </table>
+                <!-- ASSINATURAS -->
+                <div class="assinaturas-termo">
+                    <div class="assinatura-coluna">
+                        <div class="linha-assinatura"></div>
+                        <div class="nome-assinatura" id="impressao-assinatura-usuario">-</div>
+                        <div class="cargo-assinatura">Colaborador</div>
                     </div>
+                    
+                    <div class="assinatura-coluna">
+                        <div class="linha-assinatura"></div>
+                        <div class="nome-assinatura" id="impressao-assinatura-tecnico">-</div>
+                        <div class="cargo-assinatura">Técnico Responsável</div>
+                    </div>
+                </div>
 
-                    <!-- TEXTO DO TERMO -->
-                    <div class="texto-sobre-logo">
-                        <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
-                        
-                        <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
-                        
-                        <p><strong>Comprometo-me a:</strong></p>
-                        <ul>
-                            <li>Zelar pela conservação e segurança dos mesmos</li>
-                            <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
-                            <li>Devolver todos os equipamentos em caso de desligamento ou transferência</li>
-                            <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
-                        </ul>
-                        
-                        <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
-                    </div>
-
-                    <!-- ASSINATURAS -->
-                    <div class="assinaturas-sobre-logo">
-                        <div class="assinatura-coluna">
-                            <div class="linha-assinatura-logo"></div>
-                            <div class="nome-assinatura-logo" id="impressao-assinatura-usuario">-</div>
-                            <div class="cargo-assinatura-logo">Colaborador</div>
-                        </div>
-                        
-                        <div class="assinatura-coluna">
-                            <div class="linha-assinatura-logo"></div>
-                            <div class="nome-assinatura-logo" id="impressao-assinatura-tecnico">-</div>
-                            <div class="cargo-assinatura-logo">Técnico Responsável</div>
-                        </div>
-                    </div>
-
-                    <!-- RODAPÉ -->
-                    <div class="rodape-sobre-logo">
-                        <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
-                        <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
-                    </div>
+                <!-- RODAPÉ -->
+                <div class="rodape-termo">
+                    <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
+                    <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
                 </div>
             </div>
         </div>
@@ -1316,6 +1326,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Sistema Célere inicializado!');
             inicializarSistema();
+            inicializarTooltips();
         });
 
         function inicializarSistema() {
@@ -1332,6 +1343,7 @@
                 const element = document.getElementById(id);
                 if (element) {
                     element.addEventListener('input', function() {
+                        validarCamposObrigatorios();
                         setTimeout(atualizarTermo, 100);
                     });
                 }
@@ -1383,6 +1395,14 @@
             atualizarProgresso();
             atualizarTermo();
             atualizarRelatorios();
+            validarCamposObrigatorios();
+        }
+
+        function inicializarTooltips() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         }
 
         // ========== SISTEMA DE STATUS ==========
@@ -1395,6 +1415,41 @@
             setTimeout(() => {
                 status.style.display = 'none';
             }, 3000);
+        }
+
+        function mostrarLoading(mostrar) {
+            const loading = document.getElementById('loadingOverlay');
+            if (loading) {
+                loading.style.display = mostrar ? 'flex' : 'none';
+            }
+        }
+
+        // ========== VALIDAÇÃO DE CAMPOS ==========
+        function validarCamposObrigatorios() {
+            const campos = {
+                tecnico: document.getElementById('tecnico'),
+                usuario: document.getElementById('usuario'),
+                matricula: document.getElementById('matricula'),
+                setor: document.getElementById('setor')
+            };
+            
+            let todosValidos = true;
+            
+            Object.entries(campos).forEach(([key, campo]) => {
+                const isValid = campo.value.trim() !== '';
+                
+                // Adicionar/remover classes de validação
+                if (isValid) {
+                    campo.classList.remove('is-invalid');
+                    campo.classList.add('is-valid');
+                } else {
+                    campo.classList.remove('is-valid');
+                    campo.classList.add('is-invalid');
+                    todosValidos = false;
+                }
+            });
+            
+            return todosValidos;
         }
 
         // ========== ATUALIZAR PROGRESSO ==========
@@ -1429,18 +1484,20 @@
             document.getElementById('badge-cabo-hdmi').textContent = quantidades.caboHdmi;
             document.getElementById('badge-cabo-vga').textContent = quantidades.caboVga;
 
-            // Calcular totais
+            // Calcular totais - MODIFICADO: APENAS QUANTIDADE, SEM PORCENTAGEM
             const totalEquipamentos = Object.values(quantidades).reduce((a, b) => a + b, 0);
-            const percentual = Math.min(100, Math.round((totalEquipamentos / 440) * 100));
 
-            // Atualizar progresso
-            document.getElementById('progresso-texto').textContent = `Progresso: ${totalEquipamentos}/440 equipamentos (${percentual}%)`;
+            // Atualizar progresso - MODIFICADO: SEM PORCENTAGEM
+            document.getElementById('progresso-texto').textContent = `Total de equipamentos: ${totalEquipamentos}`;
+            
+            // Barra de progresso mostra apenas a quantidade relativa
+            const percentual = Math.min(100, Math.round((totalEquipamentos / 50) * 100));
             document.getElementById('progresso-bar').style.width = `${percentual}%`;
 
-            if (percentual === 100) {
-                document.getElementById('progresso-bar').classList.add('bg-warning');
+            if (totalEquipamentos > 0) {
+                document.getElementById('progresso-bar').classList.add('bg-success');
             } else {
-                document.getElementById('progresso-bar').classList.remove('bg-warning');
+                document.getElementById('progresso-bar').classList.remove('bg-success');
             }
         }
 
@@ -1453,7 +1510,7 @@
             }
         }
 
-        // ========== GERAR TERMO - FUNÇÃO CORRIGIDA ==========
+        // ========== GERAR TERMO ==========
         function atualizarTermo() {
             // Atualizar informações do termo
             document.getElementById('termo-usuario').textContent = document.getElementById('usuario').value || '-';
@@ -1500,30 +1557,14 @@
             document.getElementById('termo-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
             document.getElementById('termo-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
             
-            // VERIFICAÇÃO CORRIGIDA - Habilita o botão quando todos os campos obrigatórios estiverem preenchidos
+            // Verificação para habilitar o botão
             const aceite = document.getElementById('aceite-termo').checked;
-            const tecnicoPreenchido = document.getElementById('tecnico').value && document.getElementById('tecnico').value.trim() !== '';
-            const usuarioPreenchido = document.getElementById('usuario').value && document.getElementById('usuario').value.trim() !== '';
-            const matriculaPreenchida = document.getElementById('matricula').value && document.getElementById('matricula').value.trim() !== '';
-            const setorPreenchido = document.getElementById('setor').value && document.getElementById('setor').value !== '';
+            const camposValidos = validarCamposObrigatorios();
             const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
             
             const btnGerarTermo = document.getElementById('btn-gerar-termo');
             if (btnGerarTermo) {
-                // Habilita apenas se TODOS os campos obrigatórios estiverem preenchidos E tiver equipamentos E aceite marcado
-                const habilitar = aceite && 
-                                 tecnicoPreenchido && 
-                                 usuarioPreenchido && 
-                                 matriculaPreenchida && 
-                                 setorPreenchido && 
-                                 temEquipamentos;
-                
-                btnGerarTermo.disabled = !habilitar;
-                
-                console.log('Status do botão - Habilitado:', habilitar, {
-                    aceite, tecnico: tecnicoPreenchido, usuario: usuarioPreenchido,
-                    matricula: matriculaPreenchida, setor: setorPreenchido, equipamentos: temEquipamentos
-                });
+                btnGerarTermo.disabled = !(aceite && camposValidos && temEquipamentos);
             }
         }
 
@@ -1634,6 +1675,8 @@
         function imprimirTermoCompleto() {
             console.log('Iniciando impressão...');
             
+            mostrarLoading(true);
+            
             // Salvar a entrega
             const entrega = {
                 id: Date.now(),
@@ -1649,6 +1692,9 @@
             
             entregas.push(entrega);
             localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+            
+            // Fazer backup automático
+            fazerBackupAutomatico();
             
             // Fechar modal
             const modalElement = document.getElementById('modalPreview');
@@ -1683,10 +1729,11 @@
                     janelaImpressao.document.close();
                 }
                 
+                mostrarLoading(false);
                 mostrarStatus('Termo impresso e salvo com sucesso!', 'success');
                 atualizarRelatorios();
                 limparFormulario();
-            }, 500);
+            }, 1000);
         }
 
         function limparFormulario() {
@@ -1704,6 +1751,11 @@
             // Limpar checkboxes
             document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 checkbox.checked = false;
+            });
+            
+            // Limpar validações
+            document.querySelectorAll('.is-valid, .is-invalid').forEach(element => {
+                element.classList.remove('is-valid', 'is-invalid');
             });
             
             // Atualizar tudo
@@ -1728,109 +1780,74 @@
                 
                 .no-print { display: none !important; }
                 
-                /* CONTAINER PRINCIPAL */
-                .container-termo-com-logo {
+                /* CONTAINER PRINCIPAL COM FUNDO TIMBRADO */
+                .container-termo-timbrado {
                     width: 100%;
                     height: 100vh;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     background: white;
+                    position: relative;
                 }
                 
-                /* TERMO COM LOGO COMO "FUNDO/CARTÃO" */
-                .termo-com-logo-fundo {
-                    width: 90%;
-                    max-width: 900px;
-                    min-height: 90vh;
-                    background: white;
-                    border: 15px solid transparent;
-                    padding: 30px;
+                /* IMAGEM DE FUNDO DO TIMBRADO */
+                .fundo-timbrado {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url('logo-celere.jpeg');
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0.1;
+                    z-index: 1;
+                }
+                
+                /* CONTEÚDO SOBRE O TIMBRADO */
+                .conteudo-sobre-timbrado {
                     position: relative;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+                    z-index: 2;
+                    width: 90%;
+                    max-width: 800px;
+                    min-height: 90vh;
+                    background: rgba(255, 255, 255, 0.95);
+                    padding: 40px;
                     border: 3px solid #0f5132;
                     border-radius: 15px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.2);
                 }
                 
-                /* CABEÇALHO COM LOGO */
-                .cabecalho-com-logo {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 20px;
-                    padding-bottom: 15px;
+                /* CABEÇALHO DO TERMO */
+                .cabecalho-termo {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
                     border-bottom: 3px solid #0f5132;
                 }
                 
-                .logo-grande {
-                    flex: 0 0 auto;
-                    margin-right: 25px;
-                }
-                
-                .logo-fundo {
-                    max-width: 120px;
-                    max-height: 100px;
-                    height: auto;
-                    border: 2px solid #0f5132;
-                    border-radius: 8px;
-                    padding: 5px;
-                    background: white;
-                }
-                
-                .dados-empresa-no-logo {
-                    flex: 1;
-                }
-                
-                .empresa-nome-logo {
-                    font-size: 14px;
-                    font-weight: bold;
+                .titulo-termo {
+                    font-size: 22px;
                     color: #0f5132;
-                    margin-bottom: 4px;
-                }
-                
-                .empresa-cnpj-logo,
-                .empresa-endereco-logo,
-                .empresa-contato-logo {
-                    font-size: 11px;
-                    color: #666;
-                    margin-bottom: 3px;
-                    line-height: 1.2;
-                }
-                
-                /* CONTEÚDO SOBRE O "FUNDO" DO LOGO */
-                .conteudo-sobre-logo {
-                    padding: 0 15px;
-                }
-                
-                /* TÍTULO */
-                .titulo-sobre-logo {
-                    text-align: center;
-                    margin-bottom: 25px;
-                    padding: 15px;
-                    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-                    border-radius: 10px;
-                    border: 2px solid #0f5132;
-                }
-                
-                .titulo-sobre-logo h1 {
-                    font-size: 18px;
-                    color: #0f5132;
-                    margin: 0 0 10px 0;
+                    margin: 0 0 15px 0;
                     text-transform: uppercase;
                     font-weight: bold;
                 }
                 
-                .protocolo-sobre-logo {
+                .protocolo-termo {
                     background: #0f5132;
                     color: white;
-                    padding: 10px 20px;
-                    border-radius: 25px;
+                    padding: 8px 20px;
+                    border-radius: 20px;
                     font-weight: bold;
                     font-size: 14px;
                     display: inline-block;
                 }
                 
                 /* DADOS DA ENTREGA */
-                .dados-sobre-logo {
+                .dados-termo {
                     background: #f8f9fa;
                     padding: 20px;
                     border: 2px solid #0f5132;
@@ -1840,7 +1857,7 @@
                 
                 .linha-dados {
                     display: flex;
-                    margin-bottom: 12px;
+                    margin-bottom: 10px;
                 }
                 
                 .coluna-dados {
@@ -1854,11 +1871,11 @@
                 }
                 
                 /* EQUIPAMENTOS */
-                .equipamentos-sobre-logo {
+                .equipamentos-termo {
                     margin-bottom: 25px;
                 }
                 
-                .equipamentos-sobre-logo h3 {
+                .equipamentos-termo h3 {
                     font-size: 16px;
                     color: #0f5132;
                     margin: 0 0 15px 0;
@@ -1867,14 +1884,14 @@
                     text-align: center;
                 }
                 
-                .tabela-sobre-logo {
+                .tabela-termo {
                     width: 100%;
                     border-collapse: collapse;
                     font-size: 12px;
                     border: 2px solid #0f5132;
                 }
                 
-                .tabela-sobre-logo th {
+                .tabela-termo th {
                     background: linear-gradient(135deg, #0f5132, #157347);
                     color: white;
                     padding: 12px;
@@ -1884,15 +1901,15 @@
                     font-size: 13px;
                 }
                 
-                .tabela-sobre-logo td {
+                .tabela-termo td {
                     padding: 10px;
                     border: 1px solid #ddd;
                     background: white;
                 }
                 
                 /* TEXTO DO TERMO */
-                .texto-sobre-logo {
-                    margin: 30px 0;
+                .texto-termo {
+                    margin: 25px 0;
                     text-align: justify;
                     line-height: 1.5;
                     padding: 20px;
@@ -1901,30 +1918,30 @@
                     border-left: 5px solid #0f5132;
                 }
                 
-                .texto-sobre-logo p {
+                .texto-termo p {
                     margin-bottom: 12px;
                     font-size: 13px;
                 }
                 
-                .texto-sobre-logo ul {
+                .texto-termo ul {
                     margin: 15px 0;
                     padding-left: 30px;
                 }
                 
-                .texto-sobre-logo li {
+                .texto-termo li {
                     margin-bottom: 8px;
                     font-size: 13px;
                 }
                 
-                .texto-sobre-logo strong {
+                .texto-termo strong {
                     color: #0f5132;
                 }
                 
                 /* ASSINATURAS */
-                .assinaturas-sobre-logo {
+                .assinaturas-termo {
                     display: flex;
                     justify-content: space-between;
-                    margin-top: 80px;
+                    margin-top: 60px;
                     page-break-inside: avoid;
                 }
                 
@@ -1933,26 +1950,26 @@
                     width: 45%;
                 }
                 
-                .linha-assinatura-logo {
+                .linha-assinatura {
                     border-top: 2px solid #000;
-                    margin: 50px 0 10px 0;
+                    margin: 40px 0 10px 0;
                     padding-top: 5px;
                 }
                 
-                .nome-assinatura-logo {
+                .nome-assinatura {
                     font-weight: bold;
                     font-size: 14px;
                     margin-bottom: 5px;
                 }
                 
-                .cargo-assinatura-logo {
+                .cargo-assinatura {
                     font-size: 12px;
                     color: #666;
                 }
                 
                 /* RODAPÉ */
-                .rodape-sobre-logo {
-                    margin-top: 40px;
+                .rodape-termo {
+                    margin-top: 30px;
                     text-align: center;
                     font-size: 11px;
                     color: #666;
@@ -1960,15 +1977,46 @@
                     padding-top: 15px;
                 }
                 
-                .rodape-sobre-logo p {
+                .rodape-termo p {
                     margin: 5px 0;
+                }
+                
+                @media print {
+                    .container-termo-timbrado {
+                        height: auto;
+                        min-height: 100vh;
+                    }
+                    
+                    .conteudo-sobre-timbrado {
+                        box-shadow: none;
+                        border: 2px solid #0f5132;
+                    }
                 }
             `;
         }
 
+        // ========== SISTEMA DE BACKUP ==========
+        function fazerBackupAutomatico() {
+            const backup = {
+                entregas: entregas,
+                timestamp: new Date().toISOString(),
+                total: entregas.length
+            };
+            
+            localStorage.setItem('celere_backup_' + Date.now(), JSON.stringify(backup));
+            
+            // Manter apenas os últimos 5 backups
+            const backups = Object.keys(localStorage)
+                .filter(key => key.startsWith('celere_backup_'))
+                .sort()
+                .slice(0, -5);
+            
+            backups.forEach(key => localStorage.removeItem(key));
+        }
+
         // ========== RELATÓRIOS ==========
         function atualizarRelatorios() {
-            // Estatísticas gerais - APENAS 2 CARDS
+            // Estatísticas gerais
             document.getElementById('total-entregas').textContent = entregas.length;
             
             const totalEquipamentos = entregas.reduce((total, entrega) => {
@@ -2026,7 +2074,7 @@
                 return;
             }
 
-            mostrarStatus('Exportando para Excel...', 'loading');
+            mostrarLoading(true);
             
             try {
                 // Criar conteúdo CSV
@@ -2057,10 +2105,12 @@
                 document.body.removeChild(link);
                 
                 setTimeout(() => {
+                    mostrarLoading(false);
                     mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
                 }, 1000);
                 
             } catch (error) {
+                mostrarLoading(false);
                 mostrarStatus('Erro ao exportar para Excel', 'error');
                 console.error('Erro na exportação:', error);
             }
@@ -2131,5 +2181,3 @@
     </script>
 </body>
 </html>
-
-
