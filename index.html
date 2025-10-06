@@ -1008,7 +1008,7 @@
                             <!-- Equipamentos principais -->
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">💻</span> Quantidade de Desktop *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-cpu" min="0" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-Desktop" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🖥️</span> Quantidade de Monitores *</label>
@@ -1049,7 +1049,7 @@
                             <div class="row">
                                 <div class="col-md-3 text-center">
                                     <div class="p-2">
-                                        <div class="h4 mb-1" id="resumo-cpu">0</div>
+                                        <div class="h4 mb-1" id="resumo-desktop">0</div>
                                         <small>💻 Desktop</small>
                                     </div>
                                 </div>
@@ -1413,7 +1413,7 @@
         // ========== SISTEMA DE ARMAZENAMENTO ==========
         let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
         let quantidades = {
-            cpu: 0,
+            desktop: 0,
             monitor: 0,
             caboEnergiaDesktop: 0,
             caboEnergiaMonitor: 0,
@@ -1478,7 +1478,7 @@
                 kitCompleto.addEventListener('change', function() {
                     if (this.checked) {
                         // Preencher automaticamente
-                        ['cpu', 'monitor', 'cabo-energia-desktop', 'cabo-energia-monitor', 'teclado', 'mouse'].forEach(id => {
+                        ['desktop', 'monitor', 'cabo-energia-desktop', 'cabo-energia-monitor', 'teclado', 'mouse'].forEach(id => {
                             const checkbox = document.getElementById(id);
                             const input = document.getElementById(`qtd-${id}`);
                             if (checkbox && input) {
@@ -1556,7 +1556,7 @@
         // ========== ATUALIZAR PROGRESSO ==========
         function atualizarProgresso() {
             // Atualizar quantidades
-            quantidades.cpu = parseInt(document.getElementById('qtd-cpu').value) || 0;
+            quantidades.desktop = parseInt(document.getElementById('qtd-desktop').value) || 0;
             quantidades.monitor = parseInt(document.getElementById('qtd-monitor').value) || 0;
             quantidades.caboEnergiaDesktop = parseInt(document.getElementById('qtd-cabo-energia-desktop').value) || 0;
             quantidades.caboEnergiaMonitor = parseInt(document.getElementById('qtd-cabo-energia-monitor').value) || 0;
@@ -1566,7 +1566,7 @@
             quantidades.caboVga = parseInt(document.getElementById('qtd-cabo-vga').value) || 0;
 
             // Atualizar resumos
-            document.getElementById('resumo-cpu').textContent = quantidades.cpu;
+            document.getElementById('resumo-desktop').textContent = quantidades.desktop;
             document.getElementById('resumo-monitor').textContent = quantidades.monitor;
             document.getElementById('resumo-cabo-energia-desktop').textContent = quantidades.caboEnergiaDesktop;
             document.getElementById('resumo-cabo-energia-monitor').textContent = quantidades.caboEnergiaMonitor;
@@ -1576,7 +1576,7 @@
             document.getElementById('resumo-cabo-vga').textContent = quantidades.caboVga;
 
             // Atualizar badges
-            document.getElementById('badge-cpu').textContent = quantidades.cpu;
+            document.getElementById('badge-desktop').textContent = quantidades.desktop;
             document.getElementById('badge-monitor').textContent = quantidades.monitor;
             document.getElementById('badge-cabo-energia-desktop').textContent = quantidades.caboEnergiaDesktop;
             document.getElementById('badge-cabo-energia-monitor').textContent = quantidades.caboEnergiaMonitor;
@@ -1632,7 +1632,7 @@
                 tbody.innerHTML = '';
                 
                 const equipamentos = [
-                    { nome: 'CPU', qtd: quantidades.cpu },
+                    { nome: 'Desktop', qtd: quantidades.desktop },
                     { nome: 'Monitor', qtd: quantidades.monitor },
                     { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
                     { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
@@ -1739,7 +1739,7 @@
                 tbody.innerHTML = '';
                 
                 const equipamentos = [
-                    { nome: 'CPU', qtd: quantidades.cpu },
+                    { nome: 'Desktop', qtd: quantidades.desktop },
                     { nome: 'Monitor', qtd: quantidades.monitor },
                     { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
                     { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
@@ -2186,14 +2186,14 @@
             
             try {
                 // Criar conteúdo CSV
-                let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,CPUs,MONITORES,CABOS_DESKTOP,CABOS_MONITOR,TECLADOS,MOUSES,CABOS_HDMI,CABOS_VGA,TOTAL\n";
+                let csvContent = "DATA,PROTOCOLO,TÉCNICO,COLABORADOR,MATRÍCULA,SETOR,DESKTOPs,MONITORES,CABOS_DESKTOP,CABOS_MONITOR,TECLADOS,MOUSES,CABOS_HDMI,CABOS_VGA,TOTAL\n";
                 
                 entregas.forEach(entrega => {
                     const data = new Date(entrega.data).toLocaleDateString('pt-BR');
                     const total = entrega.totalEquipamentos || 0;
                     
                     csvContent += `"${data}","${entrega.protocolo}","${entrega.tecnico}","${entrega.usuario}","${entrega.matricula}","${entrega.setor}",`;
-                    csvContent += `${entrega.equipamentos.cpu || 0},${entrega.equipamentos.monitor || 0},`;
+                    csvContent += `${entrega.equipamentos.desktop || 0},${entrega.equipamentos.monitor || 0},`;
                     csvContent += `${entrega.equipamentos.caboEnergiaDesktop || 0},${entrega.equipamentos.caboEnergiaMonitor || 0},`;
                     csvContent += `${entrega.equipamentos.teclado || 0},${entrega.equipamentos.mouse || 0},`;
                     csvContent += `${entrega.equipamentos.caboHdmi || 0},${entrega.equipamentos.caboVga || 0},`;
@@ -2289,6 +2289,7 @@
     </script>
 </body>
 </html>
+
 
 
 
