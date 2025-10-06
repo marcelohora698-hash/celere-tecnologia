@@ -50,33 +50,6 @@
             position: relative;
             z-index: 2;
         }
-       /* Estilo para a imagem do header - REMOVER FUNDO PRETO */
-.header-logo-img {
-    height: 120px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: brightness(0) invert(1) sepia(1) hue-rotate(180deg) saturate(0) brightness(1.2);
-}
-
-.header-logo-img:hover {
-    transform: scale(1.05);
-    filter: brightness(0) invert(1) sepia(1) hue-rotate(180deg) saturate(0) brightness(1.4);
-}
-
-.header-logo-img:hover {
-    transform: scale(1.05);
-}
-
-.header-logo-img:hover {
-    transform: scale(1.05);
-    filter: brightness(1.3) contrast(1.2);
-}
-
-
-        .header-logo-img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
         
         .logo-img {
             width: 100%;
@@ -398,18 +371,6 @@
 
         /* Responsividade para mobile */
         @media (max-width: 768px) {
-            .header-logo-img {
-                height: 80px !important;
-            }
-            
-            #logo-texto h1 {
-                font-size: 2rem !important;
-            }
-            
-            #logo-texto h2 {
-                font-size: 1.2rem !important;
-            }
-            
             .health-tech-icons {
                 gap: 15px;
             }
@@ -717,11 +678,12 @@
                     <div class="logo-img-container">
                         <!-- IMAGEM DO SISTEMA + TEXTO -->
                         <div class="d-flex align-items-center justify-content-center gap-4">
-                            <!-- LOGO DO GITHUB -->
-                           <img src="https://raw.githubusercontent.com/marcelohora698-hash/celere-tecnologia/main/images/celere.jpeg" 
-                            alt="Célere Tecnologia em Saúde" 
-                             class="header-logo-img"
-                             style="height: 120px; width: auto;">
+                            <!-- LOGO DO GITHUB COM FUNDO BRANCO -->
+                            <div style="background: white; padding: 10px; border-radius: 10px; display: inline-block;">
+                                <img src="https://raw.githubusercontent.com/marcelohora698-hash/celere-tecnologia/main/images/celere.jpeg" 
+                                     alt="Célere Tecnologia em Saúde" 
+                                     style="height: 100px; width: auto; display: block;">
+                            </div>
                             
                             <!-- TEXTO -->
                             <div id="logo-texto" style="text-align: left;">
@@ -2248,11 +2210,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
