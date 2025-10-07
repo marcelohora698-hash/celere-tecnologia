@@ -1326,106 +1326,7 @@
 
     <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
     <div id="area-impressao" style="display: none;">
-        <div class="container-termo-timbrado">
-            <!-- FUNDO TIMBRADO -->
-            <div class="fundo-timbrado"></div>
-            
-            <!-- CONTEÚDO DO TERMO SOBRE O TIMBRADO -->
-            <div class="conteudo-sobre-timbrado">
-                <!-- CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO -->
-                <div class="cabecalho-termo">
-                    <!-- NOME DA EMPRESA EM DESTAQUE -->
-                    <div class="empresa-nome">CÉLERE TECNOLOGIA EM SAÚDE</div>
-                    
-                    <!-- TÍTULO DO TERMO EM TAMANHO MENOR -->
-                    <div class="titulo-termo">TERMO DE ENTREGA E RESPONSABILIDADE</div>
-                    
-                    <div class="protocolo-termo" id="impressao-protocolo">PROTOCOLO: PROT-2024-001</div>
-                </div>
-
-                <!-- DADOS -->
-                <div class="dados-termo">
-                    <div class="linha-dados">
-                        <div class="coluna-dados">
-                            <strong>Colaborador:</strong> <span id="impressao-usuario">-</span>
-                        </div>
-                        <div class="coluna-dados">
-                            <strong>Matrícula:</strong> <span id="impressao-matricula">-</span>
-                        </div>
-                    </div>
-                    <div class="linha-dados">
-                        <div class="coluna-dados">
-                            <strong>Setor:</strong> <span id="impressao-setor">-</span>
-                        </div>
-                        <div class="coluna-dados">
-                            <strong>Técnico Responsável:</strong> <span id="impressao-tecnico">-</span>
-                        </div>
-                    </div>
-                    <div class="linha-dados">
-                        <div class="coluna-dados">
-                            <strong>Data da Entrega:</strong> <span id="impressao-data">-</span>
-                        </div>
-                        <div class="coluna-dados">
-                            <strong>Total de Equipamentos:</strong> <span id="impressao-total">0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EQUIPAMENTOS -->
-                <div class="equipamentos-termo">
-                    <h3>EQUIPAMENTOS ENTREGUES</h3>
-                    <table class="tabela-termo">
-                        <thead>
-                            <tr>
-                                <th>Equipamento</th>
-                                <th>Quantidade</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="impressao-equipamentos">
-                            <!-- Preenchido via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- TEXTO DO TERMO -->
-                <div class="texto-termo">
-                    <p>Eu, <strong id="impressao-usuario-assinatura">-</strong>, matrícula <strong id="impressao-matricula-assinatura">-</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
-                    
-                    <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
-                    
-                    <p><strong>Declaro que:</strong></p>
-                    <ul>
-                        <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
-                        <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
-                        <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
-                    </ul>
-                    
-                    <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
-                </div>
-
-                <!-- ASSINATURAS -->
-                <div class="assinaturas-termo">
-                    <div class="assinatura-coluna">
-                        <div class="linha-assinatura"></div>
-                        <div class="nome-assinatura" id="impressao-assinatura-usuario">-</div>
-                        <div class="cargo-assinatura">Colaborador</div>
-                    </div>
-                    
-                    <div class="assinatura-coluna">
-                        <div class="linha-assinatura"></div>
-                        <div class="nome-assinatura" id="impressao-assinatura-tecnico">-</div>
-                        <div class="cargo-assinatura">Técnico Responsável</div>
-                    </div>
-                </div>
-
-                <!-- RODAPÉ -->
-                <div class="rodape-termo">
-                    <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
-                    <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
-                </div>
-            </div>
-        </div>
+        <!-- O conteúdo será gerado dinamicamente pelo JavaScript -->
     </div>
 
     <script>
@@ -1709,23 +1610,13 @@
             console.log('Dados válidos, atualizando impressão...');
             atualizarDadosImpressao();
             
-            // ATUALIZAÇÃO CRÍTICA: Copiar o conteúdo da área de impressão para o modal
-            const areaImpressao = document.getElementById('area-impressao');
+            // ATUALIZAÇÃO CRÍTICA: Gerar o conteúdo HTML para o preview
             const previewContent = document.getElementById('preview-content');
-            
-            if (areaImpressao && previewContent) {
-                // Clonar o conteúdo para evitar problemas de referência
-                const conteudoClonado = areaImpressao.cloneNode(true);
-                conteudoClonado.style.display = 'block'; // Tornar visível no modal
-                previewContent.innerHTML = ''; // Limpar conteúdo anterior
-                previewContent.appendChild(conteudoClonado);
-                
-                console.log('Conteúdo copiado para pré-visualização');
+            if (previewContent) {
+                previewContent.innerHTML = gerarConteudoImpressao();
+                console.log('Conteúdo gerado para pré-visualização');
             } else {
-                console.error('Elementos não encontrados:', {
-                    areaImpressao: !!areaImpressao,
-                    previewContent: !!previewContent
-                });
+                console.error('Elemento preview-content não encontrado!');
             }
             
             // Abrir o modal
@@ -1769,73 +1660,157 @@
         function atualizarDadosImpressao() {
             console.log('Atualizando dados para impressão...');
             
-            // Atualizar dados básicos
-            document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
-            document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
-            document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
-            document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
-            
+            // Esta função agora apenas prepara os dados, o HTML é gerado dinamicamente
+        }
+
+        function gerarConteudoImpressao() {
+            const usuario = document.getElementById('usuario').value || '-';
+            const matricula = document.getElementById('matricula').value || '-';
+            const setor = document.getElementById('setor').value || '-';
+            const tecnico = document.getElementById('tecnico').value || '-';
             const dataAtual = new Date().toLocaleDateString('pt-BR');
-            document.getElementById('impressao-data').textContent = dataAtual;
-            
-            // Gerar protocolo
             const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-            document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
             
-            // Atualizar equipamentos
-            const tbody = document.getElementById('impressao-equipamentos');
-            if (tbody) {
-                tbody.innerHTML = '';
-                
-                const equipamentos = [
-                    { nome: 'Desktop', qtd: quantidades.desktop },
-                    { nome: 'Monitor', qtd: quantidades.monitor },
-                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-                    { nome: 'Teclado', qtd: quantidades.teclado },
-                    { nome: 'Mouse', qtd: quantidades.mouse },
-                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-                ];
-                
-                let totalEquipamentos = 0;
-                equipamentos.forEach(equip => {
-                    if (equip.qtd > 0) {
-                        totalEquipamentos += equip.qtd;
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
+            // Gerar lista de equipamentos
+            let equipamentosHTML = '';
+            const equipamentos = [
+                { nome: 'Desktop', qtd: quantidades.desktop },
+                { nome: 'Monitor', qtd: quantidades.monitor },
+                { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                { nome: 'Teclado', qtd: quantidades.teclado },
+                { nome: 'Mouse', qtd: quantidades.mouse },
+                { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+            ];
+            
+            let totalEquipamentos = 0;
+            equipamentos.forEach(equip => {
+                if (equip.qtd > 0) {
+                    totalEquipamentos += equip.qtd;
+                    equipamentosHTML += `
+                        <tr>
                             <td>${equip.nome}</td>
                             <td>${equip.qtd}</td>
                             <td>Conferido e em perfeito estado</td>
-                        `;
-                        tbody.appendChild(tr);
-                    }
-                });
-                
-                document.getElementById('impressao-total').textContent = totalEquipamentos;
-                
-                // Atualizar assinaturas
-                document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
-                document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
-                document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
-                document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
-            }
-            
-            console.log('Dados de impressão atualizados com sucesso!');
+                        </tr>
+                    `;
+                }
+            });
+
+            return `
+                <div class="container-termo-timbrado">
+                    <!-- FUNDO TIMBRADO -->
+                    <div class="fundo-timbrado"></div>
+                    
+                    <!-- CONTEÚDO DO TERMO SOBRE O TIMBRADO -->
+                    <div class="conteudo-sobre-timbrado">
+                        <!-- CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO -->
+                        <div class="cabecalho-termo">
+                            <!-- NOME DA EMPRESA EM DESTAQUE -->
+                            <div class="empresa-nome">CÉLERE TECNOLOGIA EM SAÚDE</div>
+                            
+                            <!-- TÍTULO DO TERMO EM TAMANHO MENOR -->
+                            <div class="titulo-termo">TERMO DE ENTREGA E RESPONSABILIDADE</div>
+                            
+                            <div class="protocolo-termo">PROTOCOLO: ${protocolo}</div>
+                        </div>
+
+                        <!-- DADOS -->
+                        <div class="dados-termo">
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Colaborador:</strong> ${usuario}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Matrícula:</strong> ${matricula}
+                                </div>
+                            </div>
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Setor:</strong> ${setor}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Técnico Responsável:</strong> ${tecnico}
+                                </div>
+                            </div>
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Data da Entrega:</strong> ${dataAtual}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Total de Equipamentos:</strong> ${totalEquipamentos}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EQUIPAMENTOS -->
+                        <div class="equipamentos-termo">
+                            <h3>EQUIPAMENTOS ENTREGUES</h3>
+                            <table class="tabela-termo">
+                                <thead>
+                                    <tr>
+                                        <th>Equipamento</th>
+                                        <th>Quantidade</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${equipamentosHTML}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- TEXTO DO TERMO -->
+                        <div class="texto-termo">
+                            <p>Eu, <strong>${usuario}</strong>, matrícula <strong>${matricula}</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                            
+                            <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
+                            
+                            <p><strong>Declaro que:</strong></p>
+                            <ul>
+                                <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
+                                <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                                <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+                            </ul>
+                            
+                            <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+                        </div>
+
+                        <!-- ASSINATURAS -->
+                        <div class="assinaturas-termo">
+                            <div class="assinatura-coluna">
+                                <div class="linha-assinatura"></div>
+                                <div class="nome-assinatura">${usuario}</div>
+                                <div class="cargo-assinatura">Colaborador</div>
+                            </div>
+                            
+                            <div class="assinatura-coluna">
+                                <div class="linha-assinatura"></div>
+                                <div class="nome-assinatura">${tecnico}</div>
+                                <div class="cargo-assinatura">Técnico Responsável</div>
+                            </div>
+                        </div>
+
+                        <!-- RODAPÉ -->
+                        <div class="rodape-termo">
+                            <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
+                            <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function imprimirTermoCompleto() {
             console.log('Iniciando impressão...');
-            
-            // ATUALIZAÇÃO CRÍTICA: Garantir que os dados estejam atualizados
-            atualizarDadosImpressao();
             
             mostrarLoading(true);
             
             // Salvar a entrega
             const entrega = {
                 id: Date.now(),
-                protocolo: document.getElementById('impressao-protocolo').textContent.replace('PROTOCOLO: ', ''),
+                protocolo: `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`,
                 tecnico: document.getElementById('tecnico').value,
                 usuario: document.getElementById('usuario').value,
                 matricula: document.getElementById('matricula').value,
@@ -1860,29 +1835,37 @@
                 }
             }
             
-            // Imprimir
+            // Imprimir usando uma abordagem mais simples e confiável
             setTimeout(() => {
                 console.log('Preparando para imprimir...');
                 
-                const areaImpressao = document.getElementById('area-impressao');
-                if (areaImpressao) {
-                    const janelaImpressao = window.open('', '_blank');
-                    janelaImpressao.document.write(`
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <title>Termo de Entrega - ${entrega.protocolo}</title>
-                            <style>
-                                ${obterEstilosImpressao()}
-                            </style>
-                        </head>
-                        <body onload="window.print(); setTimeout(() => window.close(), 500);">
-                            ${areaImpressao.innerHTML}
-                        </body>
-                        </html>
-                    `);
-                    janelaImpressao.document.close();
-                }
+                const conteudoImpressao = gerarConteudoImpressao();
+                const estilosImpressao = obterEstilosImpressao();
+                
+                const janelaImpressao = window.open('', '_blank');
+                janelaImpressao.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Termo de Entrega - ${entrega.protocolo}</title>
+                        <style>
+                            ${estilosImpressao}
+                        </style>
+                    </head>
+                    <body>
+                        ${conteudoImpressao}
+                        <script>
+                            setTimeout(() => {
+                                window.print();
+                                setTimeout(() => {
+                                    window.close();
+                                }, 500);
+                            }, 500);
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                janelaImpressao.document.close();
                 
                 mostrarLoading(false);
                 mostrarStatus('Termo impresso e salvo com sucesso!', 'success');
@@ -2152,6 +2135,11 @@
                     .conteudo-sobre-timbrado {
                         box-shadow: none;
                         border: 2px solid #0f5132;
+                    }
+                    
+                    body {
+                        margin: 0;
+                        padding: 0;
                     }
                 }
             `;
