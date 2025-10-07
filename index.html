@@ -860,9 +860,9 @@
                         
                         <div class="mb-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="kit-completo">
+                                <input class="form-check-input" type="checkbox" id="kit-completo" onchange="selecionarTodosEquipamentos()">
                                 <label class="form-check-label fw-bold">
-                                    😃 CONFIRMAR ENTREGA DE EQUIPAMENTOS
+                                    😃 CONFIRMAR ENTREGA DE EQUIPAMENTOS (Seleciona Todos)
                                 </label>
                             </div>
                         </div>
@@ -1440,19 +1440,7 @@
             const kitCompleto = document.getElementById('kit-completo');
             if (kitCompleto) {
                 kitCompleto.addEventListener('change', function() {
-                    if (this.checked) {
-                        // Preencher automaticamente
-                        ['desktop', 'monitor', 'cabo-energia-desktop', 'cabo-energia-monitor', 'teclado', 'mouse'].forEach(id => {
-                            const checkbox = document.getElementById(id);
-                            const input = document.getElementById(`qtd-${id}`);
-                            if (checkbox && input) {
-                                checkbox.checked = true;
-                                input.value = '1';
-                            }
-                        });
-                        atualizarProgresso();
-                        setTimeout(atualizarTermo, 100);
-                    }
+                    selecionarTodosEquipamentos();
                 });
             }
 
@@ -1461,6 +1449,27 @@
             atualizarTermo();
             atualizarRelatorios();
             validarCamposObrigatorios();
+        }
+
+        // ========== FUNÇÃO PARA SELECIONAR TODOS OS EQUIPAMENTOS ==========
+        function selecionarTodosEquipamentos() {
+            const kitCompleto = document.getElementById('kit-completo');
+            const todosEquipamentos = [
+                'desktop', 'monitor', 'cabo-energia-desktop', 'cabo-energia-monitor', 
+                'teclado', 'mouse', 'cabo-hdmi', 'cabo-vga'
+            ];
+            
+            todosEquipamentos.forEach(id => {
+                const checkbox = document.getElementById(id);
+                const input = document.getElementById(`qtd-${id}`);
+                if (checkbox && input) {
+                    checkbox.checked = kitCompleto.checked;
+                    input.value = kitCompleto.checked ? '1' : '0';
+                }
+            });
+            
+            atualizarProgresso();
+            setTimeout(atualizarTermo, 100);
         }
 
         function inicializarTooltips() {
@@ -1633,120 +1642,119 @@
             }
         }
 
-      // ========== SISTEMA DE IMPRESSÃO ==========
-function visualizarTermo() {
-    console.log('Tentando visualizar termo...');
-    
-    if (!validarDadosParaTermo()) {
-        mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
-        return;
-    }
-
-    console.log('Dados válidos, atualizando impressão...');
-    atualizarDadosImpressao();
-    
-    const modalElement = document.getElementById('modalPreview');
-    if (modalElement) {
-        // Atualizar o conteúdo do preview ANTES de mostrar o modal
-        const areaImpressao = document.getElementById('area-impressao');
-        if (areaImpressao) {
-            document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
-        }
-        
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-        console.log('Modal aberto com sucesso!');
-    } else {
-        console.error('Modal não encontrado!');
-        mostrarStatus('Erro ao abrir visualização', 'error');
-    }
-}
-function validarDadosParaTermo() {
-    const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
-    for (let campo of camposObrigatorios) {
-        const element = document.getElementById(campo);
-        if (!element || !element.value.trim()) {
-            console.log('Campo obrigatório não preenchido:', campo);
-            mostrarStatus(`Preencha o campo: ${campo}`, 'error');
-            return false;
-        }
-    }
-    
-    const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
-    if (!temEquipamentos) {
-        console.log('Nenhum equipamento selecionado');
-        mostrarStatus('Selecione pelo menos um equipamento', 'error');
-        return false;
-    }
-    
-    const aceite = document.getElementById('aceite-termo').checked;
-    if (!aceite) {
-        console.log('Termo não aceito');
-        mostrarStatus('Você precisa aceitar os termos', 'error');
-        return false;
-    }
-    
-    console.log('Todos os dados estão válidos!');
-    return true;
-}
-
-       function atualizarDadosImpressao() {
-    console.log('Atualizando dados para impressão...');
-    
-    // Atualizar dados básicos
-    document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
-    document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
-    document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
-    document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
-    
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    document.getElementById('impressao-data').textContent = dataAtual;
-    
-    // Gerar protocolo
-    const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-    document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
-    
-    // Atualizar equipamentos
-    const tbody = document.getElementById('impressao-equipamentos');
-    if (tbody) {
-        tbody.innerHTML = '';
-        
-        const equipamentos = [
-            { nome: 'Desktop', qtd: quantidades.desktop },
-            { nome: 'Monitor', qtd: quantidades.monitor },
-            { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-            { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-            { nome: 'Teclado', qtd: quantidades.teclado },
-            { nome: 'Mouse', qtd: quantidades.mouse },
-            { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-            { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-        ];
-        
-        let totalEquipamentos = 0;
-        equipamentos.forEach(equip => {
-            if (equip.qtd > 0) {
-                totalEquipamentos += equip.qtd;
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${equip.nome}</td>
-                    <td>${equip.qtd}</td>
-                    <td>Conferido e em perfeito estado</td>
-                `;
-                tbody.appendChild(tr);
+        // ========== SISTEMA DE IMPRESSÃO ==========
+        function visualizarTermo() {
+            console.log('Tentando visualizar termo...');
+            
+            if (!validarDadosParaTermo()) {
+                mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
+                return;
             }
-        });
-        
-        document.getElementById('impressao-total').textContent = totalEquipamentos;
-        
-        // Atualizar assinaturas
-        document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
-        document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
-        document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
-        document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
-    }
-    
-    console.log('Dados de impressão atualizados com sucesso!');
-}
+
+            console.log('Dados válidos, atualizando impressão...');
+            atualizarDadosImpressao();
+            
+            // Atualizar o conteúdo do preview
+            const areaImpressao = document.getElementById('area-impressao');
+            if (areaImpressao) {
+                document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
+            }
+            
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                console.log('Modal aberto com sucesso!');
+            } else {
+                console.error('Modal não encontrado!');
+                mostrarStatus('Erro ao abrir visualização', 'error');
+            }
+        }
+
+        function validarDadosParaTermo() {
+            const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
+            for (let campo of camposObrigatorios) {
+                const element = document.getElementById(campo);
+                if (!element || !element.value.trim()) {
+                    console.log('Campo obrigatório não preenchido:', campo);
+                    return false;
+                }
+            }
+            
+            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+            if (!temEquipamentos) {
+                console.log('Nenhum equipamento selecionado');
+                return false;
+            }
+            
+            const aceite = document.getElementById('aceite-termo').checked;
+            if (!aceite) {
+                console.log('Termo não aceito');
+                return false;
+            }
+            
+            console.log('Todos os dados estão válidos!');
+            return true;
+        }
+
+        function atualizarDadosImpressao() {
+            console.log('Atualizando dados para impressão...');
+            
+            // Atualizar dados básicos
+            document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
+            document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
+            document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            document.getElementById('impressao-data').textContent = dataAtual;
+            
+            // Gerar protocolo
+            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+            document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
+            
+            // Atualizar equipamentos
+            const tbody = document.getElementById('impressao-equipamentos');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                const equipamentos = [
+                    { nome: 'Desktop', qtd: quantidades.desktop },
+                    { nome: 'Monitor', qtd: quantidades.monitor },
+                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                    { nome: 'Teclado', qtd: quantidades.teclado },
+                    { nome: 'Mouse', qtd: quantidades.mouse },
+                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+                ];
+                
+                let totalEquipamentos = 0;
+                equipamentos.forEach(equip => {
+                    if (equip.qtd > 0) {
+                        totalEquipamentos += equip.qtd;
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${equip.nome}</td>
+                            <td>${equip.qtd}</td>
+                            <td>Conferido e em perfeito estado</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+                
+                document.getElementById('impressao-total').textContent = totalEquipamentos;
+                
+                // Atualizar assinaturas
+                document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+                document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            }
+            
+            console.log('Dados de impressão atualizados com sucesso!');
+        }
+
         function imprimirTermoCompleto() {
             console.log('Iniciando impressão...');
             
@@ -2420,6 +2428,3 @@ function validarDadosParaTermo() {
     </script>
 </body>
 </html>
-
-
-
