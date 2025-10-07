@@ -1688,60 +1688,63 @@ function visualizarTermo() {
             return true;
         }
 
-        function atualizarDadosImpressao() {
-            // Atualizar dados básicos
-            document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
-            document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
-            document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
-            document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
-            
-            const dataAtual = new Date().toLocaleDateString('pt-BR');
-            document.getElementById('impressao-data').textContent = dataAtual;
-            
-            // Gerar protocolo
-            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-            document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
-            
-            // Atualizar equipamentos
-            const tbody = document.getElementById('impressao-equipamentos');
-            if (tbody) {
-                tbody.innerHTML = '';
-                
-                const equipamentos = [
-                    { nome: 'Desktop', qtd: quantidades.desktop },
-                    { nome: 'Monitor', qtd: quantidades.monitor },
-                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-                    { nome: 'Teclado', qtd: quantidades.teclado },
-                    { nome: 'Mouse', qtd: quantidades.mouse },
-                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-                ];
-                
-                let totalEquipamentos = 0;
-                equipamentos.forEach(equip => {
-                    if (equip.qtd > 0) {
-                        totalEquipamentos += equip.qtd;
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${equip.nome}</td>
-                            <td>${equip.qtd}</td>
-                            <td>Conferido e em perfeito estado</td>
-                        `;
-                        tbody.appendChild(tr);
-                    }
-                });
-                
-                document.getElementById('impressao-total').textContent = totalEquipamentos;
-                
-                // Atualizar assinaturas
-                document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
-                document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
-                document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
-                document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
+       function atualizarDadosImpressao() {
+    console.log('Atualizando dados para impressão...');
+    
+    // Atualizar dados básicos
+    document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
+    document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
+    document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
+    document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
+    
+    const dataAtual = new Date().toLocaleDateString('pt-BR');
+    document.getElementById('impressao-data').textContent = dataAtual;
+    
+    // Gerar protocolo
+    const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+    document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
+    
+    // Atualizar equipamentos
+    const tbody = document.getElementById('impressao-equipamentos');
+    if (tbody) {
+        tbody.innerHTML = '';
+        
+        const equipamentos = [
+            { nome: 'Desktop', qtd: quantidades.desktop },
+            { nome: 'Monitor', qtd: quantidades.monitor },
+            { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+            { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+            { nome: 'Teclado', qtd: quantidades.teclado },
+            { nome: 'Mouse', qtd: quantidades.mouse },
+            { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+            { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+        ];
+        
+        let totalEquipamentos = 0;
+        equipamentos.forEach(equip => {
+            if (equip.qtd > 0) {
+                totalEquipamentos += equip.qtd;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${equip.nome}</td>
+                    <td>${equip.qtd}</td>
+                    <td>Conferido e em perfeito estado</td>
+                `;
+                tbody.appendChild(tr);
             }
-        }
-
+        });
+        
+        document.getElementById('impressao-total').textContent = totalEquipamentos;
+        
+        // Atualizar assinaturas
+        document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+        document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+        document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
+        document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
+    }
+    
+    console.log('Dados de impressão atualizados com sucesso!');
+}
         function imprimirTermoCompleto() {
             console.log('Iniciando impressão...');
             
@@ -2415,4 +2418,5 @@ function visualizarTermo() {
     </script>
 </body>
 </html>
+
 
