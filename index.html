@@ -3,186 +3,2506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termo de Responsabilidade</title>
+    <title>Célere - Tecnologia em Saúde</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
+        :root {
+            --cor-primaria: #157347;
+            --cor-secundaria: #0f5132;
+            --cor-destaque: #198754;
+            --verde-principal: #0f5132;
+            --verde-secundario: #157347;
+            --verde-escuro: #0a3622;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            color: #333;
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%) !important;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            color: white;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        
+        .header-custom {
+            background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+            border-bottom: 4px solid var(--cor-destaque);
+            padding: 15px 0;
+            position: relative;
+            overflow: hidden;
         }
-        h1 {
+        
+        .header-custom::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(21, 115, 71, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(13, 110, 253, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .logo-area {
             text-align: center;
-            color: #2c3e50;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            padding: 10px 0;
+            position: relative;
+            z-index: 2;
         }
-        .section {
-            margin-bottom: 20px;
+        
+        .logo-completa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
+
+        .logo-imagem {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%);
+            border-radius: 15px;
+            padding: 10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+
+        .logo-texto {
             text-align: left;
         }
-        th {
-            background-color: #f2f2f2;
-        }
-        .declarations {
-            margin: 20px 0;
-        }
-        .declarations ul {
-            padding-left: 20px;
-        }
-        .declarations li {
-            margin-bottom: 10px;
-        }
-        .signature {
-            margin-top: 30px;
-            text-align: right;
-        }
-        .confirm-section {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        .data-field {
+
+        .logo-texto h1 {
+            font-size: 3rem;
             font-weight: bold;
-            color: #2c3e50;
+            margin-bottom: 5px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-texto h2 {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .logo-texto p {
+            font-size: 1rem;
+            margin-top: 5px;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        .health-tech-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 15px 0;
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.2);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+        
+        .btn-custom {
+            background: linear-gradient(135deg, var(--cor-destaque) 0%, #146c43 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.4);
+            background: linear-gradient(135deg, #146c43 0%, var(--cor-destaque) 100%);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-body {
+            background: transparent;
+            color: white;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+        
+        .stats-card {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(0,0,0,0.2);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background: white;
+            border-color: var(--cor-destaque);
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+            color: #333;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        
+        .kit-badge {
+            background: var(--cor-destaque);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .print-only {
+            display: none;
+        }
+
+        .equipamentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .equipamento-item {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--cor-destaque);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .equipamento-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .quantidade-input {
+            max-width: 120px;
+        }
+
+        .progress {
+            height: 12px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(135deg, var(--cor-destaque) 0%, #146c43 100%);
+            border-radius: 10px;
+        }
+
+        .bg-verde-pagina {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.9) 0%, rgba(21, 115, 71, 0.9) 100%) !important;
+            color: white;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .table {
+            background: rgba(255,255,255,0.95);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        .table td {
+            background: white;
+            border-color: #dee2e6;
+            color: #333;
+        }
+
+        .nav-tabs {
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .nav-tabs .nav-link {
+            background: linear-gradient(135deg, rgba(10, 54, 34, 0.8) 0%, rgba(15, 81, 50, 0.8) 100%);
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-right: 5px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: bold;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .text-muted {
+            color: rgba(255,255,255,0.8) !important;
+        }
+
+        .bg-light {
+            background: linear-gradient(135deg, var(--verde-principal) 0%, var(--verde-secundario) 100%) !important;
+            color: white;
+        }
+
+        .sync-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .sync-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .sync-error {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            color: white;
+        }
+
+        .sync-loading {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #1a1a2e;
+        }
+
+        .import-area {
+            border: 2px dashed rgba(255,255,255,0.5);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .import-area:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.8);
+            transform: translateY(-3px);
+        }
+
+        .import-area.dragover {
+            background: rgba(255,255,255,0.3);
+            border-color: #28a745;
+        }
+
+        .badge {
+            font-weight: 600;
+        }
+
+        /* Animações suaves */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-outline-light:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        /* Modal de visualização */
+        .modal-preview .modal-content {
+            background: white;
+            color: black;
+        }
+
+        .modal-preview .modal-header {
+            border-bottom: 2px solid #0f5132;
+            background: #f8f9fa;
+        }
+
+        .modal-preview .modal-title {
+            color: #0f5132;
+            font-weight: bold;
+        }
+
+        /* Melhorar visualização do termo no modal */
+        .modal-preview .modal-body {
+            padding: 0;
+            background: #f8f9fa;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #preview-content {
+            transform: scale(0.85);
+            transform-origin: top center;
+            width: 117.65%;
+            margin-left: -8.825%;
+            padding: 20px 0;
+        }
+
+        #preview-content .container-termo-timbrado {
+            height: auto;
+            min-height: 70vh;
+            display: block;
+        }
+
+        #preview-content .conteudo-sobre-timbrado {
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            margin: 0 auto;
+        }
+
+        /* Garantir que o conteúdo seja visível no modal */
+        #preview-content .fundo-timbrado {
+            opacity: 0.15;
+        }
+
+        /* Ajustes responsivos para o modal */
+        @media (max-width: 768px) {
+            #preview-content {
+                transform: scale(0.7);
+                width: 142.85%;
+                margin-left: -21.425%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #preview-content {
+                transform: scale(0.6);
+                width: 166.67%;
+                margin-left: -33.335%;
+            }
+            
+            .modal-preview .modal-dialog {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Estados de validação */
+        .is-valid {
+            border-color: #198754 !important;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        /* Melhorar responsividade */
+        @media (max-width: 768px) {
+            .health-tech-icons {
+                gap: 15px;
+            }
+            
+            .tech-icon {
+                font-size: 1.8rem;
+            }
+            
+            .equipamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .assinaturas-termo {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .assinatura-coluna {
+                width: 100%;
+            }
+
+            .logo-completa {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo-texto {
+                text-align: center;
+            }
+
+            .logo-texto h1 {
+                font-size: 2.5rem;
+            }
+
+            .logo-texto h2 {
+                font-size: 1.3rem;
+            }
+
+            .logo-imagem {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-texto h1 {
+                font-size: 2rem;
+            }
+
+            .logo-texto h2 {
+                font-size: 1.1rem;
+            }
+
+            .logo-imagem {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO - TERMO DENTRO DO TIMBRADO */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                font-family: 'Arial', sans-serif !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 12px !important;
+                line-height: 1.3 !important;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            /* CONTAINER PRINCIPAL COM FUNDO TIMBRADO */
+            .container-termo-timbrado {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: white;
+                position: relative;
+            }
+            
+            /* IMAGEM DE FUNDO DO TIMBRADO */
+            .fundo-timbrado {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('logo-celere.jpeg');
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: 0.1;
+                z-index: 1;
+            }
+            
+            /* CONTEÚDO SOBRE O TIMBRADO */
+            .conteudo-sobre-timbrado {
+                position: relative;
+                z-index: 2;
+                width: 90%;
+                max-width: 800px;
+                min-height: 90vh;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 40px;
+                border: 3px solid #0f5132;
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            }
+            
+            /* CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO */
+            .cabecalho-termo {
+                text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 3px solid #0f5132;
+            }
+            
+            .empresa-nome {
+                font-size: 24px;
+                color: #0f5132;
+                margin: 0 0 10px 0;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            
+            .titulo-termo {
+                font-size: 18px;
+                color: #0f5132;
+                margin: 0 0 15px 0;
+                font-weight: bold;
+            }
+            
+            .protocolo-termo {
+                background: #0f5132;
+                color: white;
+                padding: 8px 20px;
+                border-radius: 20px;
+                font-weight: bold;
+                font-size: 14px;
+                display: inline-block;
+            }
+            
+            /* DADOS DA ENTREGA */
+            .dados-termo {
+                background: #f8f9fa;
+                padding: 20px;
+                border: 2px solid #0f5132;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            }
+            
+            .linha-dados {
+                display: flex;
+                margin-bottom: 10px;
+            }
+            
+            .coluna-dados {
+                flex: 1;
+                padding: 0 15px;
+            }
+            
+            .coluna-dados strong {
+                color: #0f5132;
+                font-size: 13px;
+            }
+            
+            /* EQUIPAMENTOS */
+            .equipamentos-termo {
+                margin-bottom: 25px;
+            }
+            
+            .equipamentos-termo h3 {
+                font-size: 16px;
+                color: #0f5132;
+                margin: 0 0 15px 0;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #0f5132;
+                text-align: center;
+            }
+            
+            .tabela-termo {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 12px;
+                border: 2px solid #0f5132;
+            }
+            
+            .tabela-termo th {
+                background: linear-gradient(135deg, #0f5132, #157347);
+                color: white;
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+                font-weight: bold;
+                font-size: 13px;
+            }
+            
+            .tabela-termo td {
+                padding: 10px;
+                border: 1px solid #ddd;
+                background: white;
+            }
+            
+            /* TEXTO DO TERMO */
+            .texto-termo {
+                margin: 25px 0;
+                text-align: justify;
+                line-height: 1.5;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 10px;
+                border-left: 5px solid #0f5132;
+            }
+            
+            .texto-termo p {
+                margin-bottom: 12px;
+                font-size: 13px;
+            }
+            
+            .texto-termo ul {
+                margin: 15px 0;
+                padding-left: 30px;
+            }
+            
+            .texto-termo li {
+                margin-bottom: 8px;
+                font-size: 13px;
+            }
+            
+            .texto-termo strong {
+                color: #0f5132;
+            }
+            
+            /* ASSINATURAS */
+            .assinaturas-termo {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 60px;
+                page-break-inside: avoid;
+            }
+            
+            .assinatura-coluna {
+                text-align: center;
+                width: 45%;
+            }
+            
+            .linha-assinatura {
+                border-top: 2px solid #000;
+                margin: 40px 0 10px 0;
+                padding-top: 5px;
+            }
+            
+            .nome-assinatura {
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            
+            .cargo-assinatura {
+                font-size: 12px;
+                color: #666;
+            }
+            
+            /* RODAPÉ */
+            .rodape-termo {
+                margin-top: 30px;
+                text-align: center;
+                font-size: 11px;
+                color: #666;
+                border-top: 2px solid #0f5132;
+                padding-top: 15px;
+            }
+            
+            .rodape-termo p {
+                margin: 5px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Termo de Responsabilidade</h1>
-        
-        <div class="section">
-            <h2>Revise as informações antes de gerar o termo:</h2>
-            
-            <h3>Resumo da Entrega</h3>
-            <p><strong>Colaborador:</strong> <span class="data-field" id="colaborador">rfid</span></p>
-            <p><strong>Técnico Responsável:</strong> <span class="data-field" id="tecnico">-</span></p>
-            <p><strong>Empresa:</strong> <span class="data-field" id="empresa">-</span></p>
-            <p><strong>Data da Entrega:</strong> <span class="data-field" id="data">-</span></p>
-            <p><strong>Setor:</strong> <span class="data-field" id="setor">-</span></p>
-            <p><strong>Protocolo:</strong> <span class="data-field" id="protocolo">-</span></p>
-        </div>
+    <!-- Status de Sincronização -->
+    <div id="syncStatus" class="sync-status" style="display: none;"></div>
 
-        <div class="section">
-            <h3>Equipamentos Entregues</h3>
-            <table id="equipamentos-table">
-                <thead>
-                    <tr>
-                        <th>Equipamento</th>
-                        <th>Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Linhas serão preenchidas dinamicamente -->
-                </tbody>
-            </table>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="spinner-border text-light" role="status">
+            <span class="visually-hidden">Carregando...</span>
         </div>
+    </div>
 
-        <div class="section">
-            <h3>Termo de Responsabilidade</h3>
-            <p>
-                Eu, <span class="data-field" id="nome-colaborador">-</span>, matrícula <span class="data-field" id="matricula">-</span>, 
-                declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.
-            </p>
-            
-            <div class="declarations">
-                <p>Declaro que:</p>
-                <ul>
-                    <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
-                    <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
-                    <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
-                </ul>
-            </div>
-            
-            <p>
-                Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.
-            </p>
-        </div>
-
-        <div class="confirm-section">
-            <p>Confirmo que todas as informações estão corretas e concordo com os termos acima</p>
-            <div class="signature">
-                <p>_________________________________________</p>
-                <p>Assinatura do Colaborador</p>
+    <!-- Header com Logo FIXO -->
+    <div class="header-custom text-white">
+        <div class="container">
+            <div class="logo-area">
+                <!-- LOGO FIXO - IMAGEM E TEXTO LADO A LADO -->
+                <div class="logo-container-full">
+                    <div class="logo-img-container">
+                        <!-- NOVA ESTRUTURA COM IMAGEM E TEXTO -->
+                        <div class="logo-completa">
+                            <!-- IMAGEM DO LOGO -->
+                            <img src="images/celere.jpeg" alt="Logo Célere - Tecnologia em Saúde" class="logo-imagem">
+                            
+                            <!-- TEXTO DO LOGO -->
+                            <div class="logo-texto">
+                                <h1>CÉLERE</h1>
+                                <h2>Tecnologia em Saúde</h2>
+                                <p>Sistema de Entrega de Equipamentos de TI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ícones de Tecnologia em Saúde -->
+                <div class="health-tech-icons">
+                    <i class="fas fa-desktop tech-icon pulse" title="Tecnologia"></i>
+                    <i class="fas fa-stethoscope tech-icon" title="Saúde"></i>
+                    <i class="fas fa-laptop-medical tech-icon pulse" title="TI em Saúde"></i>
+                </div>
+                
+                <h3 class="h5 mb-1">logistica e sistema de informatização em saúde</h3>
+                <p class="small mb-0 opacity-85"><i class="fas fa-heartbeat me-1"></i> Tecnologia em Saúde</p>
             </div>
         </div>
     </div>
 
+    <div class="container py-4">
+        <!-- Card Estatísticas -->
+        <div class="stats-card no-print fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4><i class="fas fa-laptop-medical me-2"></i>Entrega de equipamentos</h4>
+                    <p class="mb-2" id="progresso-texto">Total de equipamentos entregues: 0</p>
+                    <div class="progress">
+                        <div id="progresso-bar" class="progress-bar bg-success" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-outline-light" onclick="proximaAba('relatorios')" data-bs-toggle="tooltip" data-bs-title="Visualizar relatórios e estatísticas">
+                        <i class="fas fa-chart-bar me-1"></i>Relatórios
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas -->
+        <ul class="nav nav-tabs mb-4 no-print" id="myTab">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#dados">
+                    <i class="fas fa-user me-2"></i>Dados
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#equipamentos">
+                    <i class="fas fa-laptop me-2"></i>Equipamentos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#quantidades">
+                    <i class="fas fa-calculator me-2"></i>Quantidades
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#termo">
+                    <i class="fas fa-file-signature me-2"></i>Termo
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#relatorios">
+                    <i class="fas fa-chart-bar me-2"></i>Relatórios
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Dados -->
+            <div class="tab-pane fade show active" id="dados">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-user me-2"></i>Dados do Colaborador</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="tecnico" class="form-label">Técnico Responsável *</label>
+                                <input type="text" class="form-control" id="tecnico" placeholder="Nome do técnico">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="usuario" class="form-label">Colaborador *</label>
+                                <input type="text" class="form-control" id="usuario" placeholder="Nome do colaborador">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="matricula" class="form-label">Matrícula *</label>
+                                <input type="text" class="form-control" id="matricula" placeholder="Número da matrícula">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="setor" class="form-label">Setor *</label>
+                                <select class="form-select" id="setor">
+                                    <option value="">Selecione...</option>
+                                    <option value="TI">Tecnologia da Informação</option>
+                                    <option value="RH">Recursos Humanos</option>
+                                    <option value="SAUDE">Área da Saúde</option>
+                                    <option value="ADM">Administrativo</option>
+                                    <option value="FIN">Financeiro</option>
+                                    <option value="Infor">Informatização em saúde</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-custom" onclick="proximaAba('equipamentos')">
+                            Próximo <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipamentos -->
+            <div class="tab-pane fade" id="equipamentos">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-laptop me-2"></i>Checklist dos equipamentos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info" role="alert" aria-live="polite">
+                            <strong>Kit Completo:</strong> Desktop, Monitor, Cabos de Energia,Cabos de Vídeo e Periféricos
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kit-completo" onchange="selecionarTodosEquipamentos()">
+                                <label class="form-check-label fw-bold">
+                                    😃 CONFIRMAR ENTREGA DE EQUIPAMENTOS (Seleciona Todos)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Equipamentos principais -->
+                        <h6 class="mb-3">🖥️ Equipamentos principais</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="desktop">
+                                    <label class="form-check-label">
+                                        <span class="emoji">💻</span>Desktop
+                                        <span class="badge bg-warning ms-2" id="badge-desktop">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="monitor">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🖥️</span>Monitor
+                                        <span class="badge bg-info ms-2" id="badge-monitor">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="cabo-energia-desktop">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🔌</span>Cabo de Energia Desktop
+                                        <span class="badge bg-success ms-2" id="badge-cabo-energia-desktop">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="cabo-energia-monitor">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🔌</span>Cabo de Energia Monitor
+                                        <span class="badge bg-success ms-2" id="badge-cabo-energia-monitor">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PERIFÉRICOS -->
+                        <h6 class="mb-3 mt-4">⌨️ Periféricos</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input periferico-check" type="checkbox" id="teclado">
+                                    <label class="form-check-label">
+                                        <span class="emoji">⌨️</span>Teclado
+                                        <span class="badge bg-primary ms-2" id="badge-teclado">0</span>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input periferico-check" type="checkbox" id="mouse">
+                                    <label class="form-check-label">
+                                        <span class="emoji">🖱️</span>Mouse
+                                        <span class="badge bg-secondary ms-2" id="badge-mouse">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CABOS -->
+                        <h6 class="mb-3 mt-4">🔗 Cabos de Vídeo</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input cabo-check" type="checkbox" id="cabo-hdmi">
+                                    <label class="form-check-label">
+                                        <span class="emoji">📺</span>Cabo HDMI
+                                        <span class="badge bg-primary ms-2" id="badge-cabo-hdmi">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input cabo-check" type="checkbox" id="cabo-vga">
+                                    <label class="form-check-label">
+                                        <span class="emoji">📺</span>Cabo VGA
+                                        <span class="badge bg-info ms-2" id="badge-cabo-vga">0</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-secondary" onclick="proximaAba('dados')">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar
+                        </button>
+                        <button class="btn btn-custom" onclick="proximaAba('quantidades')">
+                            Próximo <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantidades -->
+            <div class="tab-pane fade" id="quantidades">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Quantidades por Equipamento</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Informe as quantidades de cada equipamento entregue</strong>
+                        </div>
+
+                        <div class="row g-3">
+                            <!-- Equipamentos principais -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">💻</span> Quantidade de Desktop *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-desktop" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🖥️</span> Quantidade de Monitores *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-monitor" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Desktop *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-desktop" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🔌</span> Quantidade de Cabos de Energia Monitor *</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-energia-monitor" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+
+                            <!-- PERIFÉRICOS -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">⌨️</span> Quantidade de Teclados</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-teclado" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">🖱️</span> Quantidade de Mouses</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-mouse" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+
+                            <!-- CABOS DE VÍDEO -->
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos HDMI</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-hdmi" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><span class="emoji">📺</span> Quantidade de Cabos VGA</label>
+                                <input type="number" class="form-control quantidade-input" id="qtd-cabo-vga" min="0" value="0" onchange="atualizarProgresso()">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-verde-pagina rounded">
+                            <h6>Resumo das Quantidades</h6>
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-desktop">0</div>
+                                        <small>💻 Desktop</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-monitor">0</div>
+                                        <small>🖥️ Monitores</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-energia-desktop">0</div>
+                                        <small>🔌 Cabos Desktop</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-energia-monitor">0</div>
+                                        <small>🔌 Cabos Monitor</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-teclado">0</div>
+                                        <small>⌨️ Teclados</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-mouse">0</div>
+                                        <small>🖱️ Mouses</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-hdmi">0</div>
+                                        <small>📺 Cabos HDMI</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <div class="p-2">
+                                        <div class="h4 mb-1" id="resumo-cabo-vga">0</div>
+                                        <small>📺 Cabos VGA</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-secondary" onclick="proximaAba('equipamentos')">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar
+                        </button>
+                        <button class="btn btn-custom" onclick="proximaAba('termo')">
+                            Próximo <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Termo -->
+            <div class="tab-pane fade" id="termo">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-file-signature me-2"></i>Termo de Entrega e Responsabilidade</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Revise as informações antes de gerar o termo</strong>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6>Resumo da Entrega</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Colaborador:</strong> <span id="termo-usuario">-</span></p>
+                                    <p><strong>Empresa:</strong> <span id="termo-empresa">-</span></p>
+                                    <p><strong>Setor:</strong> <span id="termo-setor">-</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Técnico Responsável:</strong> <span id="termo-tecnico">-</span></p>
+                                    <p><strong>Data da Entrega:</strong> <span id="termo-data">-</span></p>
+                                    <p><strong>Protocolo:</strong> <span id="termo-protocolo">-</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6>Equipamentos Entregues</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipamento</th>
+                                            <th class="text-center">Quantidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="termo-equipamentos">
+                                        <!-- Equipamentos serão preenchidos via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6>Termo de Responsabilidade</h6>
+                            <div class="p-3 bg-verde-pagina rounded">
+                                <p class="mb-3">Eu, <strong><span id="termo-usuario-assinatura">-</span></strong>, matrícula <strong><span id="termo-matricula-assinatura">-</span></strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                                
+                                <p class="mb-3">Declaro que:</p>
+                                <ul>
+                                    <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
+                                    <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                                    <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+                                </ul>
+                                
+                                <p class="mb-0">Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="aceite-termo">
+                            <label class="form-check-label">
+                                Confirmo que todas as informações estão corretas e concordo com os termos acima
+                            </label>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-custom btn-lg" id="btn-gerar-termo" onclick="visualizarTermo()" disabled>
+                                <i class="fas fa-eye me-2"></i>Visualizar Termo para Impressão
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-secondary" onclick="proximaAba('quantidades')">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Relatórios -->
+            <div class="tab-pane fade" id="relatorios">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Relatórios e Estatísticas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="stats-card text-center">
+                                    <div class="h2 mb-1" id="total-entregas">0</div>
+                                    <small>Total de Entregas</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="stats-card text-center">
+                                    <div class="h2 mb-1" id="total-equipamentos">0</div>
+                                    <small>Equipamentos Entregues</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Distribuição por Setor</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Setor</th>
+                                                <th class="text-center">Entregas</th>
+                                                <th class="text-center">%</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabela-setores">
+                                            <!-- Dados serão preenchidos via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Últimas Entregas</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Data</th>
+                                                <th>Colaborador</th>
+                                                <th class="text-center">Equip.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabela-ultimas-entregas">
+                                            <!-- Dados serão preenchidos via JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6>Exportar Dados</h6>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-light" onclick="exportarParaExcel()">
+                                    <i class="fas fa-file-excel me-2"></i>Exportar para Excel
+                                </button>
+                                <button class="btn btn-outline-light" onclick="exportarParaJSON()">
+                                    <i class="fas fa-file-code me-2"></i>Exportar para JSON
+                                </button>
+                                <button class="btn btn-outline-light" onclick="limparDados()">
+                                    <i class="fas fa-trash me-2"></i>Limpar Dados
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 import-area" onclick="document.getElementById('import-file').click()">
+                            <i class="fas fa-file-upload fa-2x mb-3"></i>
+                            <p>Clique aqui ou arraste um arquivo para importar dados</p>
+                            <small class="text-muted">Suporte para arquivos JSON e Excel (.xlsx, .xls)</small>
+                            <input type="file" id="import-file" accept=".json,.xlsx,.xls" style="display: none;" onchange="importarDados(this.files[0])">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Visualização do Termo -->
+    <div class="modal fade modal-preview" id="modalPreview" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pré-visualização do Termo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="preview-content">
+                        <!-- Conteúdo será preenchido via JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-custom" onclick="imprimirTermoCompleto()">
+                        <i class="fas fa-print me-2"></i>Imprimir Termo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Área de Impressão (oculta na tela, visível apenas na impressão) -->
+    <div id="area-impressao" style="display: none;">
+        <!-- O conteúdo será gerado dinamicamente pelo JavaScript -->
+    </div>
+
     <script>
-        // Função para preencher os dados do termo
-        function preencherTermo(dados) {
-            // Dados básicos
-            document.getElementById('colaborador').textContent = dados.colaborador || '-';
-            document.getElementById('tecnico').textContent = dados.tecnico || '-';
-            document.getElementById('empresa').textContent = dados.empresa || '-';
-            document.getElementById('data').textContent = dados.data || '-';
-            document.getElementById('setor').textContent = dados.setor || '-';
-            document.getElementById('protocolo').textContent = dados.protocolo || '-';
-            document.getElementById('nome-colaborador').textContent = dados.nomeColaborador || '-';
-            document.getElementById('matricula').textContent = dados.matricula || '-';
-            
-            // Equipamentos
-            const tabelaEquipamentos = document.getElementById('equipamentos-table').getElementsByTagName('tbody')[0];
-            tabelaEquipamentos.innerHTML = '';
-            
-            if (dados.equipamentos && dados.equipamentos.length > 0) {
-                dados.equipamentos.forEach(equipamento => {
-                    const novaLinha = tabelaEquipamentos.insertRow();
-                    const celulaEquipamento = novaLinha.insertCell(0);
-                    const celulaQuantidade = novaLinha.insertCell(1);
-                    
-                    celulaEquipamento.textContent = equipamento.nome || '-';
-                    celulaQuantidade.textContent = equipamento.quantidade || '0';
+        // ========== SISTEMA DE ARMAZENAMENTO ==========
+        let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
+        let quantidades = {
+            desktop: 0,
+            monitor: 0,
+            caboEnergiaDesktop: 0,
+            caboEnergiaMonitor: 0,
+            teclado: 0,
+            mouse: 0,
+            caboHdmi: 0,
+            caboVga: 0
+        };
+
+        // ========== INICIALIZAÇÃO ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Sistema Célere inicializado!');
+            inicializarSistema();
+            inicializarTooltips();
+        });
+
+        function inicializarSistema() {
+            // Configurar event listeners para quantidades
+            document.querySelectorAll('.quantidade-input').forEach(input => {
+                input.addEventListener('input', function() {
+                    atualizarProgresso();
+                    atualizarTermo();
                 });
-            } else {
-                const novaLinha = tabelaEquipamentos.insertRow();
-                const celulaMensagem = novaLinha.insertCell(0);
-                celulaMensagem.colSpan = 2;
-                celulaMensagem.textContent = 'Nenhum equipamento listado';
-                celulaMensagem.style.textAlign = 'center';
-                celulaMensagem.style.fontStyle = 'italic';
+            });
+
+            // Configurar dados do usuário
+            ['tecnico', 'usuario', 'matricula', 'setor'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', function() {
+                        validarCamposObrigatorios();
+                        setTimeout(atualizarTermo, 100);
+                    });
+                }
+            });
+
+            // Configurar checkbox de aceite
+            const aceiteTermo = document.getElementById('aceite-termo');
+            if (aceiteTermo) {
+                aceiteTermo.addEventListener('change', function() {
+                    setTimeout(atualizarTermo, 100);
+                });
+            }
+
+            // Configurar checkboxes de equipamentos
+            const checkboxes = document.querySelectorAll('.equipamento-check, .periferico-check, .cabo-check');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const id = this.id;
+                    const quantidadeInput = document.getElementById(`qtd-${id}`);
+                    if (quantidadeInput) {
+                        quantidadeInput.value = this.checked ? '1' : '0';
+                        atualizarProgresso();
+                        setTimeout(atualizarTermo, 100);
+                    }
+                });
+            });
+
+            // Configurar checkbox do kit completo
+            const kitCompleto = document.getElementById('kit-completo');
+            if (kitCompleto) {
+                kitCompleto.addEventListener('change', function() {
+                    selecionarTodosEquipamentos();
+                });
+            }
+
+            // Inicializar
+            atualizarProgresso();
+            atualizarTermo();
+            atualizarRelatorios();
+            validarCamposObrigatorios();
+        }
+
+        // ========== FUNÇÃO PARA SELECIONAR TODOS OS EQUIPAMENTOS ==========
+        function selecionarTodosEquipamentos() {
+            const kitCompleto = document.getElementById('kit-completo');
+            const todosEquipamentos = [
+                'desktop', 'monitor', 'cabo-energia-desktop', 'cabo-energia-monitor', 
+                'teclado', 'mouse', 'cabo-hdmi', 'cabo-vga'
+            ];
+            
+            todosEquipamentos.forEach(id => {
+                const checkbox = document.getElementById(id);
+                const input = document.getElementById(`qtd-${id}`);
+                if (checkbox && input) {
+                    checkbox.checked = kitCompleto.checked;
+                    input.value = kitCompleto.checked ? '1' : '0';
+                }
+            });
+            
+            atualizarProgresso();
+            setTimeout(atualizarTermo, 100);
+        }
+
+        function inicializarTooltips() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+
+        // ========== SISTEMA DE STATUS ==========
+        function mostrarStatus(mensagem, tipo) {
+            const status = document.getElementById('syncStatus');
+            status.textContent = mensagem;
+            status.className = `sync-status sync-${tipo}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function mostrarLoading(mostrar) {
+            const loading = document.getElementById('loadingOverlay');
+            if (loading) {
+                loading.style.display = mostrar ? 'flex' : 'none';
             }
         }
 
-        // Exemplo de dados para preenchimento
-        const dadosExemplo = {
-            colaborador: 'rfid',
-            tecnico: 'João Silva',
-            empresa: 'Empresa XYZ Ltda',
-            data: '15/03/2024',
-            setor: 'TI',
-            protocolo: 'PROT-2024-00123',
-            nomeColaborador: 'Carlos Ferreira',
-            matricula: '12345',
-            equipamentos: [
-                { nome: 'Notebook Dell', quantidade: '1' },
-                { nome: 'Mouse sem fio', quantidade: '1' },
-                { nome: 'Teclado USB', quantidade: '1' }
-            ]
-        };
+        // ========== VALIDAÇÃO DE CAMPOS ==========
+        function validarCamposObrigatorios() {
+            const campos = {
+                tecnico: document.getElementById('tecnico'),
+                usuario: document.getElementById('usuario'),
+                matricula: document.getElementById('matricula'),
+                setor: document.getElementById('setor')
+            };
+            
+            let todosValidos = true;
+            
+            Object.entries(campos).forEach(([key, campo]) => {
+                const isValid = campo.value.trim() !== '';
+                
+                // Adicionar/remover classes de validação
+                if (isValid) {
+                    campo.classList.remove('is-invalid');
+                    campo.classList.add('is-valid');
+                } else {
+                    campo.classList.remove('is-valid');
+                    campo.classList.add('is-invalid');
+                    todosValidos = false;
+                }
+            });
+            
+            return todosValidos;
+        }
 
-        // Preencher o termo com os dados de exemplo
-        // Em um sistema real, esses dados viriam do backend ou de um formulário
-        window.onload = function() {
-            preencherTermo(dadosExemplo);
-        };
+        // ========== ATUALIZAR PROGRESSO ==========
+        function atualizarProgresso() {
+            // Atualizar quantidades
+            quantidades.desktop = parseInt(document.getElementById('qtd-desktop').value) || 0;
+            quantidades.monitor = parseInt(document.getElementById('qtd-monitor').value) || 0;
+            quantidades.caboEnergiaDesktop = parseInt(document.getElementById('qtd-cabo-energia-desktop').value) || 0;
+            quantidades.caboEnergiaMonitor = parseInt(document.getElementById('qtd-cabo-energia-monitor').value) || 0;
+            quantidades.teclado = parseInt(document.getElementById('qtd-teclado').value) || 0;
+            quantidades.mouse = parseInt(document.getElementById('qtd-mouse').value) || 0;
+            quantidades.caboHdmi = parseInt(document.getElementById('qtd-cabo-hdmi').value) || 0;
+            quantidades.caboVga = parseInt(document.getElementById('qtd-cabo-vga').value) || 0;
+
+            // Atualizar resumos
+            document.getElementById('resumo-desktop').textContent = quantidades.desktop;
+            document.getElementById('resumo-monitor').textContent = quantidades.monitor;
+            document.getElementById('resumo-cabo-energia-desktop').textContent = quantidades.caboEnergiaDesktop;
+            document.getElementById('resumo-cabo-energia-monitor').textContent = quantidades.caboEnergiaMonitor;
+            document.getElementById('resumo-teclado').textContent = quantidades.teclado;
+            document.getElementById('resumo-mouse').textContent = quantidades.mouse;
+            document.getElementById('resumo-cabo-hdmi').textContent = quantidades.caboHdmi;
+            document.getElementById('resumo-cabo-vga').textContent = quantidades.caboVga;
+
+            // Atualizar badges
+            document.getElementById('badge-desktop').textContent = quantidades.desktop;
+            document.getElementById('badge-monitor').textContent = quantidades.monitor;
+            document.getElementById('badge-cabo-energia-desktop').textContent = quantidades.caboEnergiaDesktop;
+            document.getElementById('badge-cabo-energia-monitor').textContent = quantidades.caboEnergiaMonitor;
+            document.getElementById('badge-teclado').textContent = quantidades.teclado;
+            document.getElementById('badge-mouse').textContent = quantidades.mouse;
+            document.getElementById('badge-cabo-hdmi').textContent = quantidades.caboHdmi;
+            document.getElementById('badge-cabo-vga').textContent = quantidades.caboVga;
+
+            // Calcular totais
+            const totalEquipamentos = Object.values(quantidades).reduce((a, b) => a + b, 0);
+
+            // Atualizar progresso
+            document.getElementById('progresso-texto').textContent = `Total de equipamentos: ${totalEquipamentos}`;
+            
+            // Barra de progresso mostra apenas a quantidade relativa
+            const percentual = Math.min(100, Math.round((totalEquipamentos / 50) * 100));
+            document.getElementById('progresso-bar').style.width = `${percentual}%`;
+
+            if (totalEquipamentos > 0) {
+                document.getElementById('progresso-bar').classList.add('bg-success');
+            } else {
+                document.getElementById('progresso-bar').classList.remove('bg-success');
+            }
+        }
+
+        // ========== SISTEMA PRINCIPAL ==========
+        function proximaAba(aba) {
+            const tabElement = document.querySelector(`a[href="#${aba}"]`);
+            if (tabElement) {
+                const tab = new bootstrap.Tab(tabElement);
+                tab.show();
+            }
+        }
+
+        // ========== DEBUG - VERIFICAR PREENCHIMENTO ==========
+        function debugPreenchimento() {
+            console.log('=== DEBUG PREENCHIMENTO ===');
+            console.log('Usuario:', document.getElementById('usuario').value);
+            console.log('Matricula:', document.getElementById('matricula').value);
+            console.log('Setor:', document.getElementById('setor').value);
+            console.log('Tecnico:', document.getElementById('tecnico').value);
+            console.log('Quantidades:', quantidades);
+            console.log('=== FIM DEBUG ===');
+        }
+
+        // ========== GERAR TERMO ==========
+        function atualizarTermo() {
+            // Atualizar informações do termo
+            document.getElementById('termo-usuario').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('termo-matricula').textContent = document.getElementById('matricula').value || '-';
+            document.getElementById('termo-setor').textContent = document.getElementById('setor').value || '-';
+            document.getElementById('termo-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            document.getElementById('termo-data').textContent = dataAtual;
+            
+            // Gerar protocolo
+            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+            document.getElementById('termo-protocolo').textContent = protocolo;
+            
+            // Atualizar equipamentos no termo
+            const tbody = document.getElementById('termo-equipamentos');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                const equipamentos = [
+                    { nome: 'Desktop', qtd: quantidades.desktop },
+                    { nome: 'Monitor', qtd: quantidades.monitor },
+                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                    { nome: 'Teclado', qtd: quantidades.teclado },
+                    { nome: 'Mouse', qtd: quantidades.mouse },
+                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+                ];
+                
+                equipamentos.forEach(equip => {
+                    if (equip.qtd > 0) {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${equip.nome}</td>
+                            <td class="text-center">${equip.qtd}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+            }
+            
+            // Atualizar informações de assinatura
+            document.getElementById('termo-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('termo-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+            
+            // Verificação para habilitar o botão
+            const aceite = document.getElementById('aceite-termo').checked;
+            const camposValidos = validarCamposObrigatorios();
+            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+            
+            const btnGerarTermo = document.getElementById('btn-gerar-termo');
+            if (btnGerarTermo) {
+                btnGerarTermo.disabled = !(aceite && camposValidos && temEquipamentos);
+            }
+            
+            // DEBUG - remover depois que estiver funcionando
+            debugPreenchimento();
+        }
+
+        // ========== SISTEMA DE IMPRESSÃO - FUNÇÕES CORRIGIDAS ==========
+        function visualizarTermo() {
+            console.log('Tentando visualizar termo...');
+            
+            if (!validarDadosParaTermo()) {
+                mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
+                return;
+            }
+
+            console.log('Dados válidos, atualizando impressão...');
+            atualizarDadosImpressao();
+            
+            // ATUALIZAÇÃO CRÍTICA: Gerar o conteúdo HTML para o preview
+            const previewContent = document.getElementById('preview-content');
+            if (previewContent) {
+                previewContent.innerHTML = gerarConteudoImpressao();
+                console.log('Conteúdo gerado para pré-visualização');
+            } else {
+                console.error('Elemento preview-content não encontrado!');
+            }
+            
+            // Abrir o modal
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                console.log('Modal aberto com sucesso!');
+            } else {
+                console.error('Modal não encontrado!');
+                mostrarStatus('Erro ao abrir visualização', 'error');
+            }
+        }
+
+        function validarDadosParaTermo() {
+            const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
+            
+            // DEBUG - verificar preenchimento dos campos
+            for (let campo of camposObrigatorios) {
+                const element = document.getElementById(campo);
+                console.log(`Campo ${campo}:`, element ? element.value : 'elemento não encontrado');
+                
+                if (!element || !element.value.trim()) {
+                    console.log('Campo obrigatório não preenchido:', campo);
+                    return false;
+                }
+            }
+            
+            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+            if (!temEquipamentos) {
+                console.log('Nenhum equipamento selecionado');
+                return false;
+            }
+            
+            const aceite = document.getElementById('aceite-termo').checked;
+            if (!aceite) {
+                console.log('Termo não aceito');
+                return false;
+            }
+            
+            console.log('Todos os dados estão válidos!');
+            return true;
+        }
+
+        function atualizarDadosImpressao() {
+            console.log('Atualizando dados para impressão...');
+            
+            // Esta função agora apenas prepara os dados, o HTML é gerado dinamicamente
+        }
+
+        function gerarConteudoImpressao() {
+            const usuario = document.getElementById('usuario').value || '-';
+            const matricula = document.getElementById('matricula').value || '-';
+            const setor = document.getElementById('setor').value || '-';
+            const tecnico = document.getElementById('tecnico').value || '-';
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+            
+            // Gerar lista de equipamentos
+            let equipamentosHTML = '';
+            const equipamentos = [
+                { nome: 'Desktop', qtd: quantidades.desktop },
+                { nome: 'Monitor', qtd: quantidades.monitor },
+                { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                { nome: 'Teclado', qtd: quantidades.teclado },
+                { nome: 'Mouse', qtd: quantidades.mouse },
+                { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+            ];
+            
+            let totalEquipamentos = 0;
+            equipamentos.forEach(equip => {
+                if (equip.qtd > 0) {
+                    totalEquipamentos += equip.qtd;
+                    equipamentosHTML += `
+                        <tr>
+                            <td>${equip.nome}</td>
+                            <td>${equip.qtd}</td>
+                            <td>Conferido e em perfeito estado</td>
+                        </tr>
+                    `;
+                }
+            });
+
+            return `
+                <div class="container-termo-timbrado">
+                    <!-- FUNDO TIMBRADO -->
+                    <div class="fundo-timbrado"></div>
+                    
+                    <!-- CONTEÚDO DO TERMO SOBRE O TIMBRADO -->
+                    <div class="conteudo-sobre-timbrado">
+                        <!-- CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO -->
+                        <div class="cabecalho-termo">
+                            <!-- NOME DA EMPRESA EM DESTAQUE -->
+                            <div class="empresa-nome">CÉLERE TECNOLOGIA EM SAÚDE</div>
+                            
+                            <!-- TÍTULO DO TERMO EM TAMANHO MENOR -->
+                            <div class="titulo-termo">TERMO DE ENTREGA E RESPONSABILIDADE</div>
+                            
+                            <div class="protocolo-termo">PROTOCOLO: ${protocolo}</div>
+                        </div>
+
+                        <!-- DADOS -->
+                        <div class="dados-termo">
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Colaborador:</strong> ${usuario}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Matrícula:</strong> ${matricula}
+                                </div>
+                            </div>
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Setor:</strong> ${setor}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Técnico Responsável:</strong> ${tecnico}
+                                </div>
+                            </div>
+                            <div class="linha-dados">
+                                <div class="coluna-dados">
+                                    <strong>Data da Entrega:</strong> ${dataAtual}
+                                </div>
+                                <div class="coluna-dados">
+                                    <strong>Total de Equipamentos:</strong> ${totalEquipamentos}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EQUIPAMENTOS -->
+                        <div class="equipamentos-termo">
+                            <h3>EQUIPAMENTOS ENTREGUES</h3>
+                            <table class="tabela-termo">
+                                <thead>
+                                    <tr>
+                                        <th>Equipamento</th>
+                                        <th>Quantidade</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${equipamentosHTML}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- TEXTO DO TERMO -->
+                        <div class="texto-termo">
+                            <p>Eu, <strong>${usuario}</strong>, matrícula <strong>${matricula}</strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
+                            
+                            <p>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega.</p>
+                            
+                            <p><strong>Declaro que:</strong></p>
+                            <ul>
+                                <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
+                                <li>Comunicar imediatamente qualquer problema técnico à equipe de TI</li>
+                                <li>Responsabilizar-me por quaisquer danos causados por uso inadequado</li>
+                            </ul>
+                            
+                            <p>Declaro ainda que todos os equipamentos relacionados acima foram recebidos em perfeito estado de funcionamento.</p>
+                        </div>
+
+                        <!-- ASSINATURAS -->
+                        <div class="assinaturas-termo">
+                            <div class="assinatura-coluna">
+                                <div class="linha-assinatura"></div>
+                                <div class="nome-assinatura">${usuario}</div>
+                                <div class="cargo-assinatura">Colaborador</div>
+                            </div>
+                            
+                            <div class="assinatura-coluna">
+                                <div class="linha-assinatura"></div>
+                                <div class="nome-assinatura">${tecnico}</div>
+                                <div class="cargo-assinatura">Técnico Responsável</div>
+                            </div>
+                        </div>
+
+                        <!-- RODAPÉ -->
+                        <div class="rodape-termo">
+                            <p>Documento gerado automaticamente pelo Sistema Célere - Tecnologia em Saúde</p>
+                            <p>Este termo possui validade legal e deve ser arquivado pelo setor responsável</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function imprimirTermoCompleto() {
+            console.log('Iniciando impressão...');
+            
+            mostrarLoading(true);
+            
+            // Salvar a entrega
+            const entrega = {
+                id: Date.now(),
+                protocolo: `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`,
+                tecnico: document.getElementById('tecnico').value,
+                usuario: document.getElementById('usuario').value,
+                matricula: document.getElementById('matricula').value,
+                setor: document.getElementById('setor').value,
+                data: new Date().toISOString(),
+                equipamentos: { ...quantidades },
+                totalEquipamentos: Object.values(quantidades).reduce((a, b) => a + b, 0)
+            };
+            
+            entregas.push(entrega);
+            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+            
+            // Fazer backup automático
+            fazerBackupAutomatico();
+            
+            // Fechar modal
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                }
+            }
+            
+            // Imprimir usando uma abordagem mais simples e confiável
+            setTimeout(() => {
+                console.log('Preparando para imprimir...');
+                
+                const conteudoImpressao = gerarConteudoImpressao();
+                const estilosImpressao = obterEstilosImpressao();
+                
+                const janelaImpressao = window.open('', '_blank');
+                janelaImpressao.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Termo de Entrega - ${entrega.protocolo}</title>
+                        <style>
+                            ${estilosImpressao}
+                        </style>
+                    </head>
+                    <body>
+                        ${conteudoImpressao}
+                        <script>
+                            setTimeout(() => {
+                                window.print();
+                                setTimeout(() => {
+                                    window.close();
+                                }, 500);
+                            }, 500);
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                janelaImpressao.document.close();
+                
+                mostrarLoading(false);
+                mostrarStatus('Termo impresso e salvo com sucesso!', 'success');
+                atualizarRelatorios();
+                limparFormulario();
+            }, 1000);
+        }
+
+        function limparFormulario() {
+            // Limpar campos
+            document.getElementById('tecnico').value = '';
+            document.getElementById('usuario').value = '';
+            document.getElementById('matricula').value = '';
+            document.getElementById('setor').value = '';
+            
+            // Limpar quantidades
+            document.querySelectorAll('.quantidade-input').forEach(input => {
+                input.value = '0';
+            });
+            
+            // Limpar checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Limpar validações
+            document.querySelectorAll('.is-valid, .is-invalid').forEach(element => {
+                element.classList.remove('is-valid', 'is-invalid');
+            });
+            
+            // Atualizar tudo
+            atualizarProgresso();
+            atualizarTermo();
+            
+            // Voltar para primeira aba
+            proximaAba('dados');
+        }
+
+        function obterEstilosImpressao() {
+            return `
+                body {
+                    background: white !important;
+                    color: black !important;
+                    font-family: 'Arial', sans-serif !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 12px !important;
+                    line-height: 1.3 !important;
+                }
+                
+                .no-print { display: none !important; }
+                
+                /* CONTAINER PRINCIPAL COM FUNDO TIMBRADO */
+                .container-termo-timbrado {
+                    width: 100%;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: white;
+                    position: relative;
+                }
+                
+                /* IMAGEM DE FUNDO DO TIMBRADO */
+                .fundo-timbrado {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: url('logo-celere.jpeg');
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0.1;
+                    z-index: 1;
+                }
+                
+                /* CONTEÚDO SOBRE O TIMBRADO */
+                .conteudo-sobre-timbrado {
+                    position: relative;
+                    z-index: 2;
+                    width: 90%;
+                    max-width: 800px;
+                    min-height: 90vh;
+                    background: rgba(255, 255, 255, 0.95);
+                    padding: 40px;
+                    border: 3px solid #0f5132;
+                    border-radius: 15px;
+                    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+                }
+                
+                /* CABEÇALHO DO TERMO - MODIFICADO CONFORME SOLICITADO */
+                .cabecalho-termo {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    padding-bottom: 20px;
+                    border-bottom: 3px solid #0f5132;
+                }
+                
+                .empresa-nome {
+                    font-size: 24px;
+                    color: #0f5132;
+                    margin: 0 0 10px 0;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                
+                .titulo-termo {
+                    font-size: 18px;
+                    color: #0f5132;
+                    margin: 0 0 15px 0;
+                    font-weight: bold;
+                }
+                
+                .protocolo-termo {
+                    background: #0f5132;
+                    color: white;
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    font-weight: bold;
+                    font-size: 14px;
+                    display: inline-block;
+                }
+                
+                /* DADOS DA ENTREGA */
+                .dados-termo {
+                    background: #f8f9fa;
+                    padding: 20px;
+                    border: 2px solid #0f5132;
+                    border-radius: 10px;
+                    margin-bottom: 25px;
+                }
+                
+                .linha-dados {
+                    display: flex;
+                    margin-bottom: 10px;
+                }
+                
+                .coluna-dados {
+                    flex: 1;
+                    padding: 0 15px;
+                }
+                
+                .coluna-dados strong {
+                    color: #0f5132;
+                    font-size: 13px;
+                }
+                
+                /* EQUIPAMENTOS */
+                .equipamentos-termo {
+                    margin-bottom: 25px;
+                }
+                
+                .equipamentos-termo h3 {
+                    font-size: 16px;
+                    color: #0f5132;
+                    margin: 0 0 15px 0;
+                    padding-bottom: 8px;
+                    border-bottom: 2px solid #0f5132;
+                    text-align: center;
+                }
+                
+                .tabela-termo {
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 12px;
+                    border: 2px solid #0f5132;
+                }
+                
+                .tabela-termo th {
+                    background: linear-gradient(135deg, #0f5132, #157347);
+                    color: white;
+                    padding: 12px;
+                    text-align: left;
+                    border: 1px solid #ddd;
+                    font-weight: bold;
+                    font-size: 13px;
+                }
+                
+                .tabela-termo td {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    background: white;
+                }
+                
+                /* TEXTO DO TERMO */
+                .texto-termo {
+                    margin: 25px 0;
+                    text-align: justify;
+                    line-height: 1.5;
+                    padding: 20px;
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    border-left: 5px solid #0f5132;
+                }
+                
+                .texto-termo p {
+                    margin-bottom: 12px;
+                    font-size: 13px;
+                }
+                
+                .texto-termo ul {
+                    margin: 15px 0;
+                    padding-left: 30px;
+                }
+                
+                .texto-termo li {
+                    margin-bottom: 8px;
+                    font-size: 13px;
+                }
+                
+                .texto-termo strong {
+                    color: #0f5132;
+                }
+                
+                /* ASSINATURAS */
+                .assinaturas-termo {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 60px;
+                    page-break-inside: avoid;
+                }
+                
+                .assinatura-coluna {
+                    text-align: center;
+                    width: 45%;
+                }
+                
+                .linha-assinatura {
+                    border-top: 2px solid #000;
+                    margin: 40px 0 10px 0;
+                    padding-top: 5px;
+                }
+                
+                .nome-assinatura {
+                    font-weight: bold;
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                }
+                
+                .cargo-assinatura {
+                    font-size: 12px;
+                    color: #666;
+                }
+                
+                /* RODAPÉ */
+                .rodape-termo {
+                    margin-top: 30px;
+                    text-align: center;
+                    font-size: 11px;
+                    color: #666;
+                    border-top: 2px solid #0f5132;
+                    padding-top: 15px;
+                }
+                
+                .rodape-termo p {
+                    margin: 5px 0;
+                }
+                
+                @media print {
+                    .container-termo-timbrado {
+                        height: auto;
+                        min-height: 100vh;
+                    }
+                    
+                    .conteudo-sobre-timbrado {
+                        box-shadow: none;
+                        border: 2px solid #0f5132;
+                    }
+                    
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+            `;
+        }
+
+        // ========== SISTEMA DE BACKUP ==========
+        function fazerBackupAutomatico() {
+            const backup = {
+                entregas: entregas,
+                timestamp: new Date().toISOString(),
+                total: entregas.length
+            };
+            
+            localStorage.setItem('celere_backup_' + Date.now(), JSON.stringify(backup));
+            
+            // Manter apenas os últimos 5 backups
+            const backups = Object.keys(localStorage)
+                .filter(key => key.startsWith('celere_backup_'))
+                .sort()
+                .slice(0, -5);
+            
+            backups.forEach(key => localStorage.removeItem(key));
+        }
+
+        // ========== FUNÇÃO AUXILIAR PARA IMPORTACAO ==========
+        function processarDadosImportados(dados) {
+            // Garantir que todos os campos necessários existam
+            return dados.map(item => {
+                return {
+                    id: item.id || Date.now() + Math.random(),
+                    protocolo: item.protocolo || `PROT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 9)}`,
+                    tecnico: item.tecnico || '',
+                    usuario: item.usuario || '',
+                    matricula: item.matricula || '',
+                    setor: item.setor || '',
+                    data: item.data || new Date().toISOString(),
+                    equipamentos: {
+                        desktop: parseInt(item.equipamentos?.desktop) || 0,
+                        monitor: parseInt(item.equipamentos?.monitor) || 0,
+                        caboEnergiaDesktop: parseInt(item.equipamentos?.caboEnergiaDesktop) || 0,
+                        caboEnergiaMonitor: parseInt(item.equipamentos?.caboEnergiaMonitor) || 0,
+                        teclado: parseInt(item.equipamentos?.teclado) || 0,
+                        mouse: parseInt(item.equipamentos?.mouse) || 0,
+                        caboHdmi: parseInt(item.equipamentos?.caboHdmi) || 0,
+                        caboVga: parseInt(item.equipamentos?.caboVga) || 0
+                    },
+                    totalEquipamentos: item.totalEquipamentos || Object.values(item.equipamentos || {}).reduce((a, b) => a + b, 0)
+                };
+            });
+        }
+
+        // ========== RELATÓRIOS ==========
+        function atualizarRelatorios() {
+            // RECARREGAR DADOS DO LOCALSTORAGE - CORREÇÃO IMPORTANTE!
+            entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
+            
+            console.log('Atualizando relatórios com', entregas.length, 'entregas');
+            
+            // Estatísticas gerais
+            document.getElementById('total-entregas').textContent = entregas.length;
+            
+            const totalEquipamentos = entregas.reduce((total, entrega) => {
+                return total + (entrega.totalEquipamentos || 0);
+            }, 0);
+            document.getElementById('total-equipamentos').textContent = totalEquipamentos;
+            
+            // Atualizar também o progresso geral na página
+            atualizarProgressoGeral();
+            
+            // Distribuição por setor
+            const setores = {};
+            entregas.forEach(entrega => {
+                setores[entrega.setor] = (setores[entrega.setor] || 0) + 1;
+            });
+            
+            const tabelaSetores = document.getElementById('tabela-setores');
+            if (tabelaSetores) {
+                tabelaSetores.innerHTML = '';
+                
+                Object.entries(setores).forEach(([setor, count]) => {
+                    const percentual = entregas.length > 0 ? Math.round((count / entregas.length) * 100) : 0;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${setor}</td>
+                        <td class="text-center">${count}</td>
+                        <td class="text-center">${percentual}%</td>
+                    `;
+                    tabelaSetores.appendChild(tr);
+                });
+                
+                // Se não houver dados, mostrar mensagem
+                if (entregas.length === 0) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td colspan="3" class="text-center text-muted">Nenhum dado disponível</td>
+                    `;
+                    tabelaSetores.appendChild(tr);
+                }
+            }
+            
+            // Últimas entregas
+            const tabelaUltimas = document.getElementById('tabela-ultimas-entregas');
+            if (tabelaUltimas) {
+                tabelaUltimas.innerHTML = '';
+                
+                const ultimasEntregas = entregas.slice(-5).reverse();
+                
+                if (ultimasEntregas.length > 0) {
+                    ultimasEntregas.forEach(entrega => {
+                        const totalEquip = entrega.totalEquipamentos || 0;
+                        const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                        
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${data}</td>
+                            <td>${entrega.usuario}</td>
+                            <td class="text-center">${totalEquip}</td>
+                        `;
+                        tabelaUltimas.appendChild(tr);
+                    });
+                } else {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td colspan="3" class="text-center text-muted">Nenhuma entrega registrada</td>
+                    `;
+                    tabelaUltimas.appendChild(tr);
+                }
+            }
+        }
+
+        // FUNÇÃO ADICIONAL PARA ATUALIZAR PROGRESSO GERAL
+        function atualizarProgressoGeral() {
+            const totalEquipamentos = entregas.reduce((total, entrega) => {
+                return total + (entrega.totalEquipamentos || 0);
+            }, 0);
+            
+            // Atualizar o card de estatísticas no topo
+            const progressoTexto = document.getElementById('progresso-texto');
+            const progressoBar = document.getElementById('progresso-bar');
+            
+            if (progressoTexto) {
+                progressoTexto.textContent = `Total de equipamentos entregues: ${totalEquipamentos}`;
+            }
+            
+            if (progressoBar) {
+                const percentual = Math.min(100, Math.round((totalEquipamentos / 100) * 100));
+                progressoBar.style.width = `${percentual}%`;
+                
+                if (totalEquipamentos > 0) {
+                    progressoBar.classList.add('bg-success');
+                } else {
+                    progressoBar.classList.remove('bg-success');
+                }
+            }
+        }
+
+        // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
+        function exportarParaExcel() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+
+            mostrarLoading(true);
+            
+            try {
+                // Preparar dados para a planilha
+                const dados = [
+                    ['DATA', 'PROTOCOLO', 'TÉCNICO', 'COLABORADOR', 'MATRÍCULA', 'SETOR', 
+                     'DESKTOPs', 'MONITORES', 'CABOS DESKTOP', 'CABOS MONITOR', 
+                     'TECLADOS', 'MOUSES', 'CABOS HDMI', 'CABOS VGA', 'TOTAL EQUIPAMENTOS']
+                ];
+
+                // Adicionar as entregas
+                entregas.forEach(entrega => {
+                    const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                    const total = entrega.totalEquipamentos || 0;
+                    
+                    dados.push([
+                        data,
+                        entrega.protocolo,
+                        entrega.tecnico,
+                        entrega.usuario,
+                        entrega.matricula,
+                        entrega.setor,
+                        entrega.equipamentos.desktop || 0,
+                        entrega.equipamentos.monitor || 0,
+                        entrega.equipamentos.caboEnergiaDesktop || 0,
+                        entrega.equipamentos.caboEnergiaMonitor || 0,
+                        entrega.equipamentos.teclado || 0,
+                        entrega.equipamentos.mouse || 0,
+                        entrega.equipamentos.caboHdmi || 0,
+                        entrega.equipamentos.caboVga || 0,
+                        total
+                    ]);
+                });
+
+                // Criar workbook e worksheet
+                const ws = XLSX.utils.aoa_to_sheet(dados);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Entregas Célere");
+
+                // Gerar arquivo Excel
+                const nomeArquivo = `celere-entregas-${new Date().toISOString().split('T')[0]}.xlsx`;
+                XLSX.writeFile(wb, nomeArquivo);
+                
+                setTimeout(() => {
+                    mostrarLoading(false);
+                    mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
+                }, 1000);
+                
+            } catch (error) {
+                mostrarLoading(false);
+                mostrarStatus('Erro ao exportar para Excel: ' + error.message, 'error');
+                console.error('Erro na exportação:', error);
+            }
+        }
+
+        function exportarParaJSON() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(entregas, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `celere-entregas-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            mostrarStatus('Dados exportados para JSON!', 'success');
+        }
+
+        function importarDados(file) {
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // Pegar a primeira planilha
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // Converter para JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // Remover cabeçalho
+                    jsonData.shift();
+                    
+                    const dadosValidos = jsonData.filter(row => row.length >= 6).map(row => {
+                        return {
+                            id: Date.now() + Math.random(),
+                            protocolo: row[1] || `PROT-${new Date().getFullYear()}-${String(jsonData.indexOf(row) + 1).padStart(3, '0')}`,
+                            tecnico: row[2] || '',
+                            usuario: row[3] || '',
+                            matricula: row[4] || '',
+                            setor: row[5] || '',
+                            data: new Date().toISOString(),
+                            equipamentos: {
+                                desktop: parseInt(row[6]) || 0,
+                                monitor: parseInt(row[7]) || 0,
+                                caboEnergiaDesktop: parseInt(row[8]) || 0,
+                                caboEnergiaMonitor: parseInt(row[9]) || 0,
+                                teclado: parseInt(row[10]) || 0,
+                                mouse: parseInt(row[11]) || 0,
+                                caboHdmi: parseInt(row[12]) || 0,
+                                caboVga: parseInt(row[13]) || 0
+                            },
+                            totalEquipamentos: parseInt(row[14]) || 0
+                        };
+                    }).filter(item => item.tecnico && item.usuario);
+
+                    if (dadosValidos.length > 0) {
+                        // Processar os dados para garantir estrutura correta
+                        entregas = processarDadosImportados(dadosValidos);
+                        localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                        atualizarRelatorios();
+                        mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
+                        
+                        // Forçar atualização da interface
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        throw new Error('Nenhum dado válido encontrado no arquivo Excel');
+                    }
+                } catch (error) {
+                    console.error('Erro na importação:', error);
+                    
+                    // Tentar importar como JSON se falhar como Excel
+                    try {
+                        const dados = JSON.parse(e.target.result);
+                        if (Array.isArray(dados)) {
+                            const dadosValidos = dados.filter(item => 
+                                item.protocolo && item.tecnico && item.usuario && item.matricula && item.setor
+                            );
+                            
+                            if (dadosValidos.length > 0) {
+                                // Processar os dados para garantir estrutura correta
+                                entregas = processarDadosImportados(dadosValidos);
+                                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                                atualizarRelatorios();
+                                mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
+                                
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            } else {
+                                throw new Error('Nenhum dado válido encontrado');
+                            }
+                        }
+                    } catch (jsonError) {
+                        mostrarStatus('Erro ao importar dados! Formato não suportado.', 'error');
+                    }
+                }
+            };
+            
+            // Verificar tipo de arquivo
+            if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+                reader.readAsArrayBuffer(file);
+            } else {
+                reader.readAsText(file);
+            }
+        }
+
+        function limparDados() {
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para limpar!', 'error');
+                return;
+            }
+            
+            if (confirm('Tem certeza que deseja limpar todos os dados? Esta ação não pode ser desfeita.')) {
+                localStorage.removeItem('celere_entregas');
+                entregas = [];
+                atualizarRelatorios();
+                mostrarStatus('Dados limpos com sucesso!', 'success');
+            }
+        }
     </script>
 </body>
 </html>
