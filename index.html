@@ -8,96 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-   
     <style>
-    /* ... TODO O SEU CSS ATUAL ... */
-
-    /* Modal de visualização - ESTILOS EXISTENTES */
-    .modal-preview .modal-content {
-        background: white;
-        color: black;
-    }
-
-    .modal-preview .modal-header {
-        border-bottom: 2px solid #0f5132;
-        background: #f8f9fa;
-    }
-
-    .modal-preview .modal-title {
-        color: #0f5132;
-        font-weight: bold;
-    }
-
-    /* === NOVOS ESTILOS PARA MELHORAR A VISUALIZAÇÃO === */
-    /* Adicione esta parte AQUI */
-
-    /* Melhorar visualização do termo no modal */
-    .modal-preview .modal-body {
-        padding: 0;
-        background: #f8f9fa;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
-
-    #preview-content {
-        transform: scale(0.85);
-        transform-origin: top center;
-        width: 117.65%;
-        margin-left: -8.825%;
-        padding: 20px 0;
-    }
-
-    #preview-content .container-termo-timbrado {
-        height: auto;
-        min-height: 70vh;
-        display: block;
-    }
-
-    #preview-content .conteudo-sobre-timbrado {
-        background: white;
-        box-shadow: 0 0 30px rgba(0,0,0,0.3);
-        margin: 0 auto;
-    }
-
-    /* Garantir que o conteúdo seja visível no modal */
-    #preview-content .fundo-timbrado {
-        opacity: 0.15;
-    }
-
-    /* Ajustes responsivos para o modal */
-    @media (max-width: 768px) {
-        #preview-content {
-            transform: scale(0.7);
-            width: 142.85%;
-            margin-left: -21.425%;
-        }
-    }
-
-    @media (max-width: 576px) {
-        #preview-content {
-            transform: scale(0.6);
-            width: 166.67%;
-            margin-left: -33.335%;
-        }
-        
-        .modal-preview .modal-dialog {
-            max-width: 95%;
-            margin: 0 auto;
-        }
-    }
-
-    /* ... resto do seu CSS existente continua aqui ... */
-    
-    /* Estados de validação */
-    .is-valid {
-        border-color: #198754 !important;
-    }
-    
-    /* ... e assim por diante até o final do seu CSS ... */
-</style>
-    
-    <style>
-    
         :root {
             --cor-primaria: #157347;
             --cor-secundaria: #0f5132;
@@ -472,6 +383,162 @@
             margin-right: 8px;
         }
 
+        /* Modal de visualização */
+        .modal-preview .modal-content {
+            background: white;
+            color: black;
+        }
+
+        .modal-preview .modal-header {
+            border-bottom: 2px solid #0f5132;
+            background: #f8f9fa;
+        }
+
+        .modal-preview .modal-title {
+            color: #0f5132;
+            font-weight: bold;
+        }
+
+        /* Melhorar visualização do termo no modal */
+        .modal-preview .modal-body {
+            padding: 0;
+            background: #f8f9fa;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #preview-content {
+            transform: scale(0.85);
+            transform-origin: top center;
+            width: 117.65%;
+            margin-left: -8.825%;
+            padding: 20px 0;
+        }
+
+        #preview-content .container-termo-timbrado {
+            height: auto;
+            min-height: 70vh;
+            display: block;
+        }
+
+        #preview-content .conteudo-sobre-timbrado {
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            margin: 0 auto;
+        }
+
+        /* Garantir que o conteúdo seja visível no modal */
+        #preview-content .fundo-timbrado {
+            opacity: 0.15;
+        }
+
+        /* Ajustes responsivos para o modal */
+        @media (max-width: 768px) {
+            #preview-content {
+                transform: scale(0.7);
+                width: 142.85%;
+                margin-left: -21.425%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #preview-content {
+                transform: scale(0.6);
+                width: 166.67%;
+                margin-left: -33.335%;
+            }
+            
+            .modal-preview .modal-dialog {
+                max-width: 95%;
+                margin: 0 auto;
+            }
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* Estados de validação */
+        .is-valid {
+            border-color: #198754 !important;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        /* Melhorar responsividade */
+        @media (max-width: 768px) {
+            .health-tech-icons {
+                gap: 15px;
+            }
+            
+            .tech-icon {
+                font-size: 1.8rem;
+            }
+            
+            .equipamentos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .assinaturas-termo {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .assinatura-coluna {
+                width: 100%;
+            }
+
+            .logo-completa {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .logo-texto {
+                text-align: center;
+            }
+
+            .logo-texto h1 {
+                font-size: 2.5rem;
+            }
+
+            .logo-texto h2 {
+                font-size: 1.3rem;
+            }
+
+            .logo-imagem {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-texto h1 {
+                font-size: 2rem;
+            }
+
+            .logo-texto h2 {
+                font-size: 1.1rem;
+            }
+
+            .logo-imagem {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
         /* ESTILOS ESPECÍFICOS PARA IMPRESSÃO - TERMO DENTRO DO TIMBRADO */
         @media print {
             body {
@@ -694,107 +761,6 @@
             
             .rodape-termo p {
                 margin: 5px 0;
-            }
-        }
-
-        /* Modal de visualização */
-        .modal-preview .modal-content {
-            background: white;
-            color: black;
-        }
-
-        .modal-preview .modal-header {
-            border-bottom: 2px solid #0f5132;
-            background: #f8f9fa;
-        }
-
-        .modal-preview .modal-title {
-            color: #0f5132;
-            font-weight: bold;
-        }
-
-        /* Loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        /* Estados de validação */
-        .is-valid {
-            border-color: #198754 !important;
-        }
-
-        .is-invalid {
-            border-color: #dc3545 !important;
-        }
-
-        /* Melhorar responsividade */
-        @media (max-width: 768px) {
-            .health-tech-icons {
-                gap: 15px;
-            }
-            
-            .tech-icon {
-                font-size: 1.8rem;
-            }
-            
-            .equipamentos-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .assinaturas-termo {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .assinatura-coluna {
-                width: 100%;
-            }
-
-            .logo-completa {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-
-            .logo-texto {
-                text-align: center;
-            }
-
-            .logo-texto h1 {
-                font-size: 2.5rem;
-            }
-
-            .logo-texto h2 {
-                font-size: 1.3rem;
-            }
-
-            .logo-imagem {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logo-texto h1 {
-                font-size: 2rem;
-            }
-
-            .logo-texto h2 {
-                font-size: 1.1rem;
-            }
-
-            .logo-imagem {
-                width: 80px;
-                height: 80px;
             }
         }
     </style>
@@ -1731,50 +1697,44 @@
             }
         }
 
-        // ========== SISTEMA DE IMPRESSÃO ==========
-       
+        // ========== SISTEMA DE IMPRESSÃO - FUNÇÕES CORRIGIDAS ==========
+        function visualizarTermo() {
+            console.log('Tentando visualizar termo...');
+            
+            if (!validarDadosParaTermo()) {
+                mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
+                return;
+            }
 
-            function visualizarTermo() {
-    console.log('Tentando visualizar termo...');
-    
-    if (!validarDadosParaTermo()) {
-        mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
-        return;
-    }
-
-    console.log('Dados válidos, atualizando impressão...');
-    atualizarDadosImpressao();
-    
-    // ATUALIZAÇÃO CRÍTICA: Copiar o conteúdo da área de impressão para o modal
-    const areaImpressao = document.getElementById('area-impressao');
-    const previewContent = document.getElementById('preview-content');
-    
-    if (areaImpressao && previewContent) {
-        // Clonar o conteúdo para evitar problemas de referência
-        const conteudoClonado = areaImpressao.cloneNode(true);
-        conteudoClonado.style.display = 'block'; // Tornar visível no modal
-        previewContent.innerHTML = ''; // Limpar conteúdo anterior
-        previewContent.appendChild(conteudoClonado);
-        
-        console.log('Conteúdo copiado para pré-visualização');
-    } else {
-        console.error('Elementos não encontrados:', {
-            areaImpressao: !!areaImpressao,
-            previewContent: !!previewContent
-        });
-    }
-    
-    // Abrir o modal
-    const modalElement = document.getElementById('modalPreview');
-    if (modalElement) {
-        const modal = new bootstrap.Modal(modalElement);
-        modal.show();
-        console.log('Modal aberto com sucesso!');
-    } else {
-        console.error('Modal não encontrado!');
-        mostrarStatus('Erro ao abrir visualização', 'error');
-    }
-}
+            console.log('Dados válidos, atualizando impressão...');
+            atualizarDadosImpressao();
+            
+            // ATUALIZAÇÃO CRÍTICA: Copiar o conteúdo da área de impressão para o modal
+            const areaImpressao = document.getElementById('area-impressao');
+            const previewContent = document.getElementById('preview-content');
+            
+            if (areaImpressao && previewContent) {
+                // Clonar o conteúdo para evitar problemas de referência
+                const conteudoClonado = areaImpressao.cloneNode(true);
+                conteudoClonado.style.display = 'block'; // Tornar visível no modal
+                previewContent.innerHTML = ''; // Limpar conteúdo anterior
+                previewContent.appendChild(conteudoClonado);
+                
+                console.log('Conteúdo copiado para pré-visualização');
+            } else {
+                console.error('Elementos não encontrados:', {
+                    areaImpressao: !!areaImpressao,
+                    previewContent: !!previewContent
+                });
+            }
+            
+            // Abrir o modal
+            const modalElement = document.getElementById('modalPreview');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                console.log('Modal aberto com sucesso!');
+            } else {
                 console.error('Modal não encontrado!');
                 mostrarStatus('Erro ao abrir visualização', 'error');
             }
@@ -1806,65 +1766,69 @@
             return true;
         }
 
-            function atualizarDadosImpressao() {
-    console.log('Atualizando dados para impressão...');
-    
-    // Atualizar dados básicos
-    document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
-    document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
-    document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
-    document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
-    
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    document.getElementById('impressao-data').textContent = dataAtual;
-    
-    // Gerar protocolo
-    const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
-    document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
-    
-    // Atualizar equipamentos
-    const tbody = document.getElementById('impressao-equipamentos');
-    if (tbody) {
-        tbody.innerHTML = '';
-        
-        const equipamentos = [
-            { nome: 'Desktop', qtd: quantidades.desktop },
-            { nome: 'Monitor', qtd: quantidades.monitor },
-            { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
-            { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
-            { nome: 'Teclado', qtd: quantidades.teclado },
-            { nome: 'Mouse', qtd: quantidades.mouse },
-            { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
-            { nome: 'Cabo VGA', qtd: quantidades.caboVga }
-        ];
-        
-        let totalEquipamentos = 0;
-        equipamentos.forEach(equip => {
-            if (equip.qtd > 0) {
-                totalEquipamentos += equip.qtd;
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${equip.nome}</td>
-                    <td>${equip.qtd}</td>
-                    <td>Conferido e em perfeito estado</td>
-                `;
-                tbody.appendChild(tr);
+        function atualizarDadosImpressao() {
+            console.log('Atualizando dados para impressão...');
+            
+            // Atualizar dados básicos
+            document.getElementById('impressao-usuario').textContent = document.getElementById('usuario').value || '-';
+            document.getElementById('impressao-matricula').textContent = document.getElementById('matricula').value || '-';
+            document.getElementById('impressao-setor').textContent = document.getElementById('setor').value || '-';
+            document.getElementById('impressao-tecnico').textContent = document.getElementById('tecnico').value || '-';
+            
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            document.getElementById('impressao-data').textContent = dataAtual;
+            
+            // Gerar protocolo
+            const protocolo = `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`;
+            document.getElementById('impressao-protocolo').textContent = `PROTOCOLO: ${protocolo}`;
+            
+            // Atualizar equipamentos
+            const tbody = document.getElementById('impressao-equipamentos');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                const equipamentos = [
+                    { nome: 'Desktop', qtd: quantidades.desktop },
+                    { nome: 'Monitor', qtd: quantidades.monitor },
+                    { nome: 'Cabo de Energia Desktop', qtd: quantidades.caboEnergiaDesktop },
+                    { nome: 'Cabo de Energia Monitor', qtd: quantidades.caboEnergiaMonitor },
+                    { nome: 'Teclado', qtd: quantidades.teclado },
+                    { nome: 'Mouse', qtd: quantidades.mouse },
+                    { nome: 'Cabo HDMI', qtd: quantidades.caboHdmi },
+                    { nome: 'Cabo VGA', qtd: quantidades.caboVga }
+                ];
+                
+                let totalEquipamentos = 0;
+                equipamentos.forEach(equip => {
+                    if (equip.qtd > 0) {
+                        totalEquipamentos += equip.qtd;
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${equip.nome}</td>
+                            <td>${equip.qtd}</td>
+                            <td>Conferido e em perfeito estado</td>
+                        `;
+                        tbody.appendChild(tr);
+                    }
+                });
+                
+                document.getElementById('impressao-total').textContent = totalEquipamentos;
+                
+                // Atualizar assinaturas
+                document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
+                document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
+                document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
             }
-        });
-        
-        document.getElementById('impressao-total').textContent = totalEquipamentos;
-        
-        // Atualizar assinaturas
-        document.getElementById('impressao-usuario-assinatura').textContent = document.getElementById('usuario').value || '-';
-        document.getElementById('impressao-matricula-assinatura').textContent = document.getElementById('matricula').value || '-';
-        document.getElementById('impressao-assinatura-usuario').textContent = document.getElementById('usuario').value || '-';
-        document.getElementById('impressao-assinatura-tecnico').textContent = document.getElementById('tecnico').value || '-';
-    }
-    
-    console.log('Dados de impressão atualizados com sucesso!');
-}
+            
+            console.log('Dados de impressão atualizados com sucesso!');
+        }
+
         function imprimirTermoCompleto() {
             console.log('Iniciando impressão...');
+            
+            // ATUALIZAÇÃO CRÍTICA: Garantir que os dados estejam atualizados
+            atualizarDadosImpressao();
             
             mostrarLoading(true);
             
@@ -1899,7 +1863,7 @@
             // Imprimir
             setTimeout(() => {
                 console.log('Preparando para imprimir...');
-                atualizarDadosImpressao();
+                
                 const areaImpressao = document.getElementById('area-impressao');
                 if (areaImpressao) {
                     const janelaImpressao = window.open('', '_blank');
@@ -2536,4 +2500,3 @@
     </script>
 </body>
 </html>
-
