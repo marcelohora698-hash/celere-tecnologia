@@ -1633,29 +1633,34 @@
             }
         }
 
-        // ========== SISTEMA DE IMPRESSÃO ==========
-        function visualizarTermo() {
-            console.log('Tentando visualizar termo...');
-            
-            if (!validarDadosParaTermo()) {
-                mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
-                return;
-            }
+      // ========== SISTEMA DE IMPRESSÃO ==========
+function visualizarTermo() {
+    console.log('Tentando visualizar termo...');
+    
+    if (!validarDadosParaTermo()) {
+        mostrarStatus('Preencha todos os dados obrigatórios!', 'error');
+        return;
+    }
 
-            console.log('Dados válidos, atualizando impressão...');
-            atualizarDadosImpressao();
-            
-            const modalElement = document.getElementById('modalPreview');
-            if (modalElement) {
-                const modal = new bootstrap.Modal(modalElement);
-                const areaImpressao = document.getElementById('area-impressao');
-                if (areaImpressao) {
-                    document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
-                }
-                modal.show();
-                console.log('Modal aberto com sucesso!');
-            }
+    console.log('Dados válidos, atualizando impressão...');
+    atualizarDadosImpressao();
+    
+    const modalElement = document.getElementById('modalPreview');
+    if (modalElement) {
+        // Atualizar o conteúdo do preview ANTES de mostrar o modal
+        const areaImpressao = document.getElementById('area-impressao');
+        if (areaImpressao) {
+            document.getElementById('preview-content').innerHTML = areaImpressao.innerHTML;
         }
+        
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+        console.log('Modal aberto com sucesso!');
+    } else {
+        console.error('Modal não encontrado!');
+        mostrarStatus('Erro ao abrir visualização', 'error');
+    }
+}
 
         function validarDadosParaTermo() {
             const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
@@ -2410,3 +2415,4 @@
     </script>
 </body>
 </html>
+
