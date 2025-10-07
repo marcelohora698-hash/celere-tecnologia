@@ -1314,12 +1314,15 @@
                         <!-- Conteúdo será preenchido via JavaScript -->
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-custom" onclick="imprimirTermoCompleto()">
-                        <i class="fas fa-print me-2"></i>Imprimir Termo
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-custom" onclick="imprimirTermoCompleto()">
+                            <i class="fas fa-print me-2"></i>Imprimir Termo
+                            </button>
+                              <button type="button" class="btn btn-outline-primary" onclick="imprimirDireto()" title="Método alternativo de impressão">
+                                 <i class="fas fa-print me-2"></i>Imprimir (Alternativo)
+                            </button>
+                   </div>
             </div>
         </div>
     </div>
@@ -1820,77 +1823,93 @@
             `;
         }
 
-        function imprimirTermoCompleto() {
-            console.log('Iniciando impressão...');
-            
-            mostrarLoading(true);
-            
-            // Salvar a entrega
-            const entrega = {
-                id: Date.now(),
-                protocolo: `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`,
-                tecnico: document.getElementById('tecnico').value,
-                usuario: document.getElementById('usuario').value,
-                matricula: document.getElementById('matricula').value,
-                setor: document.getElementById('setor').value,
-                data: new Date().toISOString(),
-                equipamentos: { ...quantidades },
-                totalEquipamentos: Object.values(quantidades).reduce((a, b) => a + b, 0)
-            };
-            
-            entregas.push(entrega);
-            localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-            
-            // Fazer backup automático
-            fazerBackupAutomatico();
-            
-            // Fechar modal
-            const modalElement = document.getElementById('modalPreview');
-            if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) {
-                    modal.hide();
-                }
-            }
-            
-            // Imprimir usando uma abordagem mais simples e confiável
+            function imprimirTermoCompleto() {
+    console.log('Iniciando impressão...');
+    
+    mostrarLoading(true);
+    
+    // Salvar a entrega
+    const entrega = {
+        id: Date.now(),
+        protocolo: `PROT-${new Date().getFullYear()}-${String(entregas.length + 1).padStart(3, '0')}`,
+        tecnico: document.getElementById('tecnico').value,
+        usuario: document.getElementById('usuario').value,
+        matricula: document.getElementById('matricula').value,
+        setor: document.getElementById('setor').value,
+        data: new Date().toISOString(),
+        equipamentos: { ...quantidades },
+        totalEquipamentos: Object.values(quantidades).reduce((a, b) => a + b, 0)
+    };
+    
+    entregas.push(entrega);
+    localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+    
+    // Fazer backup automático
+    fazerBackupAutomatico();
+    
+    // Fechar modal
+    const modalElement = document.getElementById('modalPreview');
+    if (modalElement) {
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+            modal.hide();
+        }
+    }
+    
+    // CORREÇÃO: Usar approach mais simples e confiável para impressão
+    setTimeout(() => {
+        console.log('Preparando para imprimir...');
+        
+        const conteudoImpressao = gerarConteudoImpressao();
+        
+        // Criar um iframe para impressão - método mais confiável
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'fixed';
+        iframe.style.right = '0';
+        iframe.style.bottom = '0';
+        iframe.style.width = '0';
+        iframe.style.height = '0';
+        iframe.style.border = 'none';
+        
+        document.body.appendChild(iframe);
+        
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        iframeDoc.open();
+        iframeDoc.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Termo de Entrega - ${entrega.protocolo}</title>
+                <style>
+                    ${obterEstilosImpressao()}
+                </style>
+            </head>
+            <body onload="window.print()">
+                ${conteudoImpressao}
+            </body>
+            </html>
+        `);
+        iframeDoc.close();
+        
+        // Configurar evento para quando a impressão terminar
+        iframe.contentWindow.onfocus = function() {
             setTimeout(() => {
-                console.log('Preparando para imprimir...');
-                
-                const conteudoImpressao = gerarConteudoImpressao();
-                const estilosImpressao = obterEstilosImpressao();
-                
-                const janelaImpressao = window.open('', '_blank');
-                janelaImpressao.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Termo de Entrega - ${entrega.protocolo}</title>
-                        <style>
-                            ${estilosImpressao}
-                        </style>
-                    </head>
-                    <body>
-                        ${conteudoImpressao}
-                        <script>
-                            setTimeout(() => {
-                                window.print();
-                                setTimeout(() => {
-                                    window.close();
-                                }, 500);
-                            }, 500);
-                        <\/script>
-                    </body>
-                    </html>
-                `);
-                janelaImpressao.document.close();
-                
+                document.body.removeChild(iframe);
                 mostrarLoading(false);
                 mostrarStatus('Termo impresso e salvo com sucesso!', 'success');
                 atualizarRelatorios();
                 limparFormulario();
             }, 1000);
-        }
+        };
+        
+        // Forçar impressão
+        setTimeout(() => {
+            iframe.contentWindow.print();
+        }, 500);
+        
+    }, 1000);
+}
 
         function limparFormulario() {
             // Limpar campos
@@ -2506,3 +2525,4 @@
     </script>
 </body>
 </html>
+
