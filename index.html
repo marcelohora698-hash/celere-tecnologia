@@ -1661,32 +1661,34 @@ function visualizarTermo() {
         mostrarStatus('Erro ao abrir visualização', 'error');
     }
 }
-
-        function validarDadosParaTermo() {
-            const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
-            for (let campo of camposObrigatorios) {
-                const element = document.getElementById(campo);
-                if (!element || !element.value.trim()) {
-                    console.log('Campo obrigatório não preenchido:', campo);
-                    return false;
-                }
-            }
-            
-            const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
-            if (!temEquipamentos) {
-                console.log('Nenhum equipamento selecionado');
-                return false;
-            }
-            
-            const aceite = document.getElementById('aceite-termo').checked;
-            if (!aceite) {
-                console.log('Termo não aceito');
-                return false;
-            }
-            
-            console.log('Todos os dados estão válidos!');
-            return true;
+function validarDadosParaTermo() {
+    const camposObrigatorios = ['tecnico', 'usuario', 'matricula', 'setor'];
+    for (let campo of camposObrigatorios) {
+        const element = document.getElementById(campo);
+        if (!element || !element.value.trim()) {
+            console.log('Campo obrigatório não preenchido:', campo);
+            mostrarStatus(`Preencha o campo: ${campo}`, 'error');
+            return false;
         }
+    }
+    
+    const temEquipamentos = Object.values(quantidades).some(qtd => qtd > 0);
+    if (!temEquipamentos) {
+        console.log('Nenhum equipamento selecionado');
+        mostrarStatus('Selecione pelo menos um equipamento', 'error');
+        return false;
+    }
+    
+    const aceite = document.getElementById('aceite-termo').checked;
+    if (!aceite) {
+        console.log('Termo não aceito');
+        mostrarStatus('Você precisa aceitar os termos', 'error');
+        return false;
+    }
+    
+    console.log('Todos os dados estão válidos!');
+    return true;
+}
 
        function atualizarDadosImpressao() {
     console.log('Atualizando dados para impressão...');
@@ -2418,5 +2420,6 @@ function visualizarTermo() {
     </script>
 </body>
 </html>
+
 
 
