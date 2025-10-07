@@ -6,6 +6,8 @@
     <title>Célere - Tecnologia em Saúde</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
             --cor-primaria: #157347;
@@ -51,40 +53,6 @@
             z-index: 2;
         }
         
-        .logo-img {
-            width: 100%;
-            max-width: 100%;
-            height: 300px;
-            object-fit: contain;
-            margin: 0 auto;
-            display: block;
-            background-color: transparent;
-            border-radius: 10px;
-            padding: 15px;
-            mix-blend-mode: multiply;
-            filter: brightness(1.1) contrast(1.1);
-        }
-        
-        .logo-container-full {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-        }
-        
-        .logo-img-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            background: transparent;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-
-        /* NOVO ESTILO PARA LOGO COM IMAGEM E TEXTO */
         .logo-completa {
             display: flex;
             align-items: center;
@@ -702,7 +670,6 @@
                 width: 100%;
             }
 
-            /* RESPONSIVIDADE PARA LOGO COM IMAGEM */
             .logo-completa {
                 flex-direction: column;
                 text-align: center;
@@ -905,10 +872,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input equipamento-check" type="checkbox" id=<"Desktop">
+                                    <input class="form-check-input equipamento-check" type="checkbox" id="desktop">
                                     <label class="form-check-label">
                                         <span class="emoji">💻</span>Desktop
-                                        <span class="badge bg-warning ms-2" id="badge-Desktop">0</span>
+                                        <span class="badge bg-warning ms-2" id="badge-desktop">0</span>
                                     </label>
                                 </div>
                                 <div class="form-check mb-3">
@@ -1008,7 +975,7 @@
                             <!-- Equipamentos principais -->
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">💻</span> Quantidade de Desktop *</label>
-                                <input type="number" class="form-control quantidade-input" id="qtd-Desktop" min="0" value="0" onchange="atualizarProgresso()">
+                                <input type="number" class="form-control quantidade-input" id="qtd-desktop" min="0" value="0" onchange="atualizarProgresso()">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><span class="emoji">🖥️</span> Quantidade de Monitores *</label>
@@ -1161,7 +1128,6 @@
                             <div class="p-3 bg-verde-pagina rounded">
                                 <p class="mb-3">Eu, <strong><span id="termo-usuario-assinatura">-</span></strong>, matrícula <strong><span id="termo-matricula-assinatura">-</span></strong>, declaro que realizei check list em todos equipamentos e acompanhei a separação de todos equipamentos que foram entregues no ato.</p>
                                 
-                                
                                 <p class="mb-3">Declaro que:</p>
                                 <ul>
                                     <li>Declaro que todos os números de tombamentos dos equipamentos foram conferidos no ato dessa entrega</li>
@@ -1268,12 +1234,12 @@
                             </div>
                         </div>
 
-                       <div class="mt-4 import-area" onclick="document.getElementById('import-file').click()">
-    <i class="fas fa-file-upload fa-2x mb-3"></i>
-    <p>Clique aqui ou arraste um arquivo para importar dados</p>
-    <small class="text-muted">Suporte para arquivos JSON e Excel (.xlsx, .xls)</small>
-    <input type="file" id="import-file" accept=".json,.xlsx,.xls" style="display: none;" onchange="importarDados(this.files[0])">
-                      </div>
+                        <div class="mt-4 import-area" onclick="document.getElementById('import-file').click()">
+                            <i class="fas fa-file-upload fa-2x mb-3"></i>
+                            <p>Clique aqui ou arraste um arquivo para importar dados</p>
+                            <small class="text-muted">Suporte para arquivos JSON e Excel (.xlsx, .xls)</small>
+                            <input type="file" id="import-file" accept=".json,.xlsx,.xls" style="display: none;" onchange="importarDados(this.files[0])">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1407,8 +1373,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
         // ========== SISTEMA DE ARMAZENAMENTO ==========
         let entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
         let quantidades = {
@@ -1584,10 +1549,10 @@
             document.getElementById('badge-cabo-hdmi').textContent = quantidades.caboHdmi;
             document.getElementById('badge-cabo-vga').textContent = quantidades.caboVga;
 
-            // Calcular totais - MODIFICADO: APENAS QUANTIDADE, SEM PORCENTAGEM
+            // Calcular totais
             const totalEquipamentos = Object.values(quantidades).reduce((a, b) => a + b, 0);
 
-            // Atualizar progresso - MODIFICADO: SEM PORCENTAGEM
+            // Atualizar progresso
             document.getElementById('progresso-texto').textContent = `Total de equipamentos: ${totalEquipamentos}`;
             
             // Barra de progresso mostra apenas a quantidade relativa
@@ -2120,203 +2085,200 @@
             
             backups.forEach(key => localStorage.removeItem(key));
         }
-// ========== FUNÇÃO AUXILIAR PARA IMPORTACAO ==========
-function processarDadosImportados(dados) {
-    // Garantir que todos os campos necessários existam
-    return dados.map(item => {
-        return {
-            id: item.id || Date.now() + Math.random(),
-            protocolo: item.protocolo || `PROT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 9)}`,
-            tecnico: item.tecnico || '',
-            usuario: item.usuario || '',
-            matricula: item.matricula || '',
-            setor: item.setor || '',
-            data: item.data || new Date().toISOString(),
-            equipamentos: {
-                desktop: parseInt(item.equipamentos?.desktop) || 0,
-                monitor: parseInt(item.equipamentos?.monitor) || 0,
-                caboEnergiaDesktop: parseInt(item.equipamentos?.caboEnergiaDesktop) || 0,
-                caboEnergiaMonitor: parseInt(item.equipamentos?.caboEnergiaMonitor) || 0,
-                teclado: parseInt(item.equipamentos?.teclado) || 0,
-                mouse: parseInt(item.equipamentos?.mouse) || 0,
-                caboHdmi: parseInt(item.equipamentos?.caboHdmi) || 0,
-                caboVga: parseInt(item.equipamentos?.caboVga) || 0
-            },
-            totalEquipamentos: item.totalEquipamentos || Object.values(item.equipamentos || {}).reduce((a, b) => a + b, 0)
-        };
-    });
-}
 
-// ========== RELATÓRIOS ==========
-function atualizarRelatorios() {
-    // ... código existente
-}
+        // ========== FUNÇÃO AUXILIAR PARA IMPORTACAO ==========
+        function processarDadosImportados(dados) {
+            // Garantir que todos os campos necessários existam
+            return dados.map(item => {
+                return {
+                    id: item.id || Date.now() + Math.random(),
+                    protocolo: item.protocolo || `PROT-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 9)}`,
+                    tecnico: item.tecnico || '',
+                    usuario: item.usuario || '',
+                    matricula: item.matricula || '',
+                    setor: item.setor || '',
+                    data: item.data || new Date().toISOString(),
+                    equipamentos: {
+                        desktop: parseInt(item.equipamentos?.desktop) || 0,
+                        monitor: parseInt(item.equipamentos?.monitor) || 0,
+                        caboEnergiaDesktop: parseInt(item.equipamentos?.caboEnergiaDesktop) || 0,
+                        caboEnergiaMonitor: parseInt(item.equipamentos?.caboEnergiaMonitor) || 0,
+                        teclado: parseInt(item.equipamentos?.teclado) || 0,
+                        mouse: parseInt(item.equipamentos?.mouse) || 0,
+                        caboHdmi: parseInt(item.equipamentos?.caboHdmi) || 0,
+                        caboVga: parseInt(item.equipamentos?.caboVga) || 0
+                    },
+                    totalEquipamentos: item.totalEquipamentos || Object.values(item.equipamentos || {}).reduce((a, b) => a + b, 0)
+                };
+            });
+        }
+
         // ========== RELATÓRIOS ==========
         function atualizarRelatorios() {
-    // RECARREGAR DADOS DO LOCALSTORAGE - CORREÇÃO IMPORTANTE!
-    entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
-    
-    console.log('Atualizando relatórios com', entregas.length, 'entregas');
-    
-    // Estatísticas gerais
-    document.getElementById('total-entregas').textContent = entregas.length;
-    
-    const totalEquipamentos = entregas.reduce((total, entrega) => {
-        return total + (entrega.totalEquipamentos || 0);
-    }, 0);
-    document.getElementById('total-equipamentos').textContent = totalEquipamentos;
-    
-    // Atualizar também o progresso geral na página
-    atualizarProgressoGeral();
-    
-    // Distribuição por setor
-    const setores = {};
-    entregas.forEach(entrega => {
-        setores[entrega.setor] = (setores[entrega.setor] || 0) + 1;
-    });
-    
-    const tabelaSetores = document.getElementById('tabela-setores');
-    if (tabelaSetores) {
-        tabelaSetores.innerHTML = '';
-        
-        Object.entries(setores).forEach(([setor, count]) => {
-            const percentual = entregas.length > 0 ? Math.round((count / entregas.length) * 100) : 0;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${setor}</td>
-                <td class="text-center">${count}</td>
-                <td class="text-center">${percentual}%</td>
-            `;
-            tabelaSetores.appendChild(tr);
-        });
-        
-        // Se não houver dados, mostrar mensagem
-        if (entregas.length === 0) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td colspan="3" class="text-center text-muted">Nenhum dado disponível</td>
-            `;
-            tabelaSetores.appendChild(tr);
-        }
-    }
-    
-    // Últimas entregas
-    const tabelaUltimas = document.getElementById('tabela-ultimas-entregas');
-    if (tabelaUltimas) {
-        tabelaUltimas.innerHTML = '';
-        
-        const ultimasEntregas = entregas.slice(-5).reverse();
-        
-        if (ultimasEntregas.length > 0) {
-            ultimasEntregas.forEach(entrega => {
-                const totalEquip = entrega.totalEquipamentos || 0;
-                const data = new Date(entrega.data).toLocaleDateString('pt-BR');
-                
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${data}</td>
-                    <td>${entrega.usuario}</td>
-                    <td class="text-center">${totalEquip}</td>
-                `;
-                tabelaUltimas.appendChild(tr);
+            // RECARREGAR DADOS DO LOCALSTORAGE - CORREÇÃO IMPORTANTE!
+            entregas = JSON.parse(localStorage.getItem('celere_entregas')) || [];
+            
+            console.log('Atualizando relatórios com', entregas.length, 'entregas');
+            
+            // Estatísticas gerais
+            document.getElementById('total-entregas').textContent = entregas.length;
+            
+            const totalEquipamentos = entregas.reduce((total, entrega) => {
+                return total + (entrega.totalEquipamentos || 0);
+            }, 0);
+            document.getElementById('total-equipamentos').textContent = totalEquipamentos;
+            
+            // Atualizar também o progresso geral na página
+            atualizarProgressoGeral();
+            
+            // Distribuição por setor
+            const setores = {};
+            entregas.forEach(entrega => {
+                setores[entrega.setor] = (setores[entrega.setor] || 0) + 1;
             });
-        } else {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td colspan="3" class="text-center text-muted">Nenhuma entrega registrada</td>
-            `;
-            tabelaUltimas.appendChild(tr);
+            
+            const tabelaSetores = document.getElementById('tabela-setores');
+            if (tabelaSetores) {
+                tabelaSetores.innerHTML = '';
+                
+                Object.entries(setores).forEach(([setor, count]) => {
+                    const percentual = entregas.length > 0 ? Math.round((count / entregas.length) * 100) : 0;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${setor}</td>
+                        <td class="text-center">${count}</td>
+                        <td class="text-center">${percentual}%</td>
+                    `;
+                    tabelaSetores.appendChild(tr);
+                });
+                
+                // Se não houver dados, mostrar mensagem
+                if (entregas.length === 0) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td colspan="3" class="text-center text-muted">Nenhum dado disponível</td>
+                    `;
+                    tabelaSetores.appendChild(tr);
+                }
+            }
+            
+            // Últimas entregas
+            const tabelaUltimas = document.getElementById('tabela-ultimas-entregas');
+            if (tabelaUltimas) {
+                tabelaUltimas.innerHTML = '';
+                
+                const ultimasEntregas = entregas.slice(-5).reverse();
+                
+                if (ultimasEntregas.length > 0) {
+                    ultimasEntregas.forEach(entrega => {
+                        const totalEquip = entrega.totalEquipamentos || 0;
+                        const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                        
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${data}</td>
+                            <td>${entrega.usuario}</td>
+                            <td class="text-center">${totalEquip}</td>
+                        `;
+                        tabelaUltimas.appendChild(tr);
+                    });
+                } else {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td colspan="3" class="text-center text-muted">Nenhuma entrega registrada</td>
+                    `;
+                    tabelaUltimas.appendChild(tr);
+                }
+            }
         }
-    }
-}
 
-// FUNÇÃO ADICIONAL PARA ATUALIZAR PROGRESSO GERAL
-function atualizarProgressoGeral() {
-    const totalEquipamentos = entregas.reduce((total, entrega) => {
-        return total + (entrega.totalEquipamentos || 0);
-    }, 0);
-    
-    // Atualizar o card de estatísticas no topo
-    const progressoTexto = document.getElementById('progresso-texto');
-    const progressoBar = document.getElementById('progresso-bar');
-    
-    if (progressoTexto) {
-        progressoTexto.textContent = `Total de equipamentos entregues: ${totalEquipamentos}`;
-    }
-    
-    if (progressoBar) {
-        const percentual = Math.min(100, Math.round((totalEquipamentos / 100) * 100));
-        progressoBar.style.width = `${percentual}%`;
-        
-        if (totalEquipamentos > 0) {
-            progressoBar.classList.add('bg-success');
-        } else {
-            progressoBar.classList.remove('bg-success');
+        // FUNÇÃO ADICIONAL PARA ATUALIZAR PROGRESSO GERAL
+        function atualizarProgressoGeral() {
+            const totalEquipamentos = entregas.reduce((total, entrega) => {
+                return total + (entrega.totalEquipamentos || 0);
+            }, 0);
+            
+            // Atualizar o card de estatísticas no topo
+            const progressoTexto = document.getElementById('progresso-texto');
+            const progressoBar = document.getElementById('progresso-bar');
+            
+            if (progressoTexto) {
+                progressoTexto.textContent = `Total de equipamentos entregues: ${totalEquipamentos}`;
+            }
+            
+            if (progressoBar) {
+                const percentual = Math.min(100, Math.round((totalEquipamentos / 100) * 100));
+                progressoBar.style.width = `${percentual}%`;
+                
+                if (totalEquipamentos > 0) {
+                    progressoBar.classList.add('bg-success');
+                } else {
+                    progressoBar.classList.remove('bg-success');
+                }
+            }
         }
-    }
-}
 
         // ========== EXPORTAÇÃO/IMPORTAÇÃO ==========
         function exportarParaExcel() {
-    if (entregas.length === 0) {
-        mostrarStatus('Não há dados para exportar!', 'error');
-        return;
-    }
+            if (entregas.length === 0) {
+                mostrarStatus('Não há dados para exportar!', 'error');
+                return;
+            }
 
-    mostrarLoading(true);
-    
-    try {
-        // Preparar dados para a planilha
-        const dados = [
-            ['DATA', 'PROTOCOLO', 'TÉCNICO', 'COLABORADOR', 'MATRÍCULA', 'SETOR', 
-             'DESKTOPs', 'MONITORES', 'CABOS DESKTOP', 'CABOS MONITOR', 
-             'TECLADOS', 'MOUSES', 'CABOS HDMI', 'CABOS VGA', 'TOTAL EQUIPAMENTOS']
-        ];
-
-        // Adicionar as entregas
-        entregas.forEach(entrega => {
-            const data = new Date(entrega.data).toLocaleDateString('pt-BR');
-            const total = entrega.totalEquipamentos || 0;
+            mostrarLoading(true);
             
-            dados.push([
-                data,
-                entrega.protocolo,
-                entrega.tecnico,
-                entrega.usuario,
-                entrega.matricula,
-                entrega.setor,
-                entrega.equipamentos.desktop || 0,
-                entrega.equipamentos.monitor || 0,
-                entrega.equipamentos.caboEnergiaDesktop || 0,
-                entrega.equipamentos.caboEnergiaMonitor || 0,
-                entrega.equipamentos.teclado || 0,
-                entrega.equipamentos.mouse || 0,
-                entrega.equipamentos.caboHdmi || 0,
-                entrega.equipamentos.caboVga || 0,
-                total
-            ]);
-        });
+            try {
+                // Preparar dados para a planilha
+                const dados = [
+                    ['DATA', 'PROTOCOLO', 'TÉCNICO', 'COLABORADOR', 'MATRÍCULA', 'SETOR', 
+                     'DESKTOPs', 'MONITORES', 'CABOS DESKTOP', 'CABOS MONITOR', 
+                     'TECLADOS', 'MOUSES', 'CABOS HDMI', 'CABOS VGA', 'TOTAL EQUIPAMENTOS']
+                ];
 
-        // Criar workbook e worksheet
-        const ws = XLSX.utils.aoa_to_sheet(dados);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Entregas Célere");
+                // Adicionar as entregas
+                entregas.forEach(entrega => {
+                    const data = new Date(entrega.data).toLocaleDateString('pt-BR');
+                    const total = entrega.totalEquipamentos || 0;
+                    
+                    dados.push([
+                        data,
+                        entrega.protocolo,
+                        entrega.tecnico,
+                        entrega.usuario,
+                        entrega.matricula,
+                        entrega.setor,
+                        entrega.equipamentos.desktop || 0,
+                        entrega.equipamentos.monitor || 0,
+                        entrega.equipamentos.caboEnergiaDesktop || 0,
+                        entrega.equipamentos.caboEnergiaMonitor || 0,
+                        entrega.equipamentos.teclado || 0,
+                        entrega.equipamentos.mouse || 0,
+                        entrega.equipamentos.caboHdmi || 0,
+                        entrega.equipamentos.caboVga || 0,
+                        total
+                    ]);
+                });
 
-        // Gerar arquivo Excel
-        const nomeArquivo = `celere-entregas-${new Date().toISOString().split('T')[0]}.xlsx`;
-        XLSX.writeFile(wb, nomeArquivo);
-        
-        setTimeout(() => {
-            mostrarLoading(false);
-            mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
-        }, 1000);
-        
-    } catch (error) {
-        mostrarLoading(false);
-        mostrarStatus('Erro ao exportar para Excel: ' + error.message, 'error');
-        console.error('Erro na exportação:', error);
-    }
-}
+                // Criar workbook e worksheet
+                const ws = XLSX.utils.aoa_to_sheet(dados);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Entregas Célere");
+
+                // Gerar arquivo Excel
+                const nomeArquivo = `celere-entregas-${new Date().toISOString().split('T')[0]}.xlsx`;
+                XLSX.writeFile(wb, nomeArquivo);
+                
+                setTimeout(() => {
+                    mostrarLoading(false);
+                    mostrarStatus('Planilha Excel exportada com sucesso!', 'success');
+                }, 1000);
+                
+            } catch (error) {
+                mostrarLoading(false);
+                mostrarStatus('Erro ao exportar para Excel: ' + error.message, 'error');
+                console.error('Erro na exportação:', error);
+            }
+        }
 
         function exportarParaJSON() {
             if (entregas.length === 0) {
@@ -2337,100 +2299,101 @@ function atualizarProgressoGeral() {
             mostrarStatus('Dados exportados para JSON!', 'success');
         }
 
-       function importarDados(file) {
-    if (!file) return;
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
+        function importarDados(file) {
+            if (!file) return;
             
-            // Pegar a primeira planilha
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            
-            // Converter para JSON
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-            
-            // Remover cabeçalho
-            jsonData.shift();
-            
-            const dadosValidos = jsonData.filter(row => row.length >= 6).map(row => {
-                return {
-                    id: Date.now() + Math.random(),
-                    protocolo: row[1] || `PROT-${new Date().getFullYear()}-${String(jsonData.indexOf(row) + 1).padStart(3, '0')}`,
-                    tecnico: row[2] || '',
-                    usuario: row[3] || '',
-                    matricula: row[4] || '',
-                    setor: row[5] || '',
-                    data: new Date().toISOString(),
-                    equipamentos: {
-                        desktop: parseInt(row[6]) || 0,
-                        monitor: parseInt(row[7]) || 0,
-                        caboEnergiaDesktop: parseInt(row[8]) || 0,
-                        caboEnergiaMonitor: parseInt(row[9]) || 0,
-                        teclado: parseInt(row[10]) || 0,
-                        mouse: parseInt(row[11]) || 0,
-                        caboHdmi: parseInt(row[12]) || 0,
-                        caboVga: parseInt(row[13]) || 0
-                    },
-                    totalEquipamentos: parseInt(row[14]) || 0
-                };
-            }).filter(item => item.tecnico && item.usuario);
-
-            if (dadosValidos.length > 0) {
-                // Processar os dados para garantir estrutura correta
-                entregas = processarDadosImportados(dadosValidos);
-                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
-                atualizarRelatorios();
-                mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
-                
-                // Forçar atualização da interface
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-            } else {
-                throw new Error('Nenhum dado válido encontrado no arquivo Excel');
-            }
-        } catch (error) {
-            console.error('Erro na importação:', error);
-            
-            // Tentar importar como JSON se falhar como Excel
-            try {
-                const dados = JSON.parse(e.target.result);
-                if (Array.isArray(dados)) {
-                    const dadosValidos = dados.filter(item => 
-                        item.protocolo && item.tecnico && item.usuario && item.matricula && item.setor
-                    );
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
                     
-                   if (dadosValidos.length > 0) {
+                    // Pegar a primeira planilha
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // Converter para JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // Remover cabeçalho
+                    jsonData.shift();
+                    
+                    const dadosValidos = jsonData.filter(row => row.length >= 6).map(row => {
+                        return {
+                            id: Date.now() + Math.random(),
+                            protocolo: row[1] || `PROT-${new Date().getFullYear()}-${String(jsonData.indexOf(row) + 1).padStart(3, '0')}`,
+                            tecnico: row[2] || '',
+                            usuario: row[3] || '',
+                            matricula: row[4] || '',
+                            setor: row[5] || '',
+                            data: new Date().toISOString(),
+                            equipamentos: {
+                                desktop: parseInt(row[6]) || 0,
+                                monitor: parseInt(row[7]) || 0,
+                                caboEnergiaDesktop: parseInt(row[8]) || 0,
+                                caboEnergiaMonitor: parseInt(row[9]) || 0,
+                                teclado: parseInt(row[10]) || 0,
+                                mouse: parseInt(row[11]) || 0,
+                                caboHdmi: parseInt(row[12]) || 0,
+                                caboVga: parseInt(row[13]) || 0
+                            },
+                            totalEquipamentos: parseInt(row[14]) || 0
+                        };
+                    }).filter(item => item.tecnico && item.usuario);
+
+                    if (dadosValidos.length > 0) {
                         // Processar os dados para garantir estrutura correta
                         entregas = processarDadosImportados(dadosValidos);
                         localStorage.setItem('celere_entregas', JSON.stringify(entregas));
                         atualizarRelatorios();
                         mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
                         
+                        // Forçar atualização da interface
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
                     } else {
-                        throw new Error('Nenhum dado válido encontrado');
+                        throw new Error('Nenhum dado válido encontrado no arquivo Excel');
+                    }
+                } catch (error) {
+                    console.error('Erro na importação:', error);
+                    
+                    // Tentar importar como JSON se falhar como Excel
+                    try {
+                        const dados = JSON.parse(e.target.result);
+                        if (Array.isArray(dados)) {
+                            const dadosValidos = dados.filter(item => 
+                                item.protocolo && item.tecnico && item.usuario && item.matricula && item.setor
+                            );
+                            
+                            if (dadosValidos.length > 0) {
+                                // Processar os dados para garantir estrutura correta
+                                entregas = processarDadosImportados(dadosValidos);
+                                localStorage.setItem('celere_entregas', JSON.stringify(entregas));
+                                atualizarRelatorios();
+                                mostrarStatus(`${dadosValidos.length} entregas importadas com sucesso!`, 'success');
+                                
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            } else {
+                                throw new Error('Nenhum dado válido encontrado');
+                            }
+                        }
+                    } catch (jsonError) {
+                        mostrarStatus('Erro ao importar dados! Formato não suportado.', 'error');
                     }
                 }
-            } catch (jsonError) {
-                mostrarStatus('Erro ao importar dados! Formato não suportado.', 'error');
+            };
+            
+            // Verificar tipo de arquivo
+            if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+                reader.readAsArrayBuffer(file);
+            } else {
+                reader.readAsText(file);
             }
         }
-    };
-    
-    // Verificar tipo de arquivo
-    if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-        reader.readAsArrayBuffer(file);
-    } else {
-        reader.readAsText(file);
-    }
-}
+
         function limparDados() {
             if (entregas.length === 0) {
                 mostrarStatus('Não há dados para limpar!', 'error');
@@ -2447,10 +2410,3 @@ function atualizarProgressoGeral() {
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
